@@ -1,0 +1,358 @@
+
+.hideMe {
+	display: none;
+}
+
+a, a:hover, a:visited, a:focus {
+	text-decoration: none;
+}
+#header {
+	width: 100%;
+	height: 40px;
+}
+
+#container {
+	clear: both;
+	width: 100%;
+	background-color: #A3A6AD;
+	font-family: Arial,Helvetica,sans-serif;	
+}
+
+#footer {
+	width: 100%;
+	height: 25px;
+}
+
+#sidebar {
+	width: 200px;
+	height: 100%;
+	float: left;
+	font-size: 14px;
+	border-style: solid;
+	border-width: 0px 1px 0px 0px;
+	border-color: #A8A8A8;
+	background: #EEF3F8 url("../images/sidebar_bg.jpg") repeat-x left top;
+}
+
+#sidebar>ul {
+	margin: 20px 0 10px;
+}
+
+li.list-profile {
+	margin: 0 10px 5px;
+	width: 190px;
+	position: relative;
+}
+
+div.list-title {
+	display: inline-block;
+	padding-left: 18px;
+	margin: 4px 0 0;
+	width: 155px;
+	line-height: 16px; 
+	overflow-x: hidden;
+	white-space: nowrap;
+}
+
+a.list-toggle-button {
+	position: absolute;
+	right: 5px;
+	top: 6px;
+	padding-left: 14px;
+	height: 14px;
+	display: inline-block;
+	text-decoration: none;
+	text-indent: -999em;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+li.list-item {
+	margin: 8px 0 8px 10px;
+	padding-left: 18px;
+}
+
+.list-item a {
+	color: black;
+}
+
+.button-unfold {
+	background: url("../images/unfold_14x14.png") no-repeat left center;
+}
+
+.button-fold {
+	background: url("../images/fold_14x14.png") no-repeat left center;	
+}
+
+.profile-sina {
+	background: url("../images/sina_12x12.png") no-repeat left center;
+}
+
+.profile-qq {
+	background: url("../images/qq_12x12.png") no-repeat left center;
+}
+
+.list-icon-home {
+	background: url("../images/home_12x12.png") no-repeat left center;
+}
+
+.list-icon-mentions {
+	background: url("../images/mentions_12x12.png") no-repeat left center;
+}
+
+.list-icon-posted {
+	background: url("../images/posted_12x12.png") no-repeat left center;
+}
+
+.list-icon-direct {
+	background: url("../images/direct_12x12.png") no-repeat left center;
+}
+
+#dashboard {
+	float: left;
+	width: 100%;
+}
+
+#dashboardTabs {
+	width: 100%;
+	height: 28px;
+	background: url("../images/tabs_bg.png") repeat;
+	-moz-box-shadow: inset 0 26px 10px -26px #4FA7CE;
+	-webkit-box-shadow: inset 0 26px 10px -26px #4FA7CE;
+	box-shadow: inset 0 26px 10px -26px #4FA7CE;
+}
+
+#dashboardTabs .tab:first-child {
+	margin-left: 3px;
+}
+
+.tab {
+	margin-top: 3px;
+	font-weight: bold;
+	margin-right: 1px;
+	float: left;
+	position: relative;
+}
+
+.active-tab {
+	border-bottom: none;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
+}
+
+.tab .tab-name {
+	text-decoration: none;
+	-moz-border-radius-topLeft: 4px;
+	-moz-border-radius-topRight: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background: #EEE;
+	padding: 5px 23px 5px 9px;
+	outline: none;
+	white-space: nowrap;
+	float: left;
+	color: #3C3C3C;
+	line-height: 15px;
+	font-size: 12px;
+}
+
+.tab .tab-delete-button {
+	background-image: url("../images/icon_close.png");
+	padding-left: 13px;
+	height: 13px;
+	display: inline-block;
+	text-decoration: none;
+	text-indent: -999em;
+	overflow: hidden;
+	vertical-align: middle;
+	outline: none;
+	cursor: pointer;
+	position: absolute;
+	top: 7px;
+	right: 5px;
+}
+
+#threadsContainer {
+	overflow-x: auto;
+	overflow-y: hidden;
+	clear: left;
+	float: left;
+	position: relative;
+	width: 100%;
+	background: url("../images/dashboard_bg.png");
+}
+
+#threadsScroll {
+	height: 100%;
+}
+
+.logo {
+	float: left;
+}
+
+.logo h1 {
+	 text-indent: -999em; 
+	 display: inline-block; 
+	 text-decoration: none; 
+	 height: 40px; 
+	 background-image: url("/images/logo_temp.jpg");
+}
+
+.tweet-panel {
+	float: left;
+}
+
+#tweetbox {
+	height: 30px;
+	overflow: hidden;
+	white-space: nowrap;
+	margin: 2px;
+	padding: 2px;
+	width:  541px;
+	outline: none; 
+	resize: none;
+}
+
+.thread {
+	width: 400px;
+	height: 100%;
+	background-color: #DFE1E4;
+	border-right: 1px solid #87898B;
+	margin-right: 2px;
+	position:relative;
+	float:left;
+	padding-top:31px;
+}
+
+.thread-header {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 31px;
+	overflow: hidden;
+	background-color: #87898B;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+.thread-buttons {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.refresh-button,
+.refreshing {
+	display: inline-block;
+	text-decoration:none;
+	text-indent: -999em;
+	overflow: hidden;
+	height: 19px;
+	padding-left: 19px;
+	vertical-align: middle;
+	white-space: nowrap;
+	background: url("../images/icon_refresh.png") 0 0 no-repeat;
+}
+
+.refreshing {
+	background: url("../images/refreshing.gif") 0 0 no-repeat;
+}
+
+.thread-icon {
+	float: left;
+	height: 28px;
+	padding-left: 28px;
+	margin: 1px 5px;
+	text-indent: -999em;
+	vertical-align: middle;
+	display: inline-block;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.thread-icon-qq {
+	background-image: url("/images/icon_qq.jpg");
+}
+
+.thread-icon-sina {
+	background-image: url("/images/icon_sina.png");
+}
+
+.thread-name {
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 12px;
+	padding-top: 3px;
+	margin-right: 75px;
+	overflow: hidden;
+	white-space: nowrap;
+	color: white;
+	text-shadow: 0 -1px rgba(0, 0, 0, .37);
+}
+
+.thread-name span {
+	display: block;
+	padding-top: 1px;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.thread-message-container {
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.message {
+	border-top: 1px solid white;
+	border-bottom: 1px solid #AEAEAE;
+	background: #EDEDED;
+	position: relative;
+	overflow: hidden;
+	padding: 4px 6px 5px 42px;
+}
+
+.message-avatar {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+
+.message-avatar img {
+	width: 30px;
+	height: 30px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.message-author {
+	font: 12px/1.5 tahoma,arial,宋体b8b\4f53;
+	font-weight: bold;
+	text-decoration: none;
+	line-height: 12px;
+	font-size: 12px;
+	color: #4E763E;
+	margin-bottom: .4em;
+}
+
+.message-time-via, 
+.message-time-via a{
+	font: 11px tahoma,arial,宋体b8b\4f53;
+	color: #999;
+	margin-bottom: .4em;
+	white-wrap: nowrap;
+}
+
+.message-body {
+	font: 12px/1.5 tahoma,arial,宋体b8b\4f53;
+}
+
+.message-body a,
+.message-body a:link,
+.message-body a:visited,
+.message-body a:hover {
+	color:#239CB9;
+}
