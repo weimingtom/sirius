@@ -1,0 +1,15 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  theme: on
+  twitter:
+    consumer_key: 'CIK2DhJkEI2i5mLDput47A'
+    consumer_secret: 'jSg0Sm0MbU2eO9w10pxWRam41FXfVSwEQEqON5v0N8'
+  sina:
+    consumer_key: '3829591131'    consumer_secret: '09ffb8df1ca16e54dbcdd47aad4bd725'    callback_url: 'http://sirius.caryyang.com/sina/authback'
+  qq:
+    consumer_key: '3550ae1bb6f74fefb480338cd8767ff9'
+    consumer_secret: '9995e63e39690b35f5ca3e8ad67c02d6'
+    callback_url: 'http://sirius.caryyang.com/qq/authback'

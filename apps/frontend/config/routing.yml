@@ -1,0 +1,25 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+login:
+  url: /login
+  param: { module: default, action: login }
+
+ajax:
+  url: /ajax/:module/:action
+  param: { method: ajax }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+auth:
+  url: /auth/:type/:action
+  param: { module: auth }
+
+default:
+  url:   /:module/:action/*
