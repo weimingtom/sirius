@@ -17,8 +17,9 @@ abstract class BaseUserForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'         => new sfWidgetFormInputHidden(),
       'email'      => new sfWidgetFormInputText(),
-      'name'       => new sfWidgetFormInputText(),
+      'full_name'  => new sfWidgetFormInputText(),
       'password'   => new sfWidgetFormInputText(),
+      'status'     => new sfWidgetFormChoice(array('choices' => array('unverify' => 'unverify', 'verified' => 'verified'))),
       'created_at' => new sfWidgetFormDateTime(),
       'updated_at' => new sfWidgetFormDateTime(),
     ));
@@ -26,8 +27,9 @@ abstract class BaseUserForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'         => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'email'      => new sfValidatorString(array('max_length' => 255)),
-      'name'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'full_name'  => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'password'   => new sfValidatorString(array('max_length' => 255)),
+      'status'     => new sfValidatorChoice(array('choices' => array('unverify' => 'unverify', 'verified' => 'verified'), 'required' => false)),
       'created_at' => new sfValidatorDateTime(),
       'updated_at' => new sfValidatorDateTime(),
     ));

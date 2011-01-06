@@ -1,0 +1,96 @@
+body {
+	background: #CEF8FF url(../images/html_bg.jpg) 0 0 repeat-x;	
+}
+
+#container {
+	width: 955px;
+	min-width: 955px;
+	margin: 10px auto 0;
+}
+
+#content {
+	clear: both;
+}
+
+
+.login, .signup{
+	display: inline-block;
+	background-color: white;
+	width: 705px;
+	margin-bottom: 10px;
+	float: left;
+	position: relative;
+}
+
+div.title {
+	background: url(../images/static_title_bg.png) 0 0 no-repeat;
+	height: 157px;
+	position: relative;
+}
+
+div.title h1 {
+	margin: 0;
+}
+
+div.title h1 a {
+	/*background: url(../images/static/static_logo.png) 0 0 no-repeat;*/
+	width: 206px;
+	height: 38px;
+	text-indent: -999em;
+	overflow: hidden;
+	position: absolute;
+	top: 27px;
+	left: 5px;
+}
+
+div.title h2 {
+	width: 128px;
+	height: 60px;
+	text-indent: -999em;
+	overflow: hidden;
+	position: absolute;
+	top: 77px;
+	left: 32px;
+}
+
+.login div.title h2 {
+	background: url(../images/login_title.png) 0 0 no-repeat;
+}
+
+.signup div.title h2 {
+	width: 200px;
+	background: url(../images/signup_title.png) 0 0 no-repeat;
+}
+
+.section {
+	width: 675px;
+	padding: 25px 15px 20px;
+	float: left;
+}
+
+#loginBox {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #EEE;
+	background-color: #F9F9F9;
+	padding: 8px 9px;
+}
+
+#loginBox #secureId {
+	border-left: 1px solid #EEE;
+	padding-left: 15px;
+	margin-left: 290px;
+	padding: 7px 10px 10px;
+}
+
+#secureId input[type="text"], #secureId input[type="password"] {
+	width: 200px;
+}
+
+.buttons {
+	margin-bottom: .5em;
+}
+
+.required {
+	color: #900;
+}
