@@ -21,7 +21,7 @@ class authbackAction extends sfAction {
 		// check fingerprint
 		$checkResult = Doctrine::getTable('Profile')
 				->createQuery()
-				->where('profile.type = ? AND profile.ProfileName = ?', 'sina', $token['user_id'])
+				->where('profile.type = ? AND profile.profile_name = ?', array('sina', $token['user_id']))
 				->fetchOne();
 		$this->forward404If($checkResult);
 		
@@ -31,7 +31,7 @@ class authbackAction extends sfAction {
 		$profile = new Profile();
 		$profile->setOwnerId($this->getUser()->getId());
 		$profile->setScreenName($user_profile['screen_name']);
-    $profile->setProfileName($token['user_id']);
+    	$profile->setProfileName($token['user_id']);
 		$profile->setType('sina');
 		$profile->setAvatarUrl($user_profile['profile_image_url']);
 		$profile->setConnectData(json_encode($tokens, true));

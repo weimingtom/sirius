@@ -3,15 +3,16 @@ User:
     Timestampable:
   columns:
     email:			{ type: string(255), notnull: true, unique: true }
-    name:			{ type: string(255) }
+    full_name:		{ type: string(255) }
     password:		{ type: string(255), notnull:true }
+    status:			{ type: enum, values: [unverify, verified], default: verified} #will change default value to unverifed
 
 Profile:
   actAs:
     Timestampable:
   columns:
     owner_id:		{ type: integer, notnull: true }
-    profile_name: { type: string(255), notnull: true }
+    profile_name: 	{ type: string(255), notnull: true }
     screen_name:	{ type: string(255), notnull: true }
     type: 			{ type: string(255), notnull: true } #Twitter, SinaWeibo, Renren, facebook, QZone, QQWeibo...
     avatar_url:		{ type: string(1023) }
@@ -47,3 +48,14 @@ Thread:
     User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Threads }
     Tab:			{ onDelete: CASCADE, local: tab_id, foreign: id, foreignAlias: Threads }
     Profile:		{ onDelete: CASCADE, local: profile_id, foreign: id, foreignAlias: Threads }
+
+Invite:
+  actAs:
+    Timestampable:
+  columns:
+    code:			{ type: string(100), notnull: true }
+    generater_id:	{ type: integer, notnull: false }
+    purpose:		{ type: string(100), notnull: true, default: 'register' }
+    is_used:		{ type: boolean, notnull: true, default: false}
+    used_by:		{ type: integer, notnull: false }
+    expire_date:	{ type: date, notnull: false }

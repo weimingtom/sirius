@@ -1,26 +1,18 @@
 User:
   admin_user:
     email:			getcary@gmail.com
-    name:			Cary Yang
+    full_name:		Cary Yang
     password: 		e10adc3949ba59abbe56e057f20f883e #123456
-
-Profile:
-  qq:
-    owner_id:		1
-    profile_name: caryyang
-    screen_name:	杨民
-    type:			qq
-    avatar_url:		
-    connect_data:	'{"oauth_token":"0554c8ce3796498fb67dbf77b1115f65","oauth_token_secret":"dd41f7bba4510bc96c2e5932768e0b8a","name":"caryyang"}'
-  sina:
-    owner_id:		1
-    profile_name: 1658389437
-    screen_name:	杨民Cary
-    type:			sina
-    avatar_url:		http://tp2.sinaimg.cn/1658389437/50/0/1
-    connect_data:	'{"oauth_token":"fa5cdda2e5f380ff4015b21d41126083","oauth_token_secret":"811bae4dfaf33ddeddf0e471c0be20e2","user_id":"1658389437"}'
+    status:			verfied
 
 Tab:
   default_tab:
     owner_id:		1
     title:			"default"
+
+Invite:
+  invite_test:
+    code:			abcdef
+    generater_id:	1
+    purpose:		register
+    is_used:		false

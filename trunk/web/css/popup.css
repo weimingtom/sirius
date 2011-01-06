@@ -1,0 +1,45 @@
+body {
+	background: url("../images/dashboard_bg.png");
+	width: 500px;
+	height: auto;
+}
+
+.sidebarTabs {
+	border-right: 1px solid #7B7E83;
+	width: 150px;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	float: left;
+}
+
+.sidebarTabs ul li {
+	margin-top: 5px;
+}
+
+.sidebarTabs li a {
+	display: block;
+	color: #272727;
+	margin-bottom: 1px;
+	padding-left: 9px;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 24px;
+	outline: none;
+	white-space: nowrap;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .36);
+}
+
+.sidebarTabs .active a, .sidebarTabs .tab a:active {
+	border-bottom: 1px solid #BCBEC4;
+	background-color: #537C9C;
+	color: white;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, .75);
+	margin-bottom: 0;
+	overflow: hidden;
+}
+
+.sidebarTabContent {
+	height: 100%;
+	margin-left: 151px;
+}

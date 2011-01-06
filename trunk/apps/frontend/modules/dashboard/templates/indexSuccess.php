@@ -27,6 +27,7 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
+		<a href="/profile/add" title="Add Profile" class="icon-16 add-profile-button">+</a>
 		<ul>
 		</ul>
 	</div>

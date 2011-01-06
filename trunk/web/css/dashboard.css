@@ -3,9 +3,6 @@
 	display: none;
 }
 
-a, a:hover, a:visited, a:focus {
-	text-decoration: none;
-}
 #header {
 	width: 100%;
 	height: 40px;
@@ -32,6 +29,18 @@ a, a:hover, a:visited, a:focus {
 	border-width: 0px 1px 0px 0px;
 	border-color: #A8A8A8;
 	background: #EEF3F8 url("../images/sidebar_bg.jpg") repeat-x left top;
+	position: relative;
+}
+
+#sidebar .add-profile-button {
+	position:absolute;
+	display:inline-block;
+	top:2px;
+	right:2px;
+	text-indent: -999em;
+	overflow: hidden;
+	vertical-align: middle;
+	background: url("../images/add.png") no-repeat left center;
 }
 
 #sidebar>ul {
@@ -46,7 +55,7 @@ li.list-profile {
 
 div.list-title {
 	display: inline-block;
-	padding-left: 18px;
+	padding-left: 22px;
 	margin: 4px 0 0;
 	width: 155px;
 	line-height: 16px; 
@@ -84,13 +93,6 @@ li.list-item {
 	background: url("../images/fold_14x14.png") no-repeat left center;	
 }
 
-.profile-sina {
-	background: url("../images/sina_12x12.png") no-repeat left center;
-}
-
-.profile-qq {
-	background: url("../images/qq_12x12.png") no-repeat left center;
-}
 
 .list-icon-home {
 	background: url("../images/home_12x12.png") no-repeat left center;

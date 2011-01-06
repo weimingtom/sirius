@@ -10,6 +10,10 @@ login:
   url: /login
   param: { module: default, action: login }
 
+signup:
+  url: /signup
+  param: { module: default, action: signup }
+
 ajax:
   url: /ajax/:module/:action
   param: { method: ajax }
@@ -17,9 +21,5 @@ ajax:
 default_index:
   url:   /:module
   param: { action: index }
-auth:
-  url: /auth/:type/:action
-  param: { module: auth }
-
 default:
   url:   /:module/:action/*
