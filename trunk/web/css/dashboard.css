@@ -37,10 +37,10 @@
 	display:inline-block;
 	top:2px;
 	right:2px;
-	text-indent: -999em;
 	overflow: hidden;
 	vertical-align: middle;
 	background: url("../images/add.png") no-repeat left center;
+	width: 0px;
 }
 
 #sidebar>ul {
@@ -198,6 +198,7 @@ li.list-item {
 	 display: inline-block; 
 	 text-decoration: none; 
 	 height: 40px; 
+	 margin: 0;
 	 background-image: url("/images/logo_temp.jpg");
 }
 

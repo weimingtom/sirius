@@ -10,10 +10,10 @@ class indexAction extends sfAction {
 			->where("owner_id = ?", $userId)
 			->fetchArray();
       
-    $this->tabs = Doctrine::getTable('Tab')
-      ->createQuery()
-      ->select("id, title")
-      ->where("owner_id = ?", $userId)
-      ->fetchArray();
+	    $this->tabs = Doctrine::getTable('Tab')
+	      ->createQuery()
+	      ->select("id, title")
+	      ->where("owner_id = ?", $userId)
+	      ->fetchArray();
   }      
 }

@@ -1,12 +1,14 @@
-<?php use_stylesheet("base.css") ?>
+<?php use_stylesheet('base.css') ?>
 <?php use_stylesheet("popup.css") ?>
 <script>
 $(function(){
 	$("#snList li").click(function(){
 		$("#snList li").removeClass('active');
 		$(this).addClass('active');
-		$("#snPage > iframe").attr('src', '/' + $(this).attr('type') + '/new');
+		$("#snPage iframe").attr('src', '/' + $(this).attr('type') + '/new');
 	});
+	
+	$("#snList li:first").click();
 });
 </script>
 <div id="snList" class="sidebarTabs">
@@ -21,6 +23,8 @@ $(function(){
 		<?php endforeach ?>
 	</ul>
 </div>
-<div id="snPage" class="tabContent">
-	<iframe src=""></iframe>
+<div id="snPage" class="sidebarTabContent">
+	<div class="tabContentWrapper">
+		<iframe src=""></iframe>
+	</div>
 </div>

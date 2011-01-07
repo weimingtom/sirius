@@ -24,11 +24,26 @@ class profileActions extends sfActions
    */
   public function executeAdd(sfWebRequest $request) {
   	$support_list = array(
-		"qq" => "腾讯微博",
 		"sina" => "新浪微博",
+		"qq" => "腾讯微博",
 	);
 	
 	$this->supportList = $support_list;
+  }
+  
+  /**
+   * Get a list of profiles
+   */
+  public function executeList(sfWebRequest $request) {
+  	$userId = $this->getUser()->getId();
+	
+  	$profiles = Doctrine::getTable('Profile')
+			->createQuery('')
+			->select("id, type, screen_name")
+			->where("owner_id = ?", $userId)
+			->fetchArray();
+	
+	return $this->renderText(json_encode($profiles));
   }
   
   

@@ -113,14 +113,33 @@
 			});
 		},
 		
-		addProfileToSidebar: function(profile) {
+		setProfiles: function(data) {
+			if (!$.isArray(data))
+				return false;
+			this.settings.profiles = data;
+			
+			var foldStatus = [];			
+			// clear all profiles in sidebar
+			$("#sidebar>ul li").each(function(index, item){
+				foldStatus[$(item).attr('profileId')] = $('.list-toggle-button', item).hasClass('button-unfold');
+			}).remove();
+			
+			for (var i = 0; i < data.length; ++i) {
+				isFold = foldStatus[data[i].id] | false;
+				this.addProfileToSidebar(data[i], isFold);
+			}
+		},
+		
+		addProfileToSidebar: function(profile, isFold) {
+			isFold = isFold | false;
+			
 			var sirius = this;
 			var sn = socialNetworkTypes;
 			var profileId = profile.id;
 			var profileType = profile.type;
 			var screenName = profile.screen_name;
 			
-			var profileEle = $("<li/>").addClass('list-profile');
+			var profileEle = $("<li/>").addClass('list-profile').attr('profileId', profileId);
 			$('<div/>').addClass('list-title').addClass('profile-'+profileType).text(screenName).appendTo(profileEle);
 			$('<a class="list-toggle-button button-fold" href="javascript:;">Toggle</a>').appendTo(profileEle);
 			
@@ -146,6 +165,12 @@
 							$('.thread-header', exist).animate({backgroundColor: 'red'}, 1000).animate({backgroundColor: bgColor}, 1000);
 						}
 					});
+			}
+			
+			if (isFold) {
+				$('.list-toggle-button', profileEle).removeClass('button-fold');
+				$('.list-toggle-button', profileEle).addClass('button-unfold');
+				$('ul', profileEle).hide();
 			}
 			
 			$("#sidebar>ul").append(profileEle);

@@ -10,18 +10,19 @@ class authbackAction extends sfAction {
 		
 		$oauth_verifier = $request->getParameter("oauth_verifier");
 		$this->forward404Unless($oauth_verifier);
-		
+
 		$to = new QQOAuth($consumer_key, $consumer_secret, $token['oauth_token'], $token['oauth_token_secret']);
 		$tokens = $to->getAccessToken($oauth_verifier);
 		$this->forward404Unless($tokens);
 		//TODO: check return string
+		$this->forward404Unless(count($tokens) > 1);
 		
 		$this->forward404Unless($this->getUser()->getId(), "User not found");
 
 		// check fingerprint
 		$checkResult = Doctrine::getTable('Profile')
         ->createQuery()
-        ->where('profile.type = ? AND profile.profile_name = ?', array('qq', $tokens['name']))
+        ->where('type = ? AND profile_name = ?', array('qq', $tokens['name']))
         ->fetchOne();
     	$this->forward404If($checkResult);
 		
@@ -37,6 +38,6 @@ class authbackAction extends sfAction {
 		$profile->setConnectData(json_encode($tokens, true));
 		$profile->save();
 		
-		return $this->renderText("{'result':'success'}");
+		return $this->renderText("<script>window.close();</script>");
 	}
 }
