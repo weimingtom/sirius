@@ -4,6 +4,19 @@ html {
 	font-family: Arial,Helvetica,sans-serif;
 }
 
+h1 {
+	color: black;
+	font-size: 18px;
+	margin-bottom: 0.15em;
+	text-shadow: rgba(255, 255, 255, 0.476563) 0px 1px 0px;
+}
+
+p {
+	font-size: 12px;
+	line-height: 14px;
+	margin: 0.1em 0px 0.5em;
+}
+
 input, select, button, textarea {
 	background-color: white;
 	color: #222;

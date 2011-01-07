@@ -1,6 +1,7 @@
 body {
-	background: url("../images/dashboard_bg.png");
+	background: url("../images/content-texture.png");
 	width: 500px;
+	height: 400px;
 	height: auto;
 }
 
@@ -40,6 +41,18 @@ body {
 }
 
 .sidebarTabContent {
-	height: 100%;
+	height: 300px;
 	margin-left: 151px;
+	padding: 4px 4px 10px;
+}
+
+.tabContentWrapper {
+	-webkit-box-shadow: #DDDEE0 0px 1px 0px, white 0px 1px 0px inset, #D4D5D6 0px 0px 0px 1px inset;
+	background-color: #DFE0E2;
+	border: 1px solid #72767B;
+	height: 100%;
+}
+
+.tabContentWrapper iframe {
+	margin: 10px;
 }

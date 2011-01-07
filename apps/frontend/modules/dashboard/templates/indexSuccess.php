@@ -1,12 +1,41 @@
+<?php use_stylesheet('base.css') ?>
 <?php use_stylesheet('dashboard.css') ?>
+<?php use_stylesheet('colorbox.css') ?>
 <?php use_javascript('socialNetworkTypes.js') ?>
 <?php use_javascript('sirius.js') ?>
+<?php use_javascript('jquery.colorbox-min.js')?>
 <script>
 $(function(){
   var options = options || {};
   options.profiles = <?php echo json_encode($sf_data->getRaw('profiles')); ?>;
   options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
   $.sirius.init(options);
+  
+  $('.add-profile-button').colorbox({
+  	href:"<?php echo url_for('/profile/add')?>",
+  	innerWidth: 510,
+  	innerHeight: 320,
+  	iframe: true,
+  	escKey: false,
+  	overlayClose: false,
+  	onClosed: function(){
+  		$.ajax({
+			type: 'GET',
+			url: '/profile/list',
+			dataType: 'json',
+			context: this,
+			success: function(data) {
+				$.sirius.setProfiles(data);
+			},
+			error: function() {
+				//alert("ERROR");
+			}
+		});
+  	},
+  }).hover(
+  	function(){$(this).animate({width: 56});}, 
+  	function(){$(this).animate({width: 0});}
+  );
 });
 </script>
 <div id="header">
@@ -27,7 +56,7 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="/profile/add" title="Add Profile" class="icon-16 add-profile-button">+</a>
+		<a href="/profile/add" title="添加账户" class="icon-16 add-profile-button">添加账户</a>
 		<ul>
 		</ul>
 	</div>

@@ -18,7 +18,7 @@ class loginAction extends sfAction {
 			// check db
 			$user = Doctrine::getTable('User')
 				->createQuery()
-				->where('user.email = ?', $email)
+				->where('email = ?', $email)
 				->fetchOne();
 				
 			if (!$user) {

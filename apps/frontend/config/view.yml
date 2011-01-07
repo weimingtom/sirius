@@ -12,7 +12,7 @@ default:
     language:     en
     #robots:       index, follow
 
-  stylesheets:    [reset.css, jquery-ui-1.8.6.css, main.css]
+  stylesheets:    [reset.css, jquery-ui-1.8.6.css, base.css]
 
   javascripts:    [jquery-1.4.4.min.js, jquery-ui-1.8.6.min.js]
 

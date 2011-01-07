@@ -19,7 +19,7 @@ class signupAction extends sfAction {
 				} else {
 					$invite = Doctrine_Core::getTable('Invite')
 						->createQuery()
-						->where('invite.purpose = "register" AND invite.is_used = false AND code = ?', $request->getParameter('invite_code'))
+						->where('purpose = "register" AND is_used = false AND code = ?', $request->getParameter('invite_code'))
 						->fetchOne();
 					if ($invite == NULL) {
 						$this->signUpErrors_invite_code = "Invite code is invalid!";
