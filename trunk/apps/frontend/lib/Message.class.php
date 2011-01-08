@@ -11,10 +11,17 @@ class Message {
 		$this->user = new MessageUser;	
 	}
 	
-	public $id;
-	public $created_at;
-	public $source;
-	public $text;
-	public $truncated;
+	public $id = "";
+	public $created_at = "";
+	public $source = "";
+	public $text = "";
 	public $user;
+	public $truncated = "";
+	
+	public $picture_thumbnail = "";
+	public $picture_original = "";
+	//public $video_thumbnail;
+	//public $video_original;
+	
+	public $retweet_origin = null;
 }

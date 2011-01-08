@@ -70,7 +70,7 @@ class QQClient
      */ 
     function mentions( $page = 1 , $count = 20 ) 
     { 
-        return $this->request_with_pager( 'http://open.t.qq.com/api/statuses/mentions' , $page , $count ); 
+        return $this->request_with_pager( 'http://open.t.qq.com/api/statuses/mentions_timeline' , $page , $count ); 
     } 
 
 

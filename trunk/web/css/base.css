@@ -227,6 +227,16 @@ a, a:hover, a:visited, a:focus {
 	text-decoration: none;
 }
 
+.icon-12, .icon-14, .icon-16, .icon-18, .icon-19, .icon-20 {
+	display: inline-block;
+	text-decoration: none;
+	text-indent: -999em;
+	overflow: hidden;
+	vertical-align: middle;
+	outline: none;
+	white-space: nowrap;
+}
+
 .icon-12 {
 	height: 12px;
 	padding-left: 12px;
@@ -245,6 +255,11 @@ a, a:hover, a:visited, a:focus {
 .icon-18 {
 	height: 18px;
 	padding-left: 18px;
+}
+
+.icon-19 {
+	height: 19px;
+	padding-left: 19px;
 }
 
 .icon-20 {

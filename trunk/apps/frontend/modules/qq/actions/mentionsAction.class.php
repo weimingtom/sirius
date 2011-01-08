@@ -1,6 +1,6 @@
 <?php
 
-class homeAction extends QQAction {
+class mentionsAction extends QQAction {
 	public function execute($request) {
 		$consumer_key = sfConfig::get('app_qq_consumer_key');
 	    $consumer_secret = sfConfig::get('app_qq_consumer_secret');
@@ -16,7 +16,7 @@ class homeAction extends QQAction {
 		
 		$connectData = json_decode($profile->getConnectData(), true);
 		$weibo = new QQClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
-		$data  = $weibo->home_timeline();
+		$data  = $weibo->mentions();
 		
 		$data = $data['data']['info'];
 		if ($request->hasParameter('since_id')) {

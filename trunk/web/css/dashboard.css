@@ -41,6 +41,14 @@
 	vertical-align: middle;
 	background: url("../images/add.png") no-repeat left center;
 	width: 0px;
+	text-indent: 0;
+}
+
+#sidebar .add-profile-button,
+#sidebar .add-profile-button:hover,
+#sidebar .add-profile-button:active,
+#sidebar .add-profile-button:visited {
+	color: black;
 }
 
 #sidebar>ul {
@@ -161,18 +169,10 @@ li.list-item {
 
 .tab .tab-delete-button {
 	background-image: url("../images/icon_close.png");
-	padding-left: 13px;
-	height: 13px;
-	display: inline-block;
-	text-decoration: none;
-	text-indent: -999em;
-	overflow: hidden;
-	vertical-align: middle;
-	outline: none;
 	cursor: pointer;
 	position: absolute;
-	top: 7px;
-	right: 5px;
+	top: 4px;
+	right: 3px;
 }
 
 #threadsContainer {
@@ -234,9 +234,10 @@ li.list-item {
 	left: 0px;
 	width: 100%;
 	height: 31px;
-	overflow: hidden;
-	background-color: #87898B;
+	background-color: #527B9B;
 	font-family: Arial,Helvetica,sans-serif;
+	background: url("../images/threadhead_bg.png") 0 0 repeat-x;
+	z-index: 5;
 }
 
 .thread-buttons {
@@ -245,17 +246,12 @@ li.list-item {
 	right: 5px;
 }
 
-.refresh-button,
-.refreshing {
-	display: inline-block;
-	text-decoration:none;
-	text-indent: -999em;
-	overflow: hidden;
-	height: 19px;
-	padding-left: 19px;
-	vertical-align: middle;
-	white-space: nowrap;
+.refresh-button {
 	background: url("../images/icon_refresh.png") 0 0 no-repeat;
+}
+
+.close-button {
+	background: url("../images/icon_close.png") 0 0 no-repeat;
 }
 
 .refreshing {
@@ -295,6 +291,27 @@ li.list-item {
 	text-shadow: 0 -1px rgba(0, 0, 0, .37);
 }
 
+.thread .thread-header .thread-name span.new-count {
+	background-color: #BD2F1F;
+	color: white;
+	text-shadow: 0 -1px 1px black;
+	display: none;
+	padding: 1px 4px;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: center;
+	position: absolute;
+	top: 20px;
+	left: 18px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	-moz-box-shadow: 0 2px 3px black;
+	-webkit-box-shadow: 0 2px 3px black;
+	box-shadow: 0 2px 3px black;
+	border-radius: 10px 10px;
+}
+
 .thread-name span {
 	display: block;
 	padding-top: 1px;
@@ -315,6 +332,10 @@ li.list-item {
 	position: relative;
 	overflow: hidden;
 	padding: 4px 6px 5px 42px;
+}
+
+.message.submessage {
+	border-bottom: 0px;
 }
 
 .message-avatar {
