@@ -1,3 +1,36 @@
+$(function() {
+	var i = document.createElement('p');
+	i.style.width = '100%';
+	
+	i.style.height = '200px';
+	
+	var o = document.createElement('div');
+	o.style.position = 'absolute';
+	o.style.top = '0px';
+	o.style.left = '0px';
+	o.style.visibility =
+	'hidden';
+	o.style.width = '200px';
+	o.style.height = '150px';
+	o.style.overflow = 'hidden';
+	o.appendChild(i);
+	
+	document.body.appendChild(o);
+	var w1 = i.offsetWidth;
+	var
+	h1 = i.offsetHeight;
+	o.style.overflow = 'scroll';
+	var w2 = i.offsetWidth;
+	var h2 = i.offsetHeight;
+	if (w1 == w2) w2 = o.clientWidth;
+	if (h1 == h2) h2 = o.clientWidth;
+	
+	document.body.removeChild(o);
+	
+	window.scrollbarWidth = w1-w2;
+	window.scrollbarHeight = h1-h2;
+});
+
 (function($) {
 	var Sirius = Sirius ||
 	function() {
@@ -25,7 +58,7 @@
 				return;
 			this.initialized = true;
 		},
-		
+				
 		_onResize: function() {
 			if ($('#sidebar').is(":visible")) {
 				$($.sirius.settings.dashboardElement).width($($.sirius.settings.containerElement).width() - $('#sidebar').outerWidth(true));
@@ -43,6 +76,9 @@
 			$($.sirius.settings.dashboardElement).height($($.sirius.settings.containerElement).height());
 			$("#threadsContainer").height($($.sirius.settings.dashboardElement).height() - $("#dashboardTabs").height());
 			$('#threadsScroll').height($("#threadsContainer").height() - $.sirius.settings.threadHeadHeight );
+			if ($('#threadsScroll').width() > $("#threadsContainer").width()) {
+				$('#threadsScroll').height($('#threadsScroll').height() - window.scrollbarHeight);
+			} 
 		},
 		
 		_initDashboard: function() {
@@ -93,7 +129,7 @@
 					.html(tabs[i].title)
 					.appendTo(tabElement);
 				$("<a href='javascript:;' />")
-					.addClass("tab-delete-button")
+					.addClass("tab-delete-button icon-19")
 					.text("X")
 					.appendTo(tabElement);
 				$("#dashboardTabs").append(tabElement);
@@ -161,8 +197,8 @@
 							sirius.serverAddThread(sirius.settings.activeTabId, profileId, $(this).attr('type'), $(this).attr('title'));
 						} else {
 							$('#threadsContainer').animate({scrollLeft: $(exist).position().left}, "slow");
-							bgColor = $('.thread-header', exist).css('backgroundColor');
-							$('.thread-header', exist).animate({backgroundColor: 'red'}, 1000).animate({backgroundColor: bgColor}, 1000);
+							bgColor = $('.message', exist).css('backgroundColor');
+							$('.message', exist).animate({backgroundColor: 'red'}, 1000).animate({backgroundColor: bgColor}, 1000);
 						}
 					});
 			}
@@ -244,36 +280,56 @@
 			});
 		},
 		
+		serverRemoveThread: function(threadId) {
+			$.ajax({
+				type: 'GET',
+				url: '/thread/delete',
+				data: {
+					threadId: threadId,
+				},
+				dataType: 'json',
+				context: this,
+				success: function (data) {
+					this.removeThread(threadId);
+				}
+			});
+		},
+		
 		addThread: function(threadInfo) {
 			if (!(dashboard = this.dashboard))
 				return false;
 
 			thread = $("<div class='thread'><div class='thread-header' /><div class='thread-message-container'/></div>")
-			.attr('profileId', threadInfo.profile_id)
-			.attr('profileType', threadInfo.profile_type)
-			.attr('threadType', threadInfo.type)
-			.attr('threadId', threadInfo.id)
-			.attr('threadParameters', threadInfo.parameters);
+				.attr('profileId', threadInfo.profile_id)
+				.attr('profileType', threadInfo.profile_type)
+				.attr('threadType', threadInfo.type)
+				.attr('threadId', threadInfo.id)
+				.attr('threadParameters', threadInfo.parameters);
 
 			threadHeader = $('.thread-header', thread)
-			.append('<span class="thread-icon" />')
-			.append('<div class="thread-name" />')
-			.append('<div class="thread-buttons"/>');
+				.append('<span class="thread-icon" />')
+				.append('<div class="thread-name" />')
+				.append('<div class="thread-buttons"/>');
 
 			$('.thread-icon', threadHeader).addClass('thread-icon-' + threadInfo.profile_type);
-			$('.thread-name', threadHeader).html(threadInfo.title + "<span>(" + threadInfo.profile_name + ")</span>");
+			$('.thread-name', threadHeader).html('<span class="new-count"></span>' + threadInfo.title + "<span>(" + threadInfo.profile_name + ")</span>");
 			$('.thread-buttons', threadHeader)
-			.append('<a href="#" class="refresh-button" title="刷新">刷新</a>')
-			.append('<span class="refreshing" title="正在刷新...">正在刷新...</span>');
+				.append('<a href="#" class="refresh-button icon-19" title="刷新">刷新</a>')
+				.append('<span class="refreshing icon-19" title="正在刷新...">正在刷新...</span>')
+				.append('<a href="#" class="close-button icon-19" title="删除此栏">删除此栏</a>');
 
 			$('#threadsScroll',this.dashboard).append(thread);
-			this.threads.push(thread[0]);
 
 			// bind event
 			thisObject = this;
 			$('.refresh-button', thread).click( function() {
 				thisObject.refreshThread($(this).parents('.thread'));
 			});
+			
+			$('.close-button', thread).click(function(){
+				thisObject.serverRemoveThread(threadInfo.id);
+			});
+			
 			// set style
 			$('.thread-height', thread).height(this.settings.threadHeadHeight);
 			$('.refreshing', thread).hide();
@@ -284,7 +340,17 @@
 			// refresh now
 			this._onResize();
 		},
+		
+		removeThread: function(threadId) {
+			$('.thread[threadId=' + threadId +']').remove();
+			
+			// refresh now
+			this._onResize();
+		},
+		
 		refreshThread: function(thread) {
+			$('.new-count', thread).text('').hide();
+			
 			profileId = $(thread).attr('profileId');
 			profileType = $(thread).attr('profileType');
 			threadType = $(thread).attr('threadType');
@@ -306,26 +372,23 @@
 				url: requestUrl,
 				data: requestData,
 				dataType: 'json',
-				context: {threadId: threadId},
+				context: {sirius:this, threadId: threadId, profileId: profileId},
 				success: function(data) {
 					tempContainer = $('<div/>');
 					lastMessageId = false;
 					profileId = this.profileId;
+					sirius = this.sirius;
 					$(data).each( function(i, message) {
 						lastMessageId = lastMessageId || message.id;
-						var avatar = $('<a href="javascript:;"></a>').addClass('message-avatar').append("<img src='" + message.user.avatar + "' />")
-							.attr('title', message.user.screen_name);
-						var author = $('<a href="javascript:;"></a>').addClass('message-author').text(message.user.screen_name);
-						var time_source = $('<p></p>').addClass('message-time-via').html(message.created_at + ' via ' + message.source);
-						var text = $('<p/>').addClass('message-body').html(message.text);
-						$('<div class="message"></div>')
-						.append(avatar)
-						.append(author)
-						.append(time_source)
-						.append(text)
-						.appendTo(tempContainer);
+						
+						messageNode = sirius.packMessage(message);
+						if (message.retweet_origin != null) {
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin)).addClass('submessage'));
+						}
+						$(messageNode).appendTo(tempContainer);
 					});
 					if (tempContainer.children().size() > 0) {
+						$('.new-count', thread).text(tempContainer.children().size()).show();
 						$('div[threadId=' + this.threadId + ']').attr('lastMessageId', lastMessageId);
 						tempContainer.children().prependTo($('div[threadId=' + this.threadId + '] .thread-message-container'));
 					}
@@ -339,9 +402,34 @@
 				}
 			});
 		},
+		
+		packMessage: function(message) {
+			var avatar = $('<a href="javascript:;"></a>').addClass('message-avatar').append("<img src='" + message.user.avatar + "' />")
+				.attr('title', message.user.screen_name);
+			var author = $('<a href="javascript:;"></a>').addClass('message-author').text(message.user.screen_name);
+			var time_source = $('<p></p>').addClass('message-time-via').html(message.created_at + (message.source != '' ? ' via ' + message.source : ''));
+			$('a', time_source).attr('target', '_blank');
+			
+			var text = $('<p/>').addClass('message-body').html(message.text);
+			
+			var node = $('<div class="message"></div>').append(avatar).append(author).append(time_source).append(text);
+			
+			if (message.picture_thumbnail != "") {
+				$('<a/>')
+					.attr('href', message.picture_original)
+					.append($('<img/>').attr('src', message.picture_thumbnail))
+					.appendTo(node)
+					.colorbox({
+						maxWidth: '80%',
+						maxHeight: '80%',
+						photo: true,
+					});
+			}
+			return node;			
+		},
+		
 		removeAllThreads: function() {
-			$(this.threads).remove();
-			this.threads = [];
+			$('.thread', this.settings.dashboardElement).remove();
 		},
 	});
 
