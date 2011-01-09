@@ -6,57 +6,118 @@
 <?php use_javascript('jquery.colorbox-min.js')?>
 <script>
 $(function(){
-  var options = options || {};
-  options.profiles = <?php echo json_encode($sf_data->getRaw('profiles')); ?>;
-  options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
-  $.sirius.init(options);
-  
-  $('.add-profile-button').colorbox({
-  	href:"<?php echo url_for('/profile/add')?>",
-  	innerWidth: 510,
-  	innerHeight: 320,
-  	iframe: true,
-  	escKey: false,
-  	overlayClose: false,
-  	onClosed: function(){
-  		$.ajax({
-			type: 'GET',
-			url: '/profile/list',
-			dataType: 'json',
-			context: this,
-			success: function(data) {
-				$.sirius.setProfiles(data);
-			},
-			error: function() {
-				//alert("ERROR");
+	var options = options || {};
+	options.profiles = <?php echo json_encode($sf_data->getRaw('profiles')); ?>;
+	options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
+	$.sirius.init(options);
+	
+	$('.add-profile-button').colorbox({
+		href:"<?php echo url_for('/profile/add')?>",
+		innerWidth: 510,
+		innerHeight: 320,
+		iframe: true,
+		escKey: false,
+		overlayClose: false,
+		onClosed: function(){
+			$.ajax({
+				type: 'GET',
+				url: '/profile/list',
+				dataType: 'json',
+				context: this,
+				success: function(data) {
+					$.sirius.setProfiles(data);
+				},
+				error: function() {
+					//alert("ERROR");
+				}
+			});
+		}
+	})
+	
+	$('.sidebar-add-profile').hover(
+		function(){$(this).animate({width: 56});}, 
+		function(){$(this).animate({width: 0});}
+	);
+	
+	$('.selectProfiles').hover(
+		function(){$(this).addClass('activeExpanded').css('height', 'auto');},
+		function(){$(this).removeClass('activeExpanded').css('height', '');}
+	);
+	
+	$('.profileContainer ._controls ._selectAll').click(function(){
+		$('.profileSelector .profileAvatar').addClass('selected');
+	});
+	$('.profileContainer ._controls ._selectNone').click(function(){
+		$('.profileSelector .profileAvatar.selected').removeClass('selected');
+	});
+	
+	$('._messageArea .ac_input').focusin(function(){
+		$('.messageComposeBox').removeClass('collapsed').addClass('expanded');
+		$('._messageArea ._pretext').hide();
+		$('.selectProfiles').outerHeight($('.messageInfoBox').outerHeight());
+		$('.profileSelector').outerHeight($('.selectProfiles').height() - $('._controls').outerHeight());	
+	}).keyup(function(){
+		$('._charCounter ._counter').text(140 - $(this).val().length);
+	});
+
+	$(document).click(function(event){
+		if ($('.messageComposeBox').hasClass('expanded') && !$.contains($('.tweet-panel')[0], event.target)) {
+			$('.messageComposeBox').removeClass('expanded').addClass('collapsed');
+			if ($('._messageArea .ac_input').val() == "") {
+				$('._messageArea ._pretext').show(); 
 			}
-		});
-  	},
-  }).hover(
-  	function(){$(this).animate({width: 56});}, 
-  	function(){$(this).animate({width: 0});}
-  );
+			$('.selectProfiles').height('');
+			$('.profileSelector').height('');
+		}
+	});
+
 });
 </script>
 <div id="header">
 	<div class="logo">
 		<h1>Sirius - Manage your relations</h1>
 	</div>
-	<div class="tweet-panel">
-		<textarea id="tweetbox"></textarea>
-		<ul class="tweet-destination hideMe">
-			<li class="tweet-twitter ">
-				<img class="tweet-user-icon" src="http://a3.twimg.com/profile_images/64812095/MM_normal.png" />
-			</li>
-			<li class="tweet-sina tweet-destination-selected">
-				<img class="tweet-user-icon" src="http://a3.twimg.com/profile_images/64812095/MM_normal.png" />
-			</li>
-		</ul>
+	<div class="tweet-panel" id="messageBoxContainer">
+	<div style="clear:both;"></div>
+		<div class="messageComposeBox collapsed">
+			<div class="messageInfoBox">
+				<div class="messageInfo _messageArea">
+					<div class="messageBoxMessageWrapper">
+						<div class="messageBoxMessageContainer _messageContainer ui-droppable">
+							<textarea class="messageBoxMessage ac_input" id="messageBoxMessage" name="message[message]" autocomplete="off"></textarea>
+							<span class="_pretext pretext" style="display: block; ">撰写新消息...</span>
+						</div>
+						<div class="_charCounter charCountBox rb-a-3">
+							<span class="_counter btn-display">140</span>
+						</div>
+					</div>
+					<div id="messageTools" class="_addLinkBlock _messageTools messageTools trim">
+						<div class="messageMedia">
+						</div>
+						<div id="saveMessageButtons" class="_saveMessageButtons saveMessageButtons">
+							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" onclick="createMessage(); return false;" title="Send Now (Shift+Enter)">发布</a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="selectProfiles">
+				<div class="profileContainer">
+					<div class="profileSelector" style="height: auto;" ></div>				
+					<div class="_controls controls">
+						<div class="btns-right">
+							<a href="#" class="btn-spl add" title="添加账户"><span class="icon-13 add-profile-button"></span></a>
+						</div>
+						<a href="#" class="_selectAll btn-spl">选择全部</a>
+						<a href="#" class="_selectNone btn-spl">取消选择</a>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="/profile/add" title="添加账户" class="icon-16 add-profile-button">添加账户</a>
+		<a href="/profile/add" title="添加账户" class="icon-13 add-profile-button sidebar-add-profile">添加账户</a>
 		<ul>
 		</ul>
 	</div>

@@ -3,9 +3,20 @@
 	display: none;
 }
 
+.add-profile-button {
+	background: url("../images/icon_plus.png") no-repeat left center;
+}
+
+body {
+	min-height: 1000px;
+	overflow: hidden;
+}
+
 #header {
 	width: 100%;
+	min-width: 1000px;
 	height: 40px;
+	background: url('../images/head_bg.png') 0 0 repeat-x;
 }
 
 #container {
@@ -32,14 +43,14 @@
 	position: relative;
 }
 
-#sidebar .add-profile-button {
+#sidebar .sidebar-add-profile {
+	font-size: 13px;
 	position:absolute;
 	display:inline-block;
-	top:2px;
+	top:1px;
 	right:2px;
 	overflow: hidden;
 	vertical-align: middle;
-	background: url("../images/add.png") no-repeat left center;
 	width: 0px;
 	text-indent: 0;
 }
@@ -199,6 +210,7 @@ li.list-item {
 	 text-decoration: none; 
 	 height: 40px; 
 	 margin: 0;
+	 width: 50px;
 	 background-image: url("/images/logo_temp.jpg");
 }
 
@@ -386,4 +398,326 @@ li.list-item {
 .message-body a:visited,
 .message-body a:hover {
 	color:#239CB9;
+}
+
+#messageBoxContainer .expanded, #messageBoxContainer .collapsed {
+	position: absolute;
+	z-index: 99;
+	width: 910px;
+} 
+
+.messageComposeBox .messageInfoBox, .messageComposeBox .messageInfo {
+	float: left;
+}
+
+#messageBoxContainer .expanded .messageInfoBox {
+	padding-bottom: 5px;
+	position: relative;
+	z-index: 2;
+	-moz-box-shadow: -3px 3px 10px -3px black;
+	-webkit-box-shadow: -3px 3px 10px -3px black;
+	box-shadow: -3px 3px 10px -3px black;
+	margin-top: -1px;
+}
+
+.messageComposeBox .messageInfo {
+	width: 546px;
+	background-color: white;
+	position: relative;
+	-moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, .4),0 1px 0 #EEE;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .4),0 1px 0 #EEE;
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, .4),0 1px 0 #EEE;
+	border: 1px solid #AEB1B8;
+	margin: 5px 0 0 4px;
+}
+
+#messageBoxContainer .collapsed .messageInfo {
+	border: 1px solid #A3A7AE;
+}
+
+#messageBoxContainer .expanded .messageInfoBox {
+	padding-bottom: 5px;
+	position: relative;
+	z-index: 2;
+	-moz-box-shadow: -3px 3px 10px -3px black;
+	-webkit-box-shadow: -3px 3px 10px -3px black;
+	box-shadow: -3px 3px 10px -3px black;
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #73767A;
+	background-color: #DFE0E2;
+}
+
+.messageComposeBox .messageBoxMessageWrapper {
+	position: relative;
+}
+
+.messageComposeBox .messageBoxMessageContainer {
+	padding: 2px 0 2px;
+}
+
+#messageBoxContainer .collapsed .messageBoxMessageContainer {
+	height: 19px;
+	padding: 5px 0 4px;
+	overflow: hidden;
+	float: left;
+}
+
+.messageComposeBox .messageBoxMessage {
+	border: none;
+	background: none;
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 12px;
+	resize: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	width: 541px;
+	height: 58px;
+	padding: 0 0 0 4px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#messageBoxContainer .collapsed .messageBoxMessageContainer #messageBoxMessage {
+	min-height: inherit;
+	height: 18px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+#messageBoxContainer .pretext {
+	color: #BBB;
+	position: absolute;
+	top: 6px;
+	left: 7px;
+}
+
+#messageBoxContainer .collapsed .charCountBox,
+#messageBoxContainer .collapsed .sendLater,
+#messageBoxContainer .collapsed .messageTools .draft,
+#messageBoxContainer .collapsed .messageTools .messageMedia {
+	display: none;
+}
+
+.messageInfo .charCountBox {
+	background: white;
+	height: 22px;
+	padding: 2px 2px 0 2px;
+	position: absolute;
+	bottom: 0;
+	right: 18px;
+}
+
+.btn-display {
+	display: inline-block;
+	background: #F2F2F4;
+	color: #AFB1B3;
+	border: 1px solid #CCC;
+	text-shadow: 0 1px 0 white;
+	padding: 1px 5px 2px;
+	text-align: center;
+	font-weight: bold;
+	-moz-box-shadow: 0 -1px 2px #DDD,inset 0 0 0 1px white;
+	-webkit-box-shadow: 0 -1px 2px #DDD,inset 0 0 0 1px white;
+	box-shadow: 0 -1px 2px #DDD,inset 0 0 0 1px white;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border-radius: 3px;
+}
+
+.messageTools {
+	background: #E9EAEC;
+	border-top: 1px solid #CCC;
+	height: 33px;
+}
+
+#messageBoxContainer .collapsed .messageTools {
+	border-top: none;
+	background: none;
+	height: 28px;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.messageTools .messageMedia {
+	float: left;
+}
+
+.messageTools .saveMessageButtons {
+	border-left: 1px solid #CCC;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+#messageBoxContainer .collapsed .messageTools #saveMessageButtons {
+	border: none;
+	padding: 1px;
+}
+
+.messageTools .section {
+	border-width: 1px;
+	border-style: solid;
+	border-color: #FBFBFB #CCC #CFD0D2 white;
+	height: 28px;
+	padding: 3px 5px 0;
+	line-height: ;
+	float: left;
+}
+
+#messageBoxContainer .collapsed .messageTools .section {
+	border: none;
+	background: none;
+	height: 23px;
+	padding: 2px 1px;
+}
+
+.messageInfoBox, .selectProfiles {
+	float: left;
+}
+
+.selectProfiles {
+	width: 355px;
+	overflow: hidden;
+}
+
+#messageBoxContainer .collapsed .selectProfiles {
+	height: 40px;
+	overflow: hidden;
+}
+
+.selectProfiles .profileContainer {
+	padding: 0 0 0 5px;
+}
+
+#messageBoxContainer .collapsed .selectProfiles.activeExpanded {
+	border-bottom: 1px solid #73767A;
+	background-color: #DFE0E2;
+	background-image: none;
+	-moz-box-shadow: 0 0 10px black;
+	-webkit-box-shadow: 0 0 10px black;
+	box-shadow: 0 0 10px black;
+}
+
+#messageBoxContainer .expanded .messageInfoBox,
+#messageBoxContainer .expanded .selectProfiles {
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #73767A;
+	background-color: #DFE0E2;
+	margin-top: -1px;
+}
+
+#messageBoxContainer .expanded .selectProfiles {
+	position: relative;
+	z-index: 1;
+	-moz-box-shadow: 0 0 10px black;
+	-webkit-box-shadow: 0 0 10px black;
+	box-shadow: 0 0 10px black;
+}
+
+
+.selectProfiles .controls {
+	padding: 4px 0;
+}
+
+.selectProfiles .controls .btn-spl {
+	margin-right: 4px;
+}
+
+.selectProfiles .controls .btns-right {
+	float: right;
+}
+
+.selectProfiles .controls .add {
+	padding: 2px 6px 4px;
+}
+
+.profileSelector {
+	padding: 4px 0 0;
+	display: inline-block;
+	clear: both;
+}
+
+.profileSelector .profileAvatar {
+	border-bottom: 1px solid #F2F3F4;
+	position: relative;
+	float: left;
+	margin: 1px 5px 3px 0;
+	outline: none;
+}
+
+.profileSelector a.selected, .profileSelector a:active, .profileSelector a.selected:hover {
+	border: 2px solid #0485CC;
+	width: 26px;
+	height: 26px;
+	margin-bottom: 4px;
+	-moz-box-shadow: 0 0 5px 0 rgba(0, 108, 255, .7);
+	-webkit-box-shadow: 0 0 5px 0 rgba(0, 108, 255, .7);
+	box-shadow: 0 0 5px 0 rgba(0, 108, 255, .7);
+}
+
+.profileSelector a.selected .networkAvatarWrapper,
+.profileSelector a:active .networkAvatarWrapper,
+.profileSelector a.selected:hover .networkAvatarWrapper {
+	width: 26px;
+	height: 26px;
+}
+
+.profileSelector a.selected .networkAvatar,
+.profileSelector a:active .networkAvatar,
+.profileSelector a.selected:hover .networkAvatar {
+	position: absolute;
+	top: -2px;
+	left: -2px;
+}
+
+.profileSelector .profileAvatar .networkAvatarWrapper{
+	display: inline-block;
+	overflow: hidden;
+	width: 30px;
+	height: 30px;
+	position: relative;
+}
+
+.profileSelector .profileAvatar .networkAvatar {
+	width: 30px;
+	height: 30px;
+	float: left;
+}
+
+.profileSelector .profileAvatar .checkmark {
+	display: none;
+	position: absolute;
+	top: 10px;
+	left: 8px;
+	z-index: 1;
+	background: url(../images/icon_checked.png) 0 0 no-repeat;
+}
+
+.profileSelector a.selected .checkmark {
+	display: block;
+}
+
+.profileSelector .profileAvatar .icon-13 {
+	position: absolute;
+	top: -4px;
+	left: 20px;
+}
+
+.profileSelector a.selected .icon-13 ,
+.profileSelector a:active .icon-13 ,
+.profileSelector a.selected:hover .icon-13 s{
+	position: absolute;
+	top: -6px;
+	left: 18px;
+}
+
+.icon-13.qq {
+	background: url(../images/icon_13x13/qq.png) 0 0 no-repeat;
+}
+
+.icon-13.sina {
+	background: url(../images/icon_13x13/sina.png) 0 0 no-repeat;
 }
