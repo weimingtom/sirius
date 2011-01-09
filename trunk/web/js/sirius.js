@@ -350,6 +350,7 @@ $(function() {
 		
 		refreshThread: function(thread) {
 			$('.new-count', thread).text('').hide();
+			$('.new-message', thread).remove();
 			
 			profileId = $(thread).attr('profileId');
 			profileType = $(thread).attr('profileType');
@@ -382,6 +383,7 @@ $(function() {
 						lastMessageId = lastMessageId || message.id;
 						
 						messageNode = sirius.packMessage(message);
+						$('.message-author', messageNode).after('<span class="icon-13 new-message"></span>');
 						if (message.retweet_origin != null) {
 							$(messageNode).append( $(sirius.packMessage(message.retweet_origin)).addClass('submessage'));
 						}

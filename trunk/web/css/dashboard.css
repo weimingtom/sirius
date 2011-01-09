@@ -334,6 +334,13 @@ li.list-item {
 	padding: 4px 6px 5px 42px;
 }
 
+.new-message {
+	position: absolute;
+	top: 6px;
+	right: 5px;
+	background: url(../images/icon_new_message.png) 0 0 no-repeat;
+}
+
 .message.submessage {
 	border-bottom: 0px;
 }
