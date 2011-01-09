@@ -85,9 +85,11 @@ class QQClient
     { 
         //  http://open.t.qq.com/api/statuses/update.json 
         $param = array(); 
-        $param['status'] = $text; 
+        $param['content'] = $text; 
+        $param['Format'] = 'json';
 
-        return $this->oauth->post( 'http://open.t.qq.com/api/statuses/update.json' , $param ); 
+
+        return $this->oauth->post( 'http://open.t.qq.com/api/t/add' , $param ); 
     }
     
     /** 

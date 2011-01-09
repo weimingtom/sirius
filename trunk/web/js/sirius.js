@@ -188,6 +188,7 @@ $(function() {
 				.append('<span class="checkmark icon-19"></span>')
 				.append(typeNode)
 				.attr('profileId', profileId)
+				.attr('profileType', profileType)
 				.attr('title', screenName)
 				.click(function(){
 					$(this).toggleClass('selected');
@@ -296,6 +297,7 @@ $(function() {
 		},
 		
 		serverAddThread: function(tabId, profileId, type, title) {
+			this.statusMessage("正在添加...", "info");
 			$.ajax({
 				type: 'GET',
 				url: '/thread/add',
@@ -309,11 +311,13 @@ $(function() {
 				context: this,
 				success: function (data) {
 					this.addThread(data);
+					this.statusMessage("添加成功", "success");
 				}
 			});
 		},
 		
 		serverRemoveThread: function(threadId) {
+			this.statusMessage("正在删除...", "info");
 			$.ajax({
 				type: 'GET',
 				url: '/thread/delete',
@@ -324,6 +328,7 @@ $(function() {
 				context: this,
 				success: function (data) {
 					this.removeThread(threadId);
+					this.statusMessage("删除成功", "success");
 				}
 			});
 		},
@@ -466,6 +471,44 @@ $(function() {
 		
 		removeAllThreads: function() {
 			$('.thread', this.settings.dashboardElement).remove();
+		},
+		
+		sendMessage: function() {
+			var message = $('._messageArea .ac_input').val()
+			if (message == '') {
+				this.statusMessage('消息内容不能为空', 'warning');
+				return;
+			}
+			var selectProfiles = $('.profileSelector .profileAvatar.selected');
+			if (selectProfiles.length == 0) {
+				this.statusMessage('请至少选择一个账号', 'warning');
+				return;
+			}
+			var profiles = [];
+			$(selectProfiles).each(function(index, profile){
+				profiles.push($(profile).attr('profileType') + "|" +  $(profile).attr('profileId'));
+			});
+			
+			$.ajax({
+				type: 'POST',
+				url: '/dashboard/send',
+				data: {message:message, profiles: profiles},
+				dataType: 'json',
+				context: this,
+				success: function(){
+					
+				}
+			});			
+		},
+		
+		statusMessage: function(message, level) {
+			var levels = ['error', 'warning', 'success', 'info']
+			if (!level || !$.inArray(level, levels)) {
+				level = 'info';
+			}
+			$('#statusContainer .statusMessage').removeClass(levels.join(' ')).addClass(level);
+			$('#statusContainer ._statusMsgContent').text(message);
+			$('#statusContainer').stop(true, true).show().delay(4000).fadeOut();
 		}
 	});
 
