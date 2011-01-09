@@ -70,9 +70,15 @@ $(function(){
 			$('.profileSelector').height('');
 		}
 	});
-
+	
+	$('._submitAddMessage').click(function(){$.sirius.sendMessage();});
 });
 </script>
+<div id="statusContainer">
+	<div class="statusMessage rb-a-4">
+		<span class="_statusMsgContent">Your message cannot be empty</span>
+	</div>
+</div>
 <div id="header">
 	<div class="logo">
 		<h1>Sirius - Manage your relations</h1>
@@ -95,7 +101,7 @@ $(function(){
 						<div class="messageMedia">
 						</div>
 						<div id="saveMessageButtons" class="_saveMessageButtons saveMessageButtons">
-							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" onclick="createMessage(); return false;" title="Send Now (Shift+Enter)">发布</a></span>
+							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" title="Send Now (Shift+Enter)">发布</a></span>
 						</div>
 					</div>
 				</div>
@@ -105,7 +111,7 @@ $(function(){
 					<div class="profileSelector" style="height: auto;" ></div>				
 					<div class="_controls controls">
 						<div class="btns-right">
-							<a href="#" class="btn-spl add" title="添加账户"><span class="icon-13 add-profile-button"></span></a>
+							<a href="#" class="btn-spl add" title="添加帐号"><span class="icon-13 add-profile-button"></span></a>
 						</div>
 						<a href="#" class="_selectAll btn-spl">选择全部</a>
 						<a href="#" class="_selectNone btn-spl">取消选择</a>
@@ -117,7 +123,7 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="/profile/add" title="添加账户" class="icon-13 add-profile-button sidebar-add-profile">添加账户</a>
+		<a href="/profile/add" title="添加帐号" class="icon-13 add-profile-button sidebar-add-profile">添加帐号</a>
 		<ul>
 		</ul>
 	</div>
