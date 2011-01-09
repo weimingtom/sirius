@@ -1,6 +1,6 @@
 <?php
 
-class authbackAction extends sfAction {
+class authbackAction extends QQAction {
 	public function execute($request) {
 		$consumer_key = sfConfig::get('app_qq_consumer_key');
 	    $consumer_secret = sfConfig::get('app_qq_consumer_secret');
@@ -34,7 +34,12 @@ class authbackAction extends sfAction {
     	$profile->setProfileName($tokens['name']);
 		$profile->setScreenName($user_profile['data']['nick']);
 		$profile->setType('qq');
-		$profile->setAvatarUrl($user_profile['data']['head']);
+		
+		if ($user_profile['data']['head'] != "") {
+			$profile->setAvatarUrl($user_profile['data']['head'] . '/40');
+		} else {
+			$profile->setAvatarUrl($this->getEmptyAvatar());
+		}
 		$profile->setConnectData(json_encode($tokens, true));
 		$profile->save();
 		

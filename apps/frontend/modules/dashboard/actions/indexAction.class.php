@@ -6,7 +6,7 @@ class indexAction extends sfAction {
 		
 		$this->profiles = Doctrine::getTable('Profile')
 			->createQuery('')
-			->select("id, type, screen_name")
+			->select("id, type, screen_name, avatar_url, profile_name")
 			->where("owner_id = ?", $userId)
 			->fetchArray();
       

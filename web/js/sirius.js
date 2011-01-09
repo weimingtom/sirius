@@ -40,6 +40,7 @@ $(function() {
 		initialized: false,
 		dashboard: null,
 		threads: [],
+		dashboard: null,
 		init: function(options) {
 			this.settings = $.extend({
 				containerElement: '#container',
@@ -49,11 +50,11 @@ $(function() {
 				profiles: {},
 				tabs: [],
 				activeTabId: 0,
-				threadWidth: 400,	
+				threadWidth: 400
 			}, options || {});
 
 			if (!this._initDashboard()
-			 && !this._initSiderbar()
+			 && !this._initSiderbarAndProfileSelector()
 			 && !this._initTabs())
 				return;
 			this.initialized = true;
@@ -84,7 +85,8 @@ $(function() {
 		_initDashboard: function() {
 			if (!this.settings.dashboardElement || this.settings.dashboardElement == '')
 				return false;
-			this.dashboard = dashboard = $($(this.settings.dashboardElement)[0]);
+			var dashboard = $($(this.settings.dashboardElement)[0]);
+			this.dashboard = dashboard;
 			if (dashboard.size == 0)
 				return false;
 
@@ -106,12 +108,13 @@ $(function() {
 			this.dashboard = dashboard;
 		},
 		
-		_initSiderbar: function() {
+		_initSiderbarAndProfileSelector: function() {
 			if (!$.isArray(this.settings.profiles))
 				return false;
 			var profiles = this.settings.profiles;
 			for (var i = 0; i < profiles.length; ++i) {
 				this.addProfileToSidebar(profiles[i]);
+				this.addProfileToProfileSelector(profiles[i]);
 			}
 		},
 		
@@ -154,16 +157,46 @@ $(function() {
 				return false;
 			this.settings.profiles = data;
 			
-			var foldStatus = [];			
-			// clear all profiles in sidebar
+			var foldStatus = [], selectedStatus = [];
+			// clear all profiles in sidebar and profileSelector
 			$("#sidebar>ul li").each(function(index, item){
 				foldStatus[$(item).attr('profileId')] = $('.list-toggle-button', item).hasClass('button-unfold');
+			}).remove();
+			$(".profileSelector a.profileAvatar").each(function(index, item){
+				selectedStatus[$(item).attr('profileId')] = $(item).hasClass('selected');
 			}).remove();
 			
 			for (var i = 0; i < data.length; ++i) {
 				isFold = foldStatus[data[i].id] | false;
+				isSelected = selectedStatus[data[i].id] | false;
 				this.addProfileToSidebar(data[i], isFold);
+				this.addProfileToProfileSelector(data[i], isSelected);
 			}
+		},
+		
+		addProfileToProfileSelector: function(profile, isSelected) {
+			var profileId = profile.id;
+			var profileType = profile.type;
+			var screenName = profile.screen_name;
+			var profileName = profile.profile_name;
+			var avatar = profile.avatar_url;
+
+			var avatarNode = $('<span class="networkAvatarWrapper"/>').append($('<img class="networkAvatar"/>').attr('src', avatar));
+			var typeNode = $('<span class="icon-13" />').addClass(profileType);
+			var node = $('<a href="#" class="profileAvatar" />')
+				.append(avatarNode)
+				.append('<span class="checkmark icon-19"></span>')
+				.append(typeNode)
+				.attr('profileId', profileId)
+				.attr('title', screenName)
+				.click(function(){
+					$(this).toggleClass('selected');
+				});
+			if (isSelected) {
+				node.addClass('selected');
+			}
+			
+			node.appendTo('.profileSelector')
 		},
 		
 		addProfileToSidebar: function(profile, isFold) {
@@ -285,7 +318,7 @@ $(function() {
 				type: 'GET',
 				url: '/thread/delete',
 				data: {
-					threadId: threadId,
+					threadId: threadId
 				},
 				dataType: 'json',
 				context: this,
@@ -296,7 +329,8 @@ $(function() {
 		},
 		
 		addThread: function(threadInfo) {
-			if (!(dashboard = this.dashboard))
+			var dashboard = this.dashboard;
+			if (!dashboard)
 				return false;
 
 			thread = $("<div class='thread'><div class='thread-header' /><div class='thread-message-container'/></div>")
@@ -424,7 +458,7 @@ $(function() {
 					.colorbox({
 						maxWidth: '80%',
 						maxHeight: '80%',
-						photo: true,
+						photo: true
 					});
 			}
 			return node;			
@@ -432,7 +466,7 @@ $(function() {
 		
 		removeAllThreads: function() {
 			$('.thread', this.settings.dashboardElement).remove();
-		},
+		}
 	});
 
 	$.sirius = new Sirius;

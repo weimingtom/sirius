@@ -80,7 +80,7 @@ abstract class QQAction extends sfAction {
 		return $message;
 	}
 	
-	private function getEmptyAvatar() {
+	protected function getEmptyAvatar() {
 		return "http://mat1.gtimg.com/www/mb/images/head_50.jpg";
 	}
 }
