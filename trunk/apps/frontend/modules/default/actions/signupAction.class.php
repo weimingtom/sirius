@@ -66,12 +66,15 @@ class signupAction extends sfAction {
 			if ($password == "") {
 				$this->signUpErrors_password = "Password is required!";
 				$hasError = true;
+			} elseif (strlen($password) < 6) {
+				$this->signUpErrors_password = 'Password is too short!';
+				$hasError = true;			
 			}
+			
 			if ($password_again == "") {
 				$this->signUpErrors_password_again = "You need re-enter your password!";
 				$hasError = true;
-			}
-			if ($password != "" && $password_again != "" && $password != $password_again) {
+			} elseif ($password != "" && $password_again != "" && $password != $password_again) {
 				$this->signUpErrors_password_again = "Oops, it's different from the previous one!";
 				$hasError = true;
 			}
@@ -102,6 +105,12 @@ class signupAction extends sfAction {
 			
 			// goto waiting for validate page
 			//TODO:_______
+			
+			//REMOVE_ME: add new tab
+			$tab = new Tab();
+			$tab->setOwnerId($user->getId());
+			$tab->setTitle('Default Tab');
+			$tab->save();			
 			
 			$this->redirect('default', 'login');
 		} else {
