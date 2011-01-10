@@ -33,6 +33,8 @@ $(function(){
 			});
 		}
 	})
+	if (options.profiles.length==0)
+		$('.sidebar-add-profile').click();
 	
 	$('.sidebar-add-profile').hover(
 		function(){$(this).animate({width: 80});}, 
