@@ -103,13 +103,22 @@ a.list-toggle-button {
 	vertical-align: middle;
 }
 
-li.list-item {
-	margin: 8px 0 8px 10px;
-	padding-left: 18px;
+.list-profile .list-item {
+	padding: 4px 0 4px 28px;
+	background-position-x: 10px;
+	margin: 1px 0;
 }
 
-.list-item a {
+.list-profile .list-item a {
 	color: black;
+}
+
+.list-profile .list-item.hightlight {
+	background-color: #525B69;
+}
+
+.list-profile .hightlight a {
+	color: #DDD;
 }
 
 .button-unfold {
