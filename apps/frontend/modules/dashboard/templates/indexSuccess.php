@@ -35,7 +35,7 @@ $(function(){
 	})
 	
 	$('.sidebar-add-profile').hover(
-		function(){$(this).animate({width: 56});}, 
+		function(){$(this).animate({width: 80});}, 
 		function(){$(this).animate({width: 0});}
 	);
 	
@@ -111,7 +111,7 @@ $(function(){
 					<div class="profileSelector" style="height: auto;" ></div>				
 					<div class="_controls controls">
 						<div class="btns-right">
-							<a href="#" class="btn-spl add" title="添加帐号"><span class="icon-13 add-profile-button"></span></a>
+							<a href="#" class="btn-spl add" title="添加微博帐号"><span class="icon-13 add-profile-button"></span></a>
 						</div>
 						<a href="#" class="_selectAll btn-spl">选择全部</a>
 						<a href="#" class="_selectNone btn-spl">取消选择</a>
@@ -123,7 +123,7 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="/profile/add" title="添加帐号" class="icon-13 add-profile-button sidebar-add-profile">添加帐号</a>
+		<a href="/profile/add" title="添加微博帐号" class="icon-13 add-profile-button sidebar-add-profile">添加微博帐号</a>
 		<ul>
 		</ul>
 	</div>
