@@ -14,6 +14,11 @@ signup:
   url: /signup
   param: { module: default, action: signup }
 
+  
+user:
+  url: /:module/user/:profileId/:tabName
+  param: { action: user }
+
 ajax:
   url: /ajax/:module/:action
   param: { method: ajax }
@@ -22,4 +27,4 @@ default_index:
   url:   /:module
   param: { action: index }
 default:
-  url:   /:module/:action/*
+  url:   /:module/:action/*

@@ -431,10 +431,10 @@ $(function() {
 					$(data).each( function(i, message) {
 						lastMessageId = lastMessageId || message.id;
 						
-						messageNode = sirius.packMessage(message);
+						messageNode = sirius.packMessage(message, profileId, profileType);
 						$('.message-author', messageNode).after('<span class="icon-13 new-message"></span>');
 						if (message.retweet_origin != null) {
-							$(messageNode).append( $(sirius.packMessage(message.retweet_origin)).addClass('submessage'));
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
 						}
 						$(messageNode).appendTo(tempContainer);
 					});
@@ -454,10 +454,10 @@ $(function() {
 			});
 		},
 		
-		packMessage: function(message) {
+		packMessage: function(message, profileId, profileType) {
 			var avatar = $('<a href="javascript:;"></a>').addClass('message-avatar').append("<img src='" + message.user.avatar + "' />")
-				.attr('title', message.user.screen_name);
-			var author = $('<a href="javascript:;"></a>').addClass('message-author').text(message.user.screen_name);
+				.attr('title', message.user.name);
+			var author = $('<a href="javascript:;"></a>').addClass('message-author').text(message.user.screen_name).attr('title', message.user.name);
 			var time_source = $('<p></p>').addClass('message-time-via').html(message.created_at + (message.source != '' ? ' via ' + message.source : ''));
 			$('a', time_source).attr('target', '_blank');
 			
@@ -476,7 +476,29 @@ $(function() {
 						photo: true
 					});
 			}
+			
+			var sirius = this;
+			$.merge(avatar, author).click(function() {
+				sirius.showUser(profileId, profileType, message.user.name, message.user.screen_name);
+			});
 			return node;			
+		},
+		
+		showUser: function(profileId, profileType, username, screenName) {
+			$('#popup-dialog').dialog('destroy').html("").dialog({
+				title: "正在加载...",
+				open: function(event, ui) {
+					var thisObj = this;
+					$.get('/' + profileType + '/user',  {name: username}, function(data){
+						$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
+							error: function( xhr, status, index, anchor ) {
+								$( anchor.hash ).html("加载失败... 请稍候重试！");
+							}
+						}});
+						$('#popup-dialog').dialog('option', {title: screenName});
+					});
+				}
+			});
 		},
 		
 		removeAllThreads: function() {
