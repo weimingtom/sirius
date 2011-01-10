@@ -226,7 +226,7 @@ $(function() {
 					.text(title)
 					.appendTo(actionItem)
 					.click(function(){
-						exist = $("div[profileId="+profileId + "][threadType="+$(this).attr('type')+"]")
+						exist = $("div.thread[profileId="+profileId + "][threadType="+$(this).attr('type')+"]")
 						if (exist.size() == 0) {
 							sirius.serverAddThread(sirius.settings.activeTabId, profileId, $(this).attr('type'), $(this).attr('title'));
 						} else {
@@ -235,6 +235,9 @@ $(function() {
 							$('.message', exist).animate({backgroundColor: 'red'}, 1000).animate({backgroundColor: bgColor}, 1000);
 						}
 					});
+				if ($("div.thread[profileId="+profileId + "][threadType="+profileType+"]")) {
+					$(actionItem).addClass('hightlight');
+				}
 			}
 			
 			if (isFold) {
@@ -372,6 +375,7 @@ $(function() {
 			// set style
 			$('.thread-height', thread).height(this.settings.threadHeadHeight);
 			$('.refreshing', thread).hide();
+			$('.list-profile[profileId=' + threadInfo.profile_id + '] li a[type=' + threadInfo.type + ']').parent().addClass('hightlight');
 			
 			// add timer to refresh
 			this.refreshThread(thread);
@@ -381,7 +385,13 @@ $(function() {
 		},
 		
 		removeThread: function(threadId) {
-			$('.thread[threadId=' + threadId +']').remove();
+			var thread = $('.thread[threadId=' + threadId +']');
+			if (thread.length > 0) {
+				var profileId = $(thread).attr('profileId');
+				var threadType = $(thread).attr('threadType');
+				$('.list-profile[profileId=' + profileId + '] li a[type=' + threadType + ']').parent().removeClass('hightlight');
+				$('.thread[threadId=' + threadId +']').remove();
+			}
 			
 			// refresh now
 			this._onResize();
@@ -471,6 +481,7 @@ $(function() {
 		
 		removeAllThreads: function() {
 			$('.thread', this.settings.dashboardElement).remove();
+			$('.list-profile li.hightlight').removeClass('hightlight');
 		},
 		
 		sendMessage: function() {
