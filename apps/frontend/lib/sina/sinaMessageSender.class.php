@@ -20,6 +20,6 @@ class sinaMessageSender {
 		$weibo = new WeiboClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
 		$response = $weibo->update($message);
 		
-		return $this->renderText(json_encode($messages));
+		return true;
 	} 
 }
