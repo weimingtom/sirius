@@ -244,8 +244,8 @@ class WeiboClient
      * @return array 
      */ 
     function user_timeline($since_id = null, $page = 1 , $count = 20 , $uid_or_name = null ) 
-    { 
-    	return $this->request_with_uid( 'http://api.t.sina.com.cn/statuses/user_timeline.json' , $since_id, $uid_or_name , $page , $count ); 
+    {
+    	return $this->request_with_uid_and_since_id( 'http://api.t.sina.com.cn/statuses/user_timeline.json' , $uid_or_name , $page , $count, $since_id ); 
     } 
 
     /** 

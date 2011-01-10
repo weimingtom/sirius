@@ -54,22 +54,14 @@ $(function(){
 	});
 	
 	$('._messageArea .ac_input').focusin(function(){
-		$('.messageComposeBox').removeClass('collapsed').addClass('expanded');
-		$('._messageArea ._pretext').hide();
-		$('.selectProfiles').outerHeight($('.messageInfoBox').outerHeight());
-		$('.profileSelector').outerHeight($('.selectProfiles').height() - $('._controls').outerHeight());	
+		$.sirius.focusSendPanel();
 	}).keyup(function(){
 		$('._charCounter ._counter').text(140 - $(this).val().length);
 	});
 
 	$(document).click(function(event){
 		if ($('.messageComposeBox').hasClass('expanded') && !$.contains($('.tweet-panel')[0], event.target)) {
-			$('.messageComposeBox').removeClass('expanded').addClass('collapsed');
-			if ($('._messageArea .ac_input').val() == "") {
-				$('._messageArea ._pretext').show(); 
-			}
-			$('.selectProfiles').height('');
-			$('.profileSelector').height('');
+			$.sirius.unfocusSendPanel();
 		}
 	});
 	

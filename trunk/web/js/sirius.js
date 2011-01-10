@@ -474,7 +474,7 @@ $(function() {
 		},
 		
 		sendMessage: function() {
-			var message = $('._messageArea .ac_input').val()
+			var message = $('._messageArea .ac_input').val();
 			if (message == '') {
 				this.statusMessage('消息内容不能为空', 'warning');
 				return;
@@ -488,7 +488,7 @@ $(function() {
 			$(selectProfiles).each(function(index, profile){
 				profiles.push($(profile).attr('profileType') + "|" +  $(profile).attr('profileId'));
 			});
-			
+			this.statusMessage('正在发送消息...', 'info');
 			$.ajax({
 				type: 'POST',
 				url: '/dashboard/send',
@@ -496,9 +496,28 @@ $(function() {
 				dataType: 'json',
 				context: this,
 				success: function(){
-					
+					this.statusMessage('发送成功', 'info');
+					$('.messageComposeBox').removeClass('collapsed').addClass('expanded');
+					$('._messageArea .ac_input').val('');
+					this.unfocusSendPanel();
 				}
 			});			
+		},
+		
+		focusSendPanel: function() {
+			$('.messageComposeBox').removeClass('collapsed').addClass('expanded');
+			$('._messageArea ._pretext').hide();
+			$('.selectProfiles').outerHeight($('.messageInfoBox').outerHeight());
+			$('.profileSelector').outerHeight($('.selectProfiles').height() - $('._controls').outerHeight());	
+		},
+		
+		unfocusSendPanel: function() {
+			$('.messageComposeBox').removeClass('expanded').addClass('collapsed');
+			if ($('._messageArea .ac_input').val() == "") {
+				$('._messageArea ._pretext').show(); 
+			}
+			$('.selectProfiles').height('');
+			$('.profileSelector').height('');
 		},
 		
 		statusMessage: function(message, level) {

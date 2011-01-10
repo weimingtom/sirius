@@ -16,6 +16,6 @@ class sendAction extends sfAction {
 			$sender->sendMessage($profileId, $message); 
 		}
 		
-		return $this->renderText("abc");
+		return $this->renderText("");
 	}
 }

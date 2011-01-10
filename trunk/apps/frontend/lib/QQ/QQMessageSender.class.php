@@ -19,8 +19,6 @@ class QQMessageSender {
 		$weibo = new QQClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
 		$response = $weibo->update($message);
 		
-		var_dump($response);die();
-		
-		return $this->renderText(json_encode($messages));
+		return true;
 	} 
 }
