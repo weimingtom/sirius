@@ -126,3 +126,4 @@ $(function(){
 		</div>
 	</div>
 </div>
+<div id="popup-dialog" style="display:none;">abc</div>

@@ -35,7 +35,7 @@ abstract class sinaAction extends sfAction {
 		
 		$user = $message->user;
 		$user->id = $origin['user']['id'];
-		$user->name = $origin['user']['name'];
+		$user->name = $origin['user']['domain'];
 		$user->screen_name = $origin['user']['screen_name'];
 		$user->avatar = $origin['user']['profile_image_url'];
 		
@@ -64,7 +64,7 @@ abstract class sinaAction extends sfAction {
 		
 		$user = $message->user;
 		$user->id = $origin['sender']['id'];
-		$user->name = $origin['sender']['name'];
+		$user->name = $origin['sender']['domain'];
 		$user->screen_name = $origin['sender']['screen_name'];
 		$user->avatar = $origin['sender']['profile_image_url'];
 		
