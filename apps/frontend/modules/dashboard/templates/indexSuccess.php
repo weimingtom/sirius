@@ -105,7 +105,7 @@ $(function(){
 					<div class="profileSelector" style="height: auto;" ></div>				
 					<div class="_controls controls">
 						<div class="btns-right">
-							<a href="#" class="btn-spl add" title="添加微博帐号"><span class="icon-13 add-profile-button"></span></a>
+							<span class="btn-spl add"><a href="#" title="添加微博帐号" class="icon-13 add-profile-button"></a></span>
 						</div>
 						<a href="#" class="_selectAll btn-spl">选择全部</a>
 						<a href="#" class="_selectNone btn-spl">取消选择</a>

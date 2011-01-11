@@ -6,10 +6,10 @@ default:
     content-type: text/html
 
   metas:
-    #title:        symfony project
+    title:        MixMes - 一站式微博管理工具
     #description:  symfony project
-    #keywords:     symfony, project
-    language:     en
+    keywords:     MixMes, 微博, 新浪微博, 腾讯微博, 搜狐微博, 饭否, weibo, twitter, tweet, 一站式
+    language:     zh_CN
     #robots:       index, follow
 
   stylesheets:    [reset.css, jquery-ui-1.8.6.css, jquery-ui-sirius.css, base.css]
