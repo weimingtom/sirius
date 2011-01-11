@@ -235,7 +235,7 @@ $(function() {
 							$('.message', exist).animate({backgroundColor: 'red'}, 1000).animate({backgroundColor: bgColor}, 1000);
 						}
 					});
-				if ($("div.thread[profileId="+profileId + "][threadType="+profileType+"]")) {
+				if ($("div.thread[profileId="+profileId + "][threadType="+type+"]").size() > 0) {
 					$(actionItem).addClass('hightlight');
 				}
 			}

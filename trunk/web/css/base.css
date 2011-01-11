@@ -263,7 +263,7 @@ a, a:hover, a:visited, a:focus {
 	text-decoration: none;
 }
 
-.icon-13, .icon-14, .icon-16, .icon-18, .icon-19, .icon-20 {
+.icon-13, .icon-14, .icon-16, .icon-18, .icon-19, .icon-20, .icon-28 {
 	display: inline-block;
 	text-decoration: none;
 	text-indent: -999em;
@@ -301,6 +301,11 @@ a, a:hover, a:visited, a:focus {
 .icon-20 {
 	height: 20px;
 	padding-left: 20px;
+}
+
+.icon-28 {
+	height: 28px;
+	padding-left: 28px;
 }
 
 .profile-sina {
