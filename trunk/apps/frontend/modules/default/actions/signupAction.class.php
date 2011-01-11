@@ -14,7 +14,7 @@ class signupAction extends sfAction {
 			if ($inviteCodeEnabled) {
 				// check invite code
 				if ($request->getParameter('invite_code') == "") {
-					$this->signUpErrors_invite_code = "Invite code is required!";
+					$this->signUpErrors_invite_code = "您还未输入邀请码";
 					$hasError = true;
 				} else {
 					$invite = Doctrine_Core::getTable('Invite')
@@ -22,12 +22,12 @@ class signupAction extends sfAction {
 						->where('purpose = "register" AND is_used = false AND code = ?', $request->getParameter('invite_code'))
 						->fetchOne();
 					if ($invite == NULL) {
-						$this->signUpErrors_invite_code = "Invite code is invalid!";
+						$this->signUpErrors_invite_code = "此邀请码不存在";
 						$hasError = true;
 					} else {
 						$invite_expire_date = $invite->getExpireDate();
 						if ($invite_expire_date != null && date_create($invite_expire_date) < date_create('now')) {
-							$this->signUpErrors_invite_code = "Invite code is expired!";
+							$this->signUpErrors_invite_code = "此邀请码已过期";
 							$hasError = true;
 						}		
 					}
@@ -37,11 +37,11 @@ class signupAction extends sfAction {
 			$email = $request->getParameter('email');
 			$name = $request->getParameter('name');
 			if($email == "") {
-				$this->signUpErrors_email = "Email is required!";
+				$this->signUpErrors_email = "您还未输入电子邮箱";
 				$hasError = true;
 			} else {
 				if (!preg_match(sfValidatorEmail::REGEX_EMAIL, $email))	{
-					$this->signUpErrors_email = "Email is invalid!";
+					$this->signUpErrors_email = "电子邮箱格式不正确";
 					$hasError = true;
 				} else {
 					$checkUser = Doctrine_Core::getTable('User')
@@ -49,14 +49,14 @@ class signupAction extends sfAction {
 						->where('user.email = ?', $email)
 						->fetchOne();
 					if ($checkUser != null) {
-						$this->signUpErrors_email = "This email has been used for another user!";
+						$this->signUpErrors_email = "该邮箱地址已注册，请<a href='/login'>登陆</a>";
 						$hasError = true;
 					}
 				}
 			}
 			
 			if($name == "") {
-				$this->signUpErrors_name = "Name is required!";
+				$this->signUpErrors_name = "您还未输入姓名";
 				$hasError = true;
 			}
 			
@@ -64,18 +64,18 @@ class signupAction extends sfAction {
 			$password = $request->getParameter('password');
 			$password_again = $request->getParameter('password_again');
 			if ($password == "") {
-				$this->signUpErrors_password = "Password is required!";
+				$this->signUpErrors_password = "您还未输入密码";
 				$hasError = true;
 			} elseif (strlen($password) < 6) {
-				$this->signUpErrors_password = 'Password is too short!';
+				$this->signUpErrors_password = '您输入的密码过短';
 				$hasError = true;			
 			}
 			
 			if ($password_again == "") {
-				$this->signUpErrors_password_again = "You need re-enter your password!";
+				$this->signUpErrors_password_again = "您还未输入确认密码";
 				$hasError = true;
 			} elseif ($password != "" && $password_again != "" && $password != $password_again) {
-				$this->signUpErrors_password_again = "Oops, it's different from the previous one!";
+				$this->signUpErrors_password_again = "密码和确认密码输入不一致";
 				$hasError = true;
 			}
 			
@@ -90,7 +90,7 @@ class signupAction extends sfAction {
 			$user->setPassword(md5($password));
 			
 			if (!$user->trySave()) {
-				$this->signUpErrors = "Signup Fail, Please try again.";
+				$this->signUpErrors = "注册失败，请检查所有输入项，或稍候重试";
 				return sfView::SUCCESS;
 			}
 			

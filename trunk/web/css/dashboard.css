@@ -388,7 +388,9 @@ a.list-toggle-button {
 	border-radius: 3px;
 }
 
-.message-author {
+.message-author,
+.message-author:link,
+.message-author:visited {
 	font: 12px/1.5 tahoma,arial,宋体b8b\4f53;
 	font-weight: bold;
 	text-decoration: none;
@@ -396,6 +398,11 @@ a.list-toggle-button {
 	font-size: 12px;
 	color: #4E763E;
 	margin-bottom: .4em;
+}
+
+.message-author:hover {
+	background-color: #4E763E;
+	color: white;
 }
 
 .message-time-via, 
@@ -412,9 +419,13 @@ a.list-toggle-button {
 
 .message-body a,
 .message-body a:link,
-.message-body a:visited,
-.message-body a:hover {
+.message-body a:visited {
 	color:#239CB9;
+}
+
+.message-body a:hover {
+	background-color: #239CB9;
+	color: white;
 }
 
 #messageBoxContainer .expanded, #messageBoxContainer .collapsed {
