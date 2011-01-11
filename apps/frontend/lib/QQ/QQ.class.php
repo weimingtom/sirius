@@ -153,9 +153,12 @@ class QQClient
      * @param mixed $uid_or_name 用户UID或微博昵称。 
      * @return array 
      */ 
-    function show_user() 
-    { 
-        return $this->oauth->get( 'http://open.t.qq.com/api/user/info');
+    function show_user($name = null) 
+    {
+    	if ($name == null) 
+        	return $this->oauth->get( 'http://open.t.qq.com/api/user/info');
+		else
+			return $this->oauth->get( 'http://open.t.qq.com/api/user/other_info', array('name' => $name));
     } 
 
     /** 
@@ -253,7 +256,8 @@ class QQClient
      */ 
     function list_dm( $page = 1 , $count = 20  ) 
     { 
-        return $this->request_with_pager( 'http://open.t.qq.com/api/direct_messages.json' , $page , $count ); 
+        //return $this->request_with_pager( 'http://open.t.qq.com/api/private/recv' , $page , $count ); 
+		return $this->oauth->get( 'http://open.t.qq.com/api/private/recv', array("format"=>"json", "pageflag"=>"0", "pagetime"=>"0", "reqnum"=>"20")); 
     } 
 
     /** 

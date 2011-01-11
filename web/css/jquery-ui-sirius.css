@@ -71,14 +71,15 @@
 
 #popup-dialog .ui-dialog-section{padding:0;}
 #popup-dialog .ui-dialog-section .userInfo{min-height:300px;padding:12px 0 12px 16px;}
-#popup-dialog .socialAvatar{border:1px solid #9ea1a4;margin-bottom:8px;padding:3px;float:left;-moz-box-shadow:0 1px 0 0 #fff,inset 0 1px 0 0 #fff;-webkit-box-shadow:0 1px 0 0 #fff,inset 0 1px 0 0 #fff;box-shadow:0 1px 0 0 #fff,inset 0 1px 0 0 #fff;}
+#popup-dialog .socialAvatar{position:relative;border:1px solid #9ea1a4;margin-bottom:8px;padding:3px;float:left;-moz-box-shadow:0 1px 0 0 #fff,inset 0 1px 0 0 #fff;-webkit-box-shadow:0 1px 0 0 #fff,inset 0 1px 0 0 #fff;box-shadow:0 1px 0 0 #fff,inset 0 1px 0 0 #fff;}
 #popup-dialog .socialAvatar .networkAvatar{width:120px;}
+#popup-dialog .socialAvatar .networklogo {top: -14px; left: -14px; position:absolute;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;}
 #popup-dialog .userstats{margin:0 0 .5em 138px;}
 #popup-dialog .userstats p{font-weight:bold;line-height:20px;text-shadow:0 1px 0 #fff;}
 #popup-dialog .userstats p span{font-size:20px;letter-spacing:-0.05em;}
 #popup-dialog .userstats p em{display:block;font-size:11px;line-height:12px;}
 #popup-dialog .report,#popup-dialog .location,#popup-dialog .userinfo{clear:both;}
-#popup-dialog .bio,#popup-dialog .userinfo{padding-right:16px;}
+/*#popup-dialog .bio,#popup-dialog .userinfo{padding-right:16px;}*/
 #popup-dialog .btns .networkUrl{margin-bottom:4px;}
 #popup-dialog .userstats p em.mayorship{display:block;font-size:12px;line-height:14px;font-weight:normal;}
 #popup-dialog .lastUpdate{border-bottom:1px solid #aaa;background-color:#efefef;margin:0 -16px .4em;padding:2px 16px 4px;}

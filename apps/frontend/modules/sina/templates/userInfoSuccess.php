@@ -7,6 +7,7 @@
 		<span class="_screen_name" style="display:none"><?php echo $userData['screen_name']?></span>
 		<span class="socialAvatar">
         <img class="networkAvatar" src="<?php echo $userData['profile_image_url_180']?>">
+        <span class="icon-28 thread-icon-sina networklogo">qq</span>
         </span>
 		
 	    <div class="userstats">
