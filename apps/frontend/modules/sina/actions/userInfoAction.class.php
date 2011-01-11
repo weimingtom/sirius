@@ -29,8 +29,10 @@ class userInfoAction extends sinaAction {
 		if ($user['domain'] == '') {
 			$user['domain'] = $user['id'];
 		}
-		$this->userData = $user;
 		
-//		var_dump($user);die();
+		if (strlen($user['url']) <= 10) {
+			$user['url'] = "";
+		}
+		$this->userData = $user;
 	}
 }
