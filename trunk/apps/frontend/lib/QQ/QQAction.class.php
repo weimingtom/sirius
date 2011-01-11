@@ -21,7 +21,7 @@ abstract class QQAction extends sfAction {
 		$timestamp = $origin['timestamp'];
 		$message->created_at = strftime('%b %d, %I:%M ', $timestamp) . strtolower(strftime('%p', $timestamp));
 		
-		$message->text = $origin['text'];
+		$message->text = $this->formatText($origin['text']);
 		$message->truncated = false; //TODO
 		$message->source = $origin['from'];
 		
@@ -54,7 +54,7 @@ abstract class QQAction extends sfAction {
 		$timestamp = $origin['timestamp'];
 		$message->created_at = strftime('%b %d, %I:%M ', $timestamp) . strtolower(strftime('%p', $timestamp));
 		
-		$message->text = $origin['text'];
+		$message->text = $this->formatText($origin['text']);
 		$message->truncated = false; //TODO
 		$message->source = $origin['from'];
 		
@@ -82,5 +82,13 @@ abstract class QQAction extends sfAction {
 	
 	protected function getEmptyAvatar() {
 		return "http://mat1.gtimg.com/www/mb/images/head_50.jpg";
+	}
+	
+	protected function formatText($text) {
+		// replace user
+		$text = preg_replace( "/ *@([\x{4e00}-\x{9fa5}A-Za-z0-9_]*) ?/u", " <a class=\"_user_link\" href=\"#\">@\\1</a> ", $text);
+		// replace #
+		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_]*)# ?/u", " <a class=\"_topic_link\" href=\"#\">#\\1#</a> ", $text); 
+		return $text;
 	}
 }
