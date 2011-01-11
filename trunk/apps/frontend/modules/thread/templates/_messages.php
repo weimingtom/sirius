@@ -9,7 +9,7 @@
 	<p class="message-time-via"><?php echo $message->creaeted_at?><?php if ($message->source != ""):?> via <?php echo $message->source?><?php endif ?></p>
 	<p class="message-body"><?php echo $message->text?></p>
 	<?php if ($message->picture_thumbnail != "") : ?>
-	<a class="_message_picture_thumbnail" title="点击看大图" href="<?php echo $message->picture_original?>">
+	<a class="_message_picture_thumbnail" href="<?php echo $message->picture_original?>">
 		<img src="<?php echo $message->picture_thumbnail?>">
 	</a>
 	<?php endif?>
@@ -22,7 +22,7 @@
 		<p class="message-time-via"><?php echo $message->retweet_origin->creaeted_at?><?php if ($message->retweet_origin->source != ""):?> via <?php echo $message->retweet_origin->source?><?php endif ?></p>
 		<p class="message-body"><?php echo $message->retweet_origin->text?></p>
 		<?php if ($message->retweet_origin->picture_thumbnail != "") : ?>
-		<a class="_message_picture_thumbnail" title="点击看大图" href="<?php echo $message->retweet_origin->picture_original?>">
+		<a class="_message_picture_thumbnail" href="<?php echo $message->retweet_origin->picture_original?>">
 			<img src="<?php echo $message->retweet_origin->picture_thumbnail?>">
 		</a>
 		<?php endif?>

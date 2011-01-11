@@ -428,6 +428,10 @@ a.list-toggle-button {
 	color: white;
 }
 
+._message_picture_thumbnail {
+	cursor: url(../images/cursor_zoom.cur), pointer;
+} 
+
 #messageBoxContainer .expanded, #messageBoxContainer .collapsed {
 	position: absolute;
 	z-index: 99;

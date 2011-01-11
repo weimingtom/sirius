@@ -471,7 +471,6 @@ $(function() {
 					.addClass('_message_picture_thumbnail')
 					.attr('href', message.picture_original)
 					.append($('<img/>').attr('src', message.picture_thumbnail))
-					.attr('title', '点击看大图')
 					.appendTo(node)
 					.colorbox({
 						maxWidth: '80%',
