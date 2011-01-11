@@ -483,6 +483,9 @@ class WeiboClient
 	
 	} 
 
+	function trend_timeline($trand_name) {
+		return $this->oauth->get( 'http://api.t.sina.com.cn/trends/statuses.json', array('trend_name'=> $trand_name)); 
+	}
 
 
     // ========================================= 

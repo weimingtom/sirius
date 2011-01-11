@@ -238,12 +238,9 @@ class QQClient
      * @param mixed $uid_or_name 指定用户UID或微博昵称 
      * @return array 
      */ 
-    function user_timeline( $page = 1 , $count = 20 , $uid_or_name = null ) 
+    function user_timeline($uid_or_name, $page = null , $count = null  ) 
     { 
-        if( !is_numeric( $page ) ) 
-            return $this->request_with_uid( 'http://open.t.qq.com/api/statuses/user_timeline.json' ,  $page ); 
-        else 
-            return $this->request_with_uid( 'http://open.t.qq.com/api/statuses/user_timeline.json' ,  $uid_or_name , $page , $count ); 
+        return $this->request_with_uid( 'http://open.t.qq.com/api/statuses/user_timeline' ,  $uid_or_name , $page , $count ); 
     } 
 
     /** 
@@ -479,7 +476,10 @@ class QQClient
 	
 	} 
 
-
+	function trend_timeline($trand_name) {
+		return $this->oauth->get( 'http://open.t.qq.com/api/statuses/ht_timeline', array('httext'=> $trand_name)); 
+	}
+	
 
     // ========================================= 
 
@@ -502,20 +502,15 @@ class QQClient
     { 
         $param = array(); 
         if( $page ) $param['page'] = $page; 
-        if( $count ) $param['count'] = $count; 
+        if( $count ) $param['reqnum'] = $count; 
         if( $cursor )$param['cursor'] =  $cursor; 
 
         if( $post ) $method = 'post'; 
         else $method = 'get'; 
 
-        if( is_numeric( $uid_or_name ) ) 
+  		if( $uid_or_name !== null ) 
         { 
-            $param['user_id'] = $uid_or_name; 
-            return $this->oauth->$method($url , $param ); 
-
-        }elseif( $uid_or_name !== null ) 
-        { 
-            $param['screen_name'] = $uid_or_name; 
+            $param['name'] = $uid_or_name; 
             return $this->oauth->$method($url , $param ); 
         } 
         else 
