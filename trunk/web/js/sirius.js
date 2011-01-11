@@ -468,6 +468,7 @@ $(function() {
 			
 			if (message.picture_thumbnail != "") {
 				$('<a/>')
+					.addClass('_message_picture_thumbnail')
 					.attr('href', message.picture_original)
 					.append($('<img/>').attr('src', message.picture_thumbnail))
 					.appendTo(node)
@@ -486,7 +487,54 @@ $(function() {
 				var user = $(this).attr('user');
 				sirius.showUser(profileId, profileType, user);
 			});
+			$('._topic_link', text).click(function(){
+				var topic = $(this).attr('topic');
+				sirius.showTopic(profileId, profileType, topic);
+			});
 			return node;			
+		},
+		
+		showTopic: function(profileId, profileType, topic) {
+			var sirius = this;
+			$('#popup-dialog').dialog('destroy').html("").dialog({
+				resizable: false,
+				minWidth: 320,
+				maxWidth: 500,
+				maxHeight: 500,
+				title: "正在加载...",
+				open: function(event, ui) {
+					$.ajax({
+						type: 'GET',
+						url: '/' + profileType + '/topicInfo',
+						data: {profileId: profileId, topic: topic},
+						context: {profileId: profileId, profileType: profileType},
+						success: function(data){
+							var profileId = this.profileId;
+							var profileType = this.profileType;
+							$(data).appendTo('#popup-dialog').tabs();
+								
+							$('#_thread_tab ._message_picture_thumbnail').colorbox({
+								maxWidth: '80%',
+								maxHeight: '80%',
+								photo: true
+							});
+							
+							$('#_thread_tab .message-avatar,#_thread_tab  .message-author').click(function() {
+								sirius.showUser(profileId, profileType, $(this).attr('title'));
+							});
+												
+							$('#_thread_tab ._user_link').click(function(){
+								var user = $(this).attr('user');
+								sirius.showUser(profileId, profileType, user);
+							});
+							$('#_thread_tab ._topic_link').click(function(){
+								var topic = $(this).attr('topic');
+								sirius.showTopic(profileId, profileType, topic);
+							});
+							$('#popup-dialog').dialog('option', {title: '话题: #' + topic + '#'});
+					}});
+				}
+			});
 		},
 		
 		showUser: function(profileId, profileType, username) {
@@ -498,29 +546,42 @@ $(function() {
 				maxHeight: 500,
 				title: "正在加载...",
 				open: function(event, ui) {
-					$.get('/' + profileType + '/userInfo',  {profileId: profileId, name: username}, function(data){
-						$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
-							context: {threadId: threadId, profileId: profileId, profileType: profileType},
-							success: function( xhr, status) {
-								if ($(anchor).hasClass('_thread')) {
-									tempContainer = $('<div/>');
-									profileId = this.profileId;
-									profileType = this.profileType;
-									$(data).each( function(i, message) {
-										messageNode = sirius.packMessage(message, profileId, profileType);
-										if (message.retweet_origin != null) {
-											$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
-										}
-										$(messageNode).appendTo($(anchor.hash));
+					$.ajax({
+						type: 'GET',
+						url: '/' + profileType + '/userInfo',
+						data: {profileId: profileId, name: username},
+						context: {profileId: profileId, profileType: profileType},
+						success: function(data){
+							$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
+								context: {profileId: this.profileId, profileType: this.profileType},
+								success: function( result, status) {
+									var profileId = this.context.profileId;
+									var profileType = this.context.profileType;
+									$('#_thread_tab ._message_picture_thumbnail').colorbox({
+										maxWidth: '80%',
+										maxHeight: '80%',
+										photo: true
 									});
+									
+									$('#_thread_tab .message-avatar,#_thread_tab  .message-author').click(function() {
+										sirius.showUser(profileId, profileType, $(this).attr('title'));
+									});
+														
+									$('#_thread_tab ._user_link').click(function(){
+										var user = $(this).attr('user');
+										sirius.showUser(profileId, profileType, user);
+									});
+									$('#_thread_tab ._topic_link').click(function(){
+										var topic = $(this).attr('topic');
+										sirius.showTopic(profileId, profileType, topic);
+									});
+								},
+								error: function( xhr, status, index, anchor ) {
+									$( anchor.hash ).html("加载失败... 请稍候重试！");
 								}
-							},
-							error: function( xhr, status, index, anchor ) {
-								$( anchor.hash ).html("加载失败... 请稍候重试！");
-							}
-						}});
-						$('#popup-dialog').dialog('option', {title: $('._bio ._screen_name', data).text()});
-					});
+							}});
+							$('#popup-dialog').dialog('option', {title: $('._bio ._screen_name', data).text()});
+					}});
 				}
 			});
 		},

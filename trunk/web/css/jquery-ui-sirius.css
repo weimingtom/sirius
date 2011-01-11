@@ -145,19 +145,16 @@
 
 #popup-dialog #_thread_tab  {
 	padding: 0;
-	width: 250px;
 }
 
 #popup-dialog #_thread_tab .messages {
 	height: 400px;
 	overflow-y:scroll;
-	width: 250px;
 	left: 0;
 }
 
 #popup-dialog #_thread_tab .message {
 	background:none;
-	width: 100%;
 }
 
 #popup-dialog #_thread_tab .message:first-child {

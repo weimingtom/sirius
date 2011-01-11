@@ -1,6 +1,6 @@
 <?php
 
-class userInfoAction extends sinaAction {
+class topicInfoAction extends sinaAction {
 	public function execute($request) {
 		$consumer_key = sfConfig::get('app_sina_consumer_key');
 	    $consumer_secret = sfConfig::get('app_sina_consumer_secret');
@@ -10,8 +10,8 @@ class userInfoAction extends sinaAction {
 		$this->forward404Unless($profile_id);
 		
 		// user
-		$username = $request->getParameter('name');
-		$this->forward404Unless($username);
+		$topic = $request->getParameter('topic');
+		$this->forward404Unless($topic);
 		
 		
 		// get profile
@@ -24,16 +24,8 @@ class userInfoAction extends sinaAction {
 		
 		$connectData = json_decode($profile->getConnectData(), true);
 		$weibo = new WeiboClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
-		$user = $weibo->show_user($username);
 		
-		$user['profile_image_url_180'] = str_replace('/50/', '/180/', $user['profile_image_url']);
-		if ($user['domain'] == '') {
-			$user['domain'] = $user['id'];
-		}
-		
-		if (strlen($user['url']) <= 10) {
-			$user['url'] = "";
-		}
-		$this->userData = $user;
+		$data = $weibo->trend_timeline($topic);
+		$this->messages = $this->formatMessages($data);
 	}
 }

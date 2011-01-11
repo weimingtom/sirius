@@ -1,9 +1,9 @@
 <div>
 	<ul>
-		<li><a href="#_<?php echo $userData['id']?>_bio">简介</a></li>
-		<li><a href="/sina/user/' . profileId . '/timeline">微博</a></li>
+		<li><a href="#_<?php echo $userData['name']?>_bio">简介</a></li>
+		<li><a title="_thread_tab" href="/qq/user/?profile_id=<?php echo $profileId?>&name=<?php echo $userData['name']?>&format=html" class="_thread">微博</a></li>
 	</ul>
-	<div id="_<?php echo $userData['id']?>_bio" class="_bio userInfo">
+	<div id="_<?php echo $userData['name']?>_bio" class="_bio userInfo">
 		<span class="_screen_name" style="display:none"><?php echo $userData['nick']?></span>
 		<span class="socialAvatar">
         	<img class="networkAvatar" src="<?php echo $userData['head']?>">

@@ -1,6 +1,6 @@
 <?php
 
-class userInfoAction extends QQAction {
+class topicInfoAction extends QQAction {
 	public function execute($request) {
 		$consumer_key = sfConfig::get('app_qq_consumer_key');
 	    $consumer_secret = sfConfig::get('app_qq_consumer_secret');
@@ -10,8 +10,8 @@ class userInfoAction extends QQAction {
 		$this->forward404Unless($profile_id);
 		
 		// user
-		$username = $request->getParameter('name');
-		$this->forward404Unless($username);
+		$topic = $request->getParameter('topic');
+		$this->forward404Unless($topic);
 		
 		
 		// get profile
@@ -24,21 +24,9 @@ class userInfoAction extends QQAction {
 		
 		$connectData = json_decode($profile->getConnectData(), true);
 		$weibo = new QQClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
-		$user = $weibo->show_user($username);
+		
+		$data = $weibo->trend_timeline($topic);
 		$this->forward404Unless($user['ret'] == 0);
-		
-		$user = $user["data"];
-		
-		if ($user['head'] == '') {
-			$user['head'] = $this->getEmptyAvatar(120);
-		} else {
-			$user['head'] .= '/120';
-		}
-
-		
-		if (strlen($user['url']) <= 10) {
-			$user['url'] = "";
-		}
-		$this->userData = $user;
+		$this->messages = $this->formatMessages($data['data']['info']);
 	}
 }
