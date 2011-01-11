@@ -243,7 +243,7 @@ class WeiboClient
      * @param mixed $uid_or_name 指定用户UID或微博昵称 
      * @return array 
      */ 
-    function user_timeline($since_id = null, $page = 1 , $count = 20 , $uid_or_name = null ) 
+    function user_timeline( $uid_or_name = null, $since_id = null, $page = 1 , $count = 20 ) 
     {
     	return $this->request_with_uid_and_since_id( 'http://api.t.sina.com.cn/statuses/user_timeline.json' , $uid_or_name , $page , $count, $since_id ); 
     } 

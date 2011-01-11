@@ -1,18 +1,15 @@
 <?php
 
-class userInfoAction extends sinaAction {
+class userAction extends sinaAction {
 	public function execute($request) {
 		$consumer_key = sfConfig::get('app_sina_consumer_key');
 	    $consumer_secret = sfConfig::get('app_sina_consumer_secret');
-		
-		$profile_id = $request->getParameter('profileId');
-		$this->profileId = $profile_id;
+		$profile_id = $request->getParameter('profile_id');
 		$this->forward404Unless($profile_id);
 		
-		// user
+		// user name
 		$username = $request->getParameter('name');
 		$this->forward404Unless($username);
-		
 		
 		// get profile
 		$profile = Doctrine::getTable('profile')->find($profile_id);
@@ -21,19 +18,16 @@ class userInfoAction extends sinaAction {
 		// check user
 		$this->forward404Unless($profile->getOwnerId() == $this->getUser()->getId());
 		
-		
 		$connectData = json_decode($profile->getConnectData(), true);
 		$weibo = new WeiboClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
-		$user = $weibo->show_user($username);
+		$since_id = $request->getParameter('since_id');
+		$data  = $weibo->user_timeline($username, $since_id);
+
+		$messages = $this->formatMessages($data);
 		
-		$user['profile_image_url_180'] = str_replace('/50/', '/180/', $user['profile_image_url']);
-		if ($user['domain'] == '') {
-			$user['domain'] = $user['id'];
+		if ($request->hasParameter('format') && $request->getParameter('format') == 'html') {
+			return $this->renderPartial('thread/messages', array('messages'=>$messages));
 		}
-		
-		if (strlen($user['url']) <= 10) {
-			$user['url'] = "";
-		}
-		$this->userData = $user;
+		return $this->renderText(json_encode($messages));
 	}
 }

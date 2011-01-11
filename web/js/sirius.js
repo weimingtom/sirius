@@ -490,13 +490,31 @@ $(function() {
 		},
 		
 		showUser: function(profileId, profileType, username) {
+			var sirius = this;
 			$('#popup-dialog').dialog('destroy').html("").dialog({
 				resizable: false,
 				minWidth: 320,
+				maxWidth: 500,
+				maxHeight: 500,
 				title: "正在加载...",
 				open: function(event, ui) {
 					$.get('/' + profileType + '/userInfo',  {profileId: profileId, name: username}, function(data){
 						$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
+							context: {threadId: threadId, profileId: profileId, profileType: profileType},
+							success: function( xhr, status) {
+								if ($(anchor).hasClass('_thread')) {
+									tempContainer = $('<div/>');
+									profileId = this.profileId;
+									profileType = this.profileType;
+									$(data).each( function(i, message) {
+										messageNode = sirius.packMessage(message, profileId, profileType);
+										if (message.retweet_origin != null) {
+											$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
+										}
+										$(messageNode).appendTo($(anchor.hash));
+									});
+								}
+							},
 							error: function( xhr, status, index, anchor ) {
 								$( anchor.hash ).html("加载失败... 请稍候重试！");
 							}
