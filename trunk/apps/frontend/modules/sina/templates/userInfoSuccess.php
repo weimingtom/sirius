@@ -34,13 +34,13 @@
 	    </div>
         
 		
-<!--		<div class="_userInfoActions userInfoActions btns">
-	        <a class="_follow btn-cmt" href="#">Follow</a>
-	        <a class="_unfollow btn-cmt" href="#">Unfollow</a>
-	        <a class="_dm btn-cmt" href="#">DM</a>
+		<!--<div class="_userInfoActions userInfoActions btns">
+	        <a class="_follow btn-cmt" href="#">关注</a>
+	        <a class="_unfollow btn-cmt" href="#">取消关注</a>
+	        <a class="_dm btn-cmt" href="#">私信</a>
 	        <a class="_reply btn-cmt" href="#">Reply</a>
 	        <a class="_addToList btn-cmt" href="#">Add To List</a>
 	    </div>
--->
+
     </div>
 </div>
