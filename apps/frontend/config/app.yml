@@ -21,3 +21,7 @@ all:
   foursquare:
     consumer_key: '4HBZFWRSMXTOQGT1PWKF1TWJZEULYRHC2E5SVBHTR42G1TUM'
     consumer_secret: 'X4V2WXQ50MYYTHRJVHL1TQKOJTVBVENLODA3C25W5EVTTNUA'
+  douban:
+    consumer_key: '0c84b64088f504a4258e22c19adf0dec'
+    consumer_secret: '2af83742619bb77a'
+    callback_url: 'http://dev.mixmes.com/douban/authback'

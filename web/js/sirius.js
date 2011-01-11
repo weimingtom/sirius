@@ -422,11 +422,12 @@ $(function() {
 				url: requestUrl,
 				data: requestData,
 				dataType: 'json',
-				context: {sirius:this, threadId: threadId, profileId: profileId},
+				context: {sirius:this, threadId: threadId, profileId: profileId, profileType: profileType},
 				success: function(data) {
 					tempContainer = $('<div/>');
 					lastMessageId = false;
 					profileId = this.profileId;
+					profileType = this.profileType;
 					sirius = this.sirius;
 					$(data).each( function(i, message) {
 						lastMessageId = lastMessageId || message.id;
@@ -479,23 +480,28 @@ $(function() {
 			
 			var sirius = this;
 			$.merge(avatar, author).click(function() {
-				sirius.showUser(profileId, profileType, message.user.name, message.user.screen_name);
+				sirius.showUser(profileId, profileType, message.user.name);
+			});
+			$('._user_link', text).click(function(){
+				var user = $(this).attr('user');
+				sirius.showUser(profileId, profileType, user);
 			});
 			return node;			
 		},
 		
-		showUser: function(profileId, profileType, username, screenName) {
+		showUser: function(profileId, profileType, username) {
 			$('#popup-dialog').dialog('destroy').html("").dialog({
+				resizable: false,
+				minWidth: 320,
 				title: "正在加载...",
 				open: function(event, ui) {
-					var thisObj = this;
-					$.get('/' + profileType + '/user',  {name: username}, function(data){
+					$.get('/' + profileType + '/userInfo',  {profileId: profileId, name: username}, function(data){
 						$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
 							error: function( xhr, status, index, anchor ) {
 								$( anchor.hash ).html("加载失败... 请稍候重试！");
 							}
 						}});
-						$('#popup-dialog').dialog('option', {title: screenName});
+						$('#popup-dialog').dialog('option', {title: $('._bio ._screen_name', data).text()});
 					});
 				}
 			});
