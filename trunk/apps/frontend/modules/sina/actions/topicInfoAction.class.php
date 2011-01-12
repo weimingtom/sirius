@@ -2,9 +2,6 @@
 
 class topicInfoAction extends sinaAction {
 	public function execute($request) {
-		$consumer_key = sfConfig::get('app_sina_consumer_key');
-	    $consumer_secret = sfConfig::get('app_sina_consumer_secret');
-		
 		$profile_id = $request->getParameter('profileId');
 		$this->profileId = $profile_id;
 		$this->forward404Unless($profile_id);
@@ -23,7 +20,7 @@ class topicInfoAction extends sinaAction {
 		
 		
 		$connectData = json_decode($profile->getConnectData(), true);
-		$weibo = new WeiboClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
+		$weibo = new WeiboClient($this->consumerKey, $this->consumerSecret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
 		
 		$data = $weibo->trend_timeline($topic);
 		$this->messages = $this->formatMessages($data);

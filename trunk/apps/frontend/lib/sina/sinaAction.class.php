@@ -1,6 +1,15 @@
 <?php
 
-abstract class sinaAction extends sfAction {	
+abstract class sinaAction extends sfAction {
+	public function preExecute() {
+		parent::preExecute();
+		
+		$this->consumerKey = sfConfig::get('app_sina_consumer_key');
+	    $this->consumerSecret = sfConfig::get('app_sina_consumer_secret');
+		$this->callbackUrl = sfConfig::get('app_sina_callback_url');
+		
+	}
+		
 	protected function formatMessages($originMessages, $isDM = false) {
 		$messages = array();
 		foreach ($originMessages as $originMessage) {
@@ -79,5 +88,18 @@ abstract class sinaAction extends sfAction {
 		// replace user
 		$text = preg_replace( "/ *@([\x{4e00}-\x{9fa5}A-Za-z0-9_]*) ?/u", " <a class=\"_user_link\" href=\"#\" user=\"\\1\">@\\1</a> ", $text);
 		return $text;
+	}
+	
+	protected function getMessageCommentsAndRetweetCount($messageIdArray) {
+		if ($messageIdArray == null) {
+			return null;
+		}
+		if (is_array()) {
+			$messageIds = implode(',', $messageIdArray);
+		} else {
+			$messageIds = $messageIdArray;
+		}
+		
+		
 	}
 }

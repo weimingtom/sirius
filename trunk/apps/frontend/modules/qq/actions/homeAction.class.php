@@ -2,8 +2,6 @@
 
 class homeAction extends QQAction {
 	public function execute($request) {
-		$consumer_key = sfConfig::get('app_qq_consumer_key');
-	    $consumer_secret = sfConfig::get('app_qq_consumer_secret');
 		$profile_id = $request->getParameter('profile_id');
 		$this->forward404Unless($profile_id);
 		
@@ -15,7 +13,7 @@ class homeAction extends QQAction {
 		$this->forward404Unless($profile->getOwnerId() == $this->getUser()->getId());
 		
 		$connectData = json_decode($profile->getConnectData(), true);
-		$weibo = new QQClient($consumer_key, $consumer_secret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
+		$weibo = new QQClient($this->consumerKey, $this->consumerSecret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
 		$data  = $weibo->home_timeline();
 		
 		$data = $data['data']['info'];
