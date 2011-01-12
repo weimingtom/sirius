@@ -1,17 +1,14 @@
 <?php
 
-class authbackAction extends sfAction {
+class authbackAction extends sinaAction {
 	public function execute($request) {
-		$consumer_key = sfConfig::get('app_sina_consumer_key');
-	    $consumer_secret = sfConfig::get('app_sina_consumer_secret');
-		
 		$token = $this->getUser()->getAttribute("SinaOAuthToken");
 		$this->forward404Unless($token);
 		
 		$oauth_verifier = $request->getParameter("oauth_verifier");
 		$this->forward404Unless($oauth_verifier);
 		
-		$to = new WeiboOAuth($consumer_key, $consumer_secret, $token['oauth_token'], $token['oauth_token_secret']);
+		$to = new WeiboOAuth($this->consumerKey, $this->consumerSecret, $token['oauth_token'], $token['oauth_token_secret']);
 		$tokens = $to->getAccessToken($oauth_verifier);
 		$this->forward404Unless($token);
 		//TODO: check return string
@@ -25,7 +22,7 @@ class authbackAction extends sfAction {
 				->fetchOne();
 		$this->forward404If($checkResult);
 		
-		$weibo = new WeiboClient($consumer_key, $consumer_secret, $tokens['oauth_token'], $tokens['oauth_token_secret']);
+		$weibo = new WeiboClient($this->consumerKey, $this->consumerSecret, $tokens['oauth_token'], $tokens['oauth_token_secret']);
 		$user_profile = $weibo->show_user($tokens['user_id']);
 		
 		$profile = new Profile();

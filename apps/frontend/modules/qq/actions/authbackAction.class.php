@@ -2,16 +2,13 @@
 
 class authbackAction extends QQAction {
 	public function execute($request) {
-		$consumer_key = sfConfig::get('app_qq_consumer_key');
-	    $consumer_secret = sfConfig::get('app_qq_consumer_secret');
-		
 		$token = $this->getUser()->getAttribute("QQOAuthToken");
 		$this->forward404Unless($token);
 		
 		$oauth_verifier = $request->getParameter("oauth_verifier");
 		$this->forward404Unless($oauth_verifier);
 
-		$to = new QQOAuth($consumer_key, $consumer_secret, $token['oauth_token'], $token['oauth_token_secret']);
+		$to = new QQOAuth($this->consumerKey, $this->consumerSecret, $token['oauth_token'], $token['oauth_token_secret']);
 		$tokens = $to->getAccessToken($oauth_verifier);
 		$this->forward404Unless($tokens);
 		//TODO: check return string
@@ -26,7 +23,7 @@ class authbackAction extends QQAction {
         ->fetchOne();
     	$this->forward404If($checkResult);
 		
-		$weibo = new QQClient($consumer_key, $consumer_secret, $tokens['oauth_token'], $tokens['oauth_token_secret']);
+		$weibo = new QQClient($this->consumerKey, $this->consumerSecret, $tokens['oauth_token'], $tokens['oauth_token_secret']);
 		$user_profile = $weibo->show_user();
 
 		$profile = new Profile();

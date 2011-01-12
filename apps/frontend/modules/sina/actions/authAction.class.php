@@ -1,15 +1,11 @@
 <?php
 
-class authAction extends sfAction {
+class authAction extends sinaAction {
 	public function execute($request) {
-		$consumer_key = sfConfig::get('app_sina_consumer_key');
-	    $consumer_secret = sfConfig::get('app_sina_consumer_secret');
-		$callback_url = sfConfig::get('app_sina_callback_url');
-				
-		$to = new WeiboOAuth($consumer_key, $consumer_secret);
+		$to = new WeiboOAuth($this->consumerKey, $this->consumerSecret);
 		$tok = $to->getRequestToken();
 		$this->getUser()->setAttribute("SinaOAuthToken", $tok);
-		$request_link = $to->getAuthorizeURL($tok['oauth_token'], false, $callback_url);
+		$request_link = $to->getAuthorizeURL($tok['oauth_token'], false, $this->callbackUrl);
 		return $this->redirect($request_link);		
 	}
 }

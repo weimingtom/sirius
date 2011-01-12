@@ -1,5 +1,13 @@
 <?php
 abstract class QQAction extends sfAction {
+	public function preExecute() {
+		parent::preExecute();
+		
+		$this->consumerKey = sfConfig::get('app_qq_consumer_key');
+	    $this->consumerSecret = sfConfig::get('app_qq_consumer_secret');
+		$this->callbackUrl = sfConfig::get('app_qq_callback_url');
+		
+	}
 	
 	protected function formatMessages($originMessages, $isDM = false) {
 		//var_dump($originMessages);die();
