@@ -40,8 +40,10 @@ abstract class QQAction extends sfAction {
 		
 		if ($origin['type'] == 2) {
 			$message->retweet_origin = $this->formatMessage($origin['source']);
+		} else {
+			$message->retweetCount = $origin['count'];
 		}
-		
+				
 		$user = $message->user;
 		$user->id = $origin['name'];
 		$user->name = $origin['name'];
