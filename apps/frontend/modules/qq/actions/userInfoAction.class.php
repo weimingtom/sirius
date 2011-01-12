@@ -2,7 +2,7 @@
 
 class userInfoAction extends QQAction {
 	public function execute($request) {
-		$profile_id = $request->getParameter('profileId');
+		$profile_id = $request->getParameter('profile_id');
 		$this->profileId = $profile_id;
 		$this->forward404Unless($profile_id);
 		

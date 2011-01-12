@@ -360,6 +360,25 @@ $(function() {
 				.append('<span class="refreshing icon-19" title="正在刷新...">正在刷新...</span>')
 				.append('<a href="#" class="close-button icon-19" title="删除此栏">删除此栏</a>');
 
+			// add actions
+			var profileTypeDefine = socialNetworkTypes[threadInfo.profile_type];
+			for (var i = 0; i < profileTypeDefine.length; ++i) {
+				if (profileTypeDefine[i].type == threadInfo.type) {
+					if (profileTypeDefine[i].actions != undefined) {
+						var actions = profileTypeDefine[i].actions;
+						var threadActions = $('<span class="_actions messageActions" />');
+						for (var i = 0; i < actions.length; ++i) {
+							$('<a />').addClass('action icon-19').addClass('action-' + actions[i].name)
+								.attr('title', actions[i].title)
+								.html(actions[i].title)
+								.appendTo(threadActions);
+						}
+						$(thread).append(threadActions);
+					}
+					break;
+				}
+			}			
+			
 			$('#threadsScroll',this.dashboard).append(thread);
 
 			// bind event
@@ -440,6 +459,22 @@ $(function() {
 						$(messageNode).appendTo(tempContainer);
 					});
 					if (tempContainer.children().size() > 0) {
+						if ($('div[threadId=' + this.threadId + '] ._actions').size() > 0) {
+							var threadId = this.threadId;
+							$('.message', tempContainer).hover(
+								function(event){
+									var top = $(this).position().top + 5;
+									$('.message-count-status', this).hide();
+									$('.new-message', this).hide();
+									$('div[threadId=' + threadId + '] ._actions').css('top', top);
+								},
+								function(event){
+									$('.message-count-status', this).show();
+									$('.new-message', this).show();
+									$('div[threadId=' + threadId + '] ._actions').css('top', -199);
+								}
+							);
+						}
 						$('.new-count', thread).text(tempContainer.children().size()).show();
 						$('div[threadId=' + this.threadId + ']').attr('lastMessageId', lastMessageId);
 						tempContainer.children().prependTo($('div[threadId=' + this.threadId + '] .thread-message-container'));
@@ -521,7 +556,13 @@ $(function() {
 						success: function(data){
 							var profileId = this.profileId;
 							var profileType = this.profileType;
-							$(data).appendTo('#popup-dialog').tabs();
+							$(data).appendTo('#popup-dialog').tabs({
+								show: function (event, ui) {
+									if ($(ui.tab).attr('expectedWidth') != undefined) {
+										$('#popup-dialog').dialog('option', {width: $(ui.tab).attr('expectedWidth')});
+									}
+								}
+							});
 								
 							$('#_thread_tab ._message_picture_thumbnail').colorbox({
 								maxWidth: '80%',
@@ -551,7 +592,7 @@ $(function() {
 			var sirius = this;
 			$('#popup-dialog').dialog('destroy').html("").dialog({
 				resizable: false,
-				minWidth: 330,
+				minWidth: 300,
 				maxWidth: 500,
 				maxHeight: 500,
 				title: "正在加载...",
@@ -562,34 +603,41 @@ $(function() {
 						data: {profile_id: profileId, name: username},
 						context: {profileId: profileId, profileType: profileType},
 						success: function(data){
-							$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
-								context: {profileId: this.profileId, profileType: this.profileType},
-								success: function( result, status) {
-									var profileId = this.context.profileId;
-									var profileType = this.context.profileType;
-									$('#_thread_tab ._message_picture_thumbnail').colorbox({
-										maxWidth: '80%',
-										maxHeight: '80%',
-										photo: true
-									});
-									
-									$('#_thread_tab .message-avatar,#_thread_tab  .message-author').click(function() {
-										sirius.showUser(profileId, profileType, $(this).attr('title'));
-									});
-														
-									$('#_thread_tab ._user_link').click(function(){
-										var user = $(this).attr('user');
-										sirius.showUser(profileId, profileType, user);
-									});
-									$('#_thread_tab ._topic_link').click(function(){
-										var topic = $(this).attr('topic');
-										sirius.showTopic(profileId, profileType, topic);
-									});
+							$(data).appendTo('#popup-dialog').tabs({
+								show: function (event, ui) {
+									if ($(ui.tab).attr('expectedWidth') != undefined) {
+										$('#popup-dialog').dialog('option', {width: $(ui.tab).attr('expectedWidth')});
+									}
 								},
-								error: function( xhr, status, index, anchor ) {
-									$( anchor.hash ).html("加载失败... 请稍候重试！");
+								ajaxOptions: {
+									context: {profileId: this.profileId, profileType: this.profileType},
+									success: function( result, status) {
+										var profileId = this.context.profileId;
+										var profileType = this.context.profileType;
+										$('#_thread_tab ._message_picture_thumbnail').colorbox({
+											maxWidth: '80%',
+											maxHeight: '80%',
+											photo: true
+										});
+										
+										$('#_thread_tab .message-avatar,#_thread_tab  .message-author').click(function() {
+											sirius.showUser(profileId, profileType, $(this).attr('title'));
+										});
+															
+										$('#_thread_tab ._user_link').click(function(){
+											var user = $(this).attr('user');
+											sirius.showUser(profileId, profileType, user);
+										});
+										$('#_thread_tab ._topic_link').click(function(){
+											var topic = $(this).attr('topic');
+											sirius.showTopic(profileId, profileType, topic);
+										});
+									},
+									error: function( xhr, status, index, anchor ) {
+										$( anchor.hash ).html("加载失败... 请稍候重试！");
+									}
 								}
-							}});
+							});
 							$('#popup-dialog').dialog('option', {title: $('._bio ._screen_name', data).text()});
 					}});
 				}

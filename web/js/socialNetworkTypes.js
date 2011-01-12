@@ -3,7 +3,17 @@ var socialNetworkTypes = socialNetworkTypes || [];
 socialNetworkTypes['sina'] = [
 	{
 		defaultTitle: '首页微博',
-		type: 'home'
+		type: 'home',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			}
+		]
 	},
 	
 	{
