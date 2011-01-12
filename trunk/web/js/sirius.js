@@ -466,6 +466,16 @@ $(function() {
 			
 			var node = $('<div class="message"></div>').append(avatar).append(author).append(time_source).append(text);
 			
+			var countStatus = $('<span class="message-count-status" />');
+			if (message.retweetCount >= 0) {
+				$(countStatus).html('<span>' + message.retweetCount + '</span> 条转发');
+			}			
+			if (message.commentCount >= 0) {
+				$(countStatus).html($(countStatus).html() + ', <span>' + message.commentCount + '</span> 条评论');
+			}
+			
+			$(time_source).after(countStatus);
+			
 			if (message.picture_thumbnail != "") {
 				$('<a/>')
 					.addClass('_message_picture_thumbnail')
@@ -498,15 +508,15 @@ $(function() {
 			var sirius = this;
 			$('#popup-dialog').dialog('destroy').html("").dialog({
 				resizable: false,
-				minWidth: 320,
+				minWidth: 330,
 				maxWidth: 500,
-				maxHeight: 500,
+				maxHeight: 600,
 				title: "正在加载...",
 				open: function(event, ui) {
 					$.ajax({
 						type: 'GET',
 						url: '/' + profileType + '/topicInfo',
-						data: {profileId: profileId, topic: topic},
+						data: {profile_id: profileId, topic: topic},
 						context: {profileId: profileId, profileType: profileType},
 						success: function(data){
 							var profileId = this.profileId;
@@ -541,7 +551,7 @@ $(function() {
 			var sirius = this;
 			$('#popup-dialog').dialog('destroy').html("").dialog({
 				resizable: false,
-				minWidth: 320,
+				minWidth: 330,
 				maxWidth: 500,
 				maxHeight: 500,
 				title: "正在加载...",
@@ -549,7 +559,7 @@ $(function() {
 					$.ajax({
 						type: 'GET',
 						url: '/' + profileType + '/userInfo',
-						data: {profileId: profileId, name: username},
+						data: {profile_id: profileId, name: username},
 						context: {profileId: profileId, profileType: profileType},
 						success: function(data){
 							$(data).appendTo('#popup-dialog').tabs({ajaxOptions: {
