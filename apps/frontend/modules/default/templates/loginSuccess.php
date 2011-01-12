@@ -2,11 +2,16 @@
 <?php use_stylesheet('base.css') ?>
 <?php use_stylesheet('login.css') ?>
 <script>
-<?php if ($errorMsg): ?>
 	$(function(){
+<?php if ($errorMsg): ?>
 		var errorMsg = "<?php echo $errorMsg?>";
-	});
 <?php endif?>
+		$('#memberLoginForm input').keypress(function(event){
+			if (event.which == 13) {
+				$('#memberLoginForm').submit();
+			}
+		});
+	});
 </script>
 <div id="container">
 	<div id="content">
