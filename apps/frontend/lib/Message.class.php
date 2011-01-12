@@ -18,6 +18,9 @@ class Message {
 	public $user;
 	public $truncated = "";
 	
+	public $retweetCount = -1;
+	public $commentCount = -1;
+	
 	public $picture_thumbnail = "";
 	public $picture_original = "";
 	//public $video_thumbnail;

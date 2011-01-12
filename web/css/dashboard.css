@@ -413,6 +413,23 @@ a.list-toggle-button {
 	white-wrap: nowrap;
 }
 
+.message-count-status {
+	position: absolute;
+	top: 4px;
+	right: 18px;
+	font: 11px tahoma,arial,宋体b8b体4f53;
+	color: #999;
+}
+
+.message-count-status span {
+	/*font: 12px Georgia, arial, 宋体b8b体4f53;
+	color: black;*/
+}
+
+.submessage .message-count-status {
+	right: 12px;
+}
+
 .message-body {
 	font: 12px/1.5 tahoma,arial,宋体b8b\4f53;
 }
