@@ -42,6 +42,10 @@ abstract class BaseThreadForm extends BaseFormDoctrine
       'updated_at'   => new sfValidatorDateTime(),
     ));
 
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorDoctrineUnique(array('model' => 'Thread', 'column' => array('tab_id', 'profile_id', 'type', 'parameters')))
+    );
+
     $this->widgetSchema->setNameFormat('thread[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);

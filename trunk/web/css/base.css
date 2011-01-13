@@ -308,6 +308,10 @@ a, a:hover, a:visited, a:focus {
 	padding-left: 28px;
 }
 
+.icon-add {
+	background: url("../images/icon_plus.png") no-repeat left center;
+}
+
 .profile-sina {
 	background: url("../images/icon_16x16/sina.png") no-repeat left center;
 }

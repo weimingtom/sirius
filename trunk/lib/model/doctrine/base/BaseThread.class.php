@@ -88,6 +88,18 @@ abstract class BaseThread extends sfDoctrineRecord
              'default' => '',
              'length' => '255',
              ));
+
+
+        $this->index('tab_thread_index', array(
+             'fields' => 
+             array(
+              0 => 'tab_id',
+              1 => 'profile_id',
+              2 => 'type',
+              3 => 'parameters',
+             ),
+             'type' => 'unique',
+             ));
     }
 
     public function setUp()
