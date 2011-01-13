@@ -1,7 +1,5 @@
-<?php $messages = $sf_data->getRaw('messages'); ?>
-<div class="messages" expectWidth="350">
-<?php foreach($messages as $message): ?>
-<div class="message">
+<?php $message = $sf_data->getRaw('message'); ?>
+<div class="message" messageId="<?php echo $message->id?>">
 	<a href="javascript:;" class="message-avatar" title="<?php echo $message->user->name?>">
 		<img src="<?php echo $message->user->avatar?>">
 	</a>
@@ -21,7 +19,7 @@
 		<a href='#' class='message-count-status _comment-count'><span class="icon-19 action-comment"></span><span><?php echo $message->commentCount?></span> 条评论</a>
 	<?php endif?>
 	<?php if ($message->retweet_origin != null): ?>
-	<div class="message submessage">
+	<div class="message submessage" messageId="<?php echo $message->retweet_origin->id?>">
 		<a href="javascript:;" class="message-avatar" title="<?php echo $message->retweet_origin->user->name?>">
 			<img src="<?php echo $message->retweet_origin->user->avatar?>">
 		</a>
@@ -43,7 +41,4 @@
 	</div>
 	<?php endif ?>
 	
-</div>
-
-<?php endforeach?>
 </div>

@@ -516,9 +516,15 @@ $(function() {
 			$(node).append("<div style='clear:both;' />");
 			if (message.retweetCount > 0) {
 				$(node).append("<a href='#' class='message-count-status _retweet-count'><span class='icon-19 action-retweet'></span><span>" + message.retweetCount + '</span> 条转发</a>');
+				$('._retweet-count', node).click(function(){
+					sirius.showMessage(profileId, profileType,message.id, 'retweet');
+				}); 
 			}			
 			if (message.commentCount > 0) {
 				$(node).append("<a href='#' class='message-count-status _comment-count'><span class='icon-19 action-comment'></span><span>" + message.commentCount + '</span> 条评论</a>');
+				$('._comment-count', node).click(function(){
+					sirius.showMessage(profileId, profileType, message.id, 'comment');
+				}); 
 			}
 			
 			var sirius = this;
@@ -536,9 +542,83 @@ $(function() {
 			return node;			
 		},
 		
+		showMessage: function(profileId, profileType, messageId, defaultTab) {
+			var sirius = this;
+			var selectedTab = 0;
+			if (defaultTab == 'comment') {
+				selectedTab = 1;
+			}			
+			$('#popup-dialog').dialog('destroy').html("").dialog({
+				position: ['center', 100],
+				resizable: false,
+				minWidth: 330,
+				maxWidth: 500,
+				maxHeight: 600,
+				title: "微博详情",
+				open: function(event, ui) {
+					$.ajax({
+						type: 'GET',
+						url: '/' + profileType + '/messageInfo',
+						data: {profile_id: profileId, id: messageId, tab: defaultTab},
+						context: {profileId: profileId, profileType: profileType},
+						success: function(data){
+							$(data).appendTo('#popup-dialog')
+							       .children('a._message_picture_thumbnail')
+							       .colorbox({maxWidth: '80%', maxHeight: '80%', photo: true})
+							       .end()
+							       .filter('._message-info-tabs')
+							       .tabs({
+							    selected: selectedTab,
+								show: function (event, ui) {
+									if ($(ui.tab).attr('expectedWidth') != undefined) {
+										$('#popup-dialog').dialog('option', {width: $(ui.tab).attr('expectedWidth')});
+									}
+								},
+								ajaxOptions: {
+									context: {profileId: this.profileId, profileType: this.profileType},
+									success: function( result, status) {
+										var profileId = this.context.profileId;
+										var profileType = this.context.profileType;
+										$('._thread-tab ._message_picture_thumbnail').colorbox({
+											maxWidth: '80%',
+											maxHeight: '80%',
+											photo: true
+										});
+										
+										$('._thread-tab .message-avatar,._thread-tab  .message-author').click(function() {
+											sirius.showUser(profileId, profileType, $(this).attr('title'));
+										});
+															
+										$('._thread-tab ._user_link').click(function(){
+											var user = $(this).attr('user');
+											sirius.showUser(profileId, profileType, user);
+										});
+										$('._thread-tab ._topic_link').click(function(){
+											var topic = $(this).attr('topic');
+											sirius.showTopic(profileId, profileType, topic);
+										});
+										$('._thread-tab ._comment-count').click(function(){
+											sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'comment');
+										}); 
+										$('._thread-tab ._retweet-count').click(function(){
+											sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'retweet');
+										}); 
+									},
+									error: function( xhr, status, index, anchor ) {
+										$( anchor.hash ).html("<div class='dialog-error'>加载失败... 请稍候重试！</div>");
+									}
+								}
+							});
+						}
+					})
+				}
+			});
+		},
+		
 		showTopic: function(profileId, profileType, topic) {
 			var sirius = this;
 			$('#popup-dialog').dialog('destroy').html("").dialog({
+				position: ['center', 100],
 				resizable: false,
 				minWidth: 330,
 				maxWidth: 500,
@@ -561,24 +641,30 @@ $(function() {
 								}
 							});
 								
-							$('#_thread_tab ._message_picture_thumbnail').colorbox({
+							$('._thread-tab ._message_picture_thumbnail').colorbox({
 								maxWidth: '80%',
 								maxHeight: '80%',
 								photo: true
 							});
 							
-							$('#_thread_tab .message-avatar,#_thread_tab  .message-author').click(function() {
+							$('._thread-tab .message-avatar,._thread-tab  .message-author').click(function() {
 								sirius.showUser(profileId, profileType, $(this).attr('title'));
 							});
 												
-							$('#_thread_tab ._user_link').click(function(){
+							$('._thread-tab ._user_link').click(function(){
 								var user = $(this).attr('user');
 								sirius.showUser(profileId, profileType, user);
 							});
-							$('#_thread_tab ._topic_link').click(function(){
+							$('._thread-tab ._topic_link').click(function(){
 								var topic = $(this).attr('topic');
 								sirius.showTopic(profileId, profileType, topic);
 							});
+							$('._thread-tab ._comment-count').click(function(){
+								sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'comment');
+							}); 
+							$('._thread-tab ._retweet-count').click(function(){
+								sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'retweet');
+							}); 
 							$('#popup-dialog').dialog('option', {title: '话题: #' + topic + '#'});
 					}});
 				}
@@ -588,6 +674,7 @@ $(function() {
 		showUser: function(profileId, profileType, username) {
 			var sirius = this;
 			$('#popup-dialog').dialog('destroy').html("").dialog({
+				position: ['center', 100],
 				resizable: false,
 				minWidth: 300,
 				maxWidth: 500,
@@ -611,27 +698,33 @@ $(function() {
 									success: function( result, status) {
 										var profileId = this.context.profileId;
 										var profileType = this.context.profileType;
-										$('#_thread_tab ._message_picture_thumbnail').colorbox({
+										$('._thread-tab ._message_picture_thumbnail').colorbox({
 											maxWidth: '80%',
 											maxHeight: '80%',
 											photo: true
 										});
 										
-										$('#_thread_tab .message-avatar,#_thread_tab  .message-author').click(function() {
+										$('._thread-tab .message-avatar,._thread-tab  .message-author').click(function() {
 											sirius.showUser(profileId, profileType, $(this).attr('title'));
 										});
 															
-										$('#_thread_tab ._user_link').click(function(){
+										$('._thread-tab ._user_link').click(function(){
 											var user = $(this).attr('user');
 											sirius.showUser(profileId, profileType, user);
 										});
-										$('#_thread_tab ._topic_link').click(function(){
+										$('._thread-tab ._topic_link').click(function(){
 											var topic = $(this).attr('topic');
 											sirius.showTopic(profileId, profileType, topic);
 										});
+										$('._thread-tab ._comment-count').click(function(){
+											sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'comment');
+										}); 
+										$('._thread-tab ._retweet-count').click(function(){
+											sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'retweet');
+										}); 
 									},
 									error: function( xhr, status, index, anchor ) {
-										$( anchor.hash ).html("加载失败... 请稍候重试！");
+										$( anchor.hash ).html("<div class='dialog-error'>加载失败... 请稍候重试！</div>");
 									}
 								}
 							});

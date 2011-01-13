@@ -1,7 +1,7 @@
 <div>
 	<ul>
 		<li><a href="#_<?php echo $userData['name']?>_bio" expectedWidth="320">简介</a></li>
-		<li><a title="_thread_tab" href="/qq/user/?profile_id=<?php echo $profileId?>&name=<?php echo $userData['name']?>&format=html" class="_thread" expectedWidth="400">微博</a></li>
+		<li><a title="微博" href="/qq/user/?profile_id=<?php echo $profileId?>&name=<?php echo $userData['name']?>&format=html" class="_thread" expectedWidth="400">微博</a></li>
 	</ul>
 	<div id="_<?php echo $userData['name']?>_bio" class="_bio userInfo">
 		<span class="_screen_name" style="display:none"><?php echo $userData['nick']?></span>
@@ -36,4 +36,7 @@
 	    </div>
 -->
     </div>
+    <div class="_thread-tab" id="微博">
+		<div class="loading"><img src="/images/loading.gif" /></div>
+	</div>
 </div>

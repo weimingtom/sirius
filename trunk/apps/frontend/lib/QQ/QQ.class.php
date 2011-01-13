@@ -119,7 +119,7 @@ class QQClient
      */ 
     function show_status( $sid ) 
     { 
-        return $this->oauth->get( 'http://open.t.qq.com/api/statuses/show/' . $sid . '.json' ); 
+        return $this->oauth->get( 'http://open.t.qq.com/api/t/show', array("id" => $sid) ); 
     } 
 
     /** 
@@ -383,6 +383,18 @@ class QQClient
         return $this->oauth->get('http://open.t.qq.com/api/statuses/comments.json' , $param ); 
 
     } 
+	
+	
+	function get_reposts_by_sid( $sid , $pageflag = 0 , $pagetime = NULL ) 
+    { 
+        $param = array(); 
+        $param['rootid'] = $sid; 
+        if( $pageflag ) $param['pageflag'] = $pageflag; 
+        if( $pagetime ) $param['pagetime'] = $pagetime; 
+
+        return $this->oauth->get('http://open.t.qq.com/api/t/re_list' , $param ); 
+
+    }
 
     /** 
      * 批量统计微博的评论数，转发数，一次请求最多获取100个。 

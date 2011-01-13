@@ -3,3 +3,6 @@
 
 userInfoSuccess:
   has_layout:     false
+
+messageInfoSuccess:
+  has_layout:     false

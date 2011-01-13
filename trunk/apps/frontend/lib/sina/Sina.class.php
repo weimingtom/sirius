@@ -391,6 +391,17 @@ class WeiboClient
 
     } 
 
+	function get_reposts_by_sid( $sid , $page = 1 , $count = 20 ) 
+    { 
+        $param = array(); 
+        $param['id'] = $sid; 
+        if( $page ) $param['page'] = $page; 
+        if( $count ) $param['count'] = $count; 
+
+        return $this->oauth->get('http://api.t.sina.com.cn/statuses/repost_timeline.json' , $param ); 
+
+    } 
+	
     /** 
      * 批量统计微博的评论数，转发数，一次请求最多获取100个。 
      *  
