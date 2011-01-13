@@ -5,9 +5,32 @@ abstract class QQAction extends sfAction {
 		
 		$this->consumerKey = sfConfig::get('app_qq_consumer_key');
 	    $this->consumerSecret = sfConfig::get('app_qq_consumer_secret');
-		$this->callbackUrl = sfConfig::get('app_qq_callback_url');
-		
+		$this->callbackUrl = sfConfig::get('app_qq_callback_url');		
 	}
+	
+	protected function prepareApiConsumer($request) {
+		if (!$request->hasParameter('profile_id')) {
+			return false;
+		}		
+		$this->profileId = $request->getParameter('profile_id');
+		
+		// get profile
+		$this->profile = Doctrine::getTable('profile')->find($this->profileId);
+		if (!$this->profile) {
+			return false;
+		}
+		
+		// check user
+		if ($this->profile->getOwnerId() != $this->getUser()->getId()) {
+			return false;
+		}
+		
+		$connectData = json_decode($this->profile->getConnectData(), true);
+		$this->apiConsumer = new QQClient($this->consumerKey, $this->consumerSecret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
+		
+		return $this->apiConsumer;			
+	}
+	
 	
 	protected function formatMessages($originMessages, $isDM = false) {
 		//var_dump($originMessages);die();

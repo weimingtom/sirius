@@ -148,21 +148,25 @@
 	line-height: 14px;
 }
 
-#popup-dialog #_thread_tab  {
+#popup-dialog .ui-tabs .ui-tabs-nav li a .icon-19 {
+	margin: -0.5em 0;
+}
+
+#popup-dialog ._thread-tab  {
 	padding: 0;
 }
 
-#popup-dialog #_thread_tab .messages {
+#popup-dialog ._thread-tab .messages {
 	height: 400px;
 	overflow-y:scroll;
 	left: 0;
 }
 
-#popup-dialog #_thread_tab .message {
+#popup-dialog ._thread-tab .message {
 	background:none;
 }
 
-#popup-dialog #_thread_tab .message:first-child {
+#popup-dialog ._thread-tab .message:first-child {
 	background:none;
 	border-top: none;
 }

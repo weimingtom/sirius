@@ -1,7 +1,7 @@
 <div>
 	<ul>
 		<li><a href="#_<?php echo $userData['name']?>_bio" expectedWidth="320">简介</a></li>
-		<li><a title="_thread_tab" href="/sina/user/?profile_id=<?php echo $profileId?>&name=<?php echo $userData['name']?>&format=html" class="_thread"  expectedWidth="400">微博</a></li>
+		<li><a title="微博" href="/sina/user/?profile_id=<?php echo $profileId?>&name=<?php echo $userData['name']?>&format=html" class="_thread"  expectedWidth="400">微博</a></li>
 	</ul>
 	<div id="_<?php echo $userData['name']?>_bio" class="_bio userInfo">
 		<span class="_screen_name" style="display:none"><?php echo $userData['screen_name']?></span>
@@ -40,7 +40,10 @@
 	        <a class="_dm btn-cmt" href="#">私信</a>
 	        <a class="_reply btn-cmt" href="#">Reply</a>
 	        <a class="_addToList btn-cmt" href="#">Add To List</a>
-	    </div>
+	    </div>-->
 
     </div>
+    <div class="_thread-tab" id="微博">
+		<div class="loading"><img src="/images/loading.gif" /></div>
+	</div>
 </div>

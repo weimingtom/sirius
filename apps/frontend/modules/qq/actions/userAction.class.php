@@ -23,7 +23,7 @@ class userAction extends QQAction {
 		$messages = $this->formatMessages($data['data']['info']);
 
 		if ($request->hasParameter('format') && $request->getParameter('format') == 'html') {
-			return $this->renderPartial('thread/messages', array('messages'=>$messages));
+			return $this->renderPartial('global/messages', array('messages'=>$messages));
 		}
 		return $this->renderText(json_encode($messages));
 	}
