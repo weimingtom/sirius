@@ -5,7 +5,7 @@ class mentionsAction extends QQAction {
 		// prepare apiConsumer
 		$this->forward404Unless($this->prepareApiConsumer($request));
 		
-		$data  = $this->apiConsumer->home_timeline();
+		$data  = $this->apiConsumer->mentions();
 		
 		$data = $data['data']['info'];
 		if ($request->hasParameter('since_id')) {
