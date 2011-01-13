@@ -152,6 +152,21 @@ $(function() {
 			});
 		},
 		
+		refreshProfiles: function() {
+			$.ajax({
+				type: 'GET',
+				url: '/profile/list',
+				dataType: 'json',
+				context: this,
+				success: function(data) {
+					this.setProfiles(data);
+				},
+				error: function() {
+					this.statusMessage('帐号刷新失败', 'error');
+				}
+			});
+		},
+		
 		setProfiles: function(data) {
 			if (!$.isArray(data))
 				return false;
@@ -459,22 +474,6 @@ $(function() {
 						$(messageNode).appendTo(tempContainer);
 					});
 					if (tempContainer.children().size() > 0) {
-						if ($('div[threadId=' + this.threadId + '] ._actions').size() > 0) {
-							var threadId = this.threadId;
-							$('.message', tempContainer).hover(
-								function(event){
-									var top = $(this).position().top + 5;
-									$('.message-count-status', this).hide();
-									$('.new-message', this).hide();
-									$('div[threadId=' + threadId + '] ._actions').css('top', top);
-								},
-								function(event){
-									$('.message-count-status', this).show();
-									$('.new-message', this).show();
-									$('div[threadId=' + threadId + '] ._actions').css('top', -199);
-								}
-							);
-						}
 						$('.new-count', thread).text(tempContainer.children().size()).show();
 						$('div[threadId=' + this.threadId + ']').attr('lastMessageId', lastMessageId);
 						tempContainer.children().prependTo($('div[threadId=' + this.threadId + '] .thread-message-container'));
@@ -501,16 +500,6 @@ $(function() {
 			
 			var node = $('<div class="message"></div>').append(avatar).append(author).append(time_source).append(text);
 			
-			var countStatus = $('<span class="message-count-status" />');
-			if (message.retweetCount >= 0) {
-				$(countStatus).html('<span>' + message.retweetCount + '</span> 条转发');
-			}			
-			if (message.commentCount >= 0) {
-				$(countStatus).html($(countStatus).html() + ', <span>' + message.commentCount + '</span> 条评论');
-			}
-			
-			$(time_source).after(countStatus);
-			
 			if (message.picture_thumbnail != "") {
 				$('<a/>')
 					.addClass('_message_picture_thumbnail')
@@ -522,6 +511,14 @@ $(function() {
 						maxHeight: '80%',
 						photo: true
 					});
+			}
+			
+			$(node).append("<div style='clear:both;' />");
+			if (message.retweetCount > 0) {
+				$(node).append("<a href='#' class='message-count-status _retweet-count'><span class='icon-19 action-retweet'></span><span>" + message.retweetCount + '</span> 条转发</a>');
+			}			
+			if (message.commentCount > 0) {
+				$(node).append("<a href='#' class='message-count-status _comment-count'><span class='icon-19 action-comment'></span><span>" + message.commentCount + '</span> 条评论</a>');
 			}
 			
 			var sirius = this;

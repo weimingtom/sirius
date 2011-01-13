@@ -21,7 +21,14 @@ class authbackAction extends QQAction {
         ->createQuery()
         ->where('type = ? AND profile_name = ?', array('qq', $tokens['name']))
         ->fetchOne();
-    	$this->forward404If($checkResult);
+		if ($checkResult) {
+			if ($checkResult->getOwnerId() == $this->getUser()->getId()) {
+				$this->errorMsg = '您已经添加了该帐号,无法重复添加。';
+			} else {
+				$this->errorMsg = '该帐号已被其他MixMes用户添加';
+			}			
+			return sfView::ERROR;
+		}
 		
 		$weibo = new QQClient($this->consumerKey, $this->consumerSecret, $tokens['oauth_token'], $tokens['oauth_token_secret']);
 		$user_profile = $weibo->show_user();
@@ -40,6 +47,6 @@ class authbackAction extends QQAction {
 		$profile->setConnectData(json_encode($tokens, true));
 		$profile->save();
 		
-		return $this->renderText("<script>window.close();</script>");
+		return sfView::SUCCESS;
 	}
 }

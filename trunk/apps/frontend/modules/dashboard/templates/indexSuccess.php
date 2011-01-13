@@ -19,18 +19,7 @@ $(function(){
 		escKey: false,
 		overlayClose: false,
 		onClosed: function(){
-			$.ajax({
-				type: 'GET',
-				url: '/profile/list',
-				dataType: 'json',
-				context: this,
-				success: function(data) {
-					$.sirius.setProfiles(data);
-				},
-				error: function() {
-					//alert("ERROR");
-				}
-			});
+			
 		}
 	})
 	if (options.profiles.length==0)
