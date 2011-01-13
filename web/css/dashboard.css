@@ -12,7 +12,7 @@ body {
 	overflow: hidden;
 }
 
-#statusContainer{width:100%;height:1px;text-align:center;position:absolute;top:7px;left:0;z-index:1100; display:none;}
+#statusContainer{width:100%;height:1px;text-align:center;position:absolute;top:7px;left:0;z-index:11000; display:none;}
 #statusContainer .statusMessage{display:inline-block;background-color:#999;padding:4px 7px 5px;}
 #statusContainer .statusMessage span{color:#fff;font-size:13px;font-weight:bold;text-shadow:0 1px 0 rgba(0,0,0,.2);}
 #statusContainer .error{border-bottom:1px solid #720606;background-color:#940808;text-shadow:0 1px 0 rgba(114,6,6,.1);-moz-box-shadow:0 2px 2px rgba(148,8,8,.3);-webkit-box-shadow:0 2px 2px rgba(148,8,8,.3);box-shadow:0 2px 2px rgba(148,8,8,.3);}
@@ -361,11 +361,11 @@ a.list-toggle-button {
 	opacity: .85;
 }
 
-.messageActions .action-comment {
+.action-comment {
 	background: url('../images/icon_comment.png') 0 0 no-repeat;
 }
 
-.messageActions .action-retweet {
+.action-retweet {
 	background: url('../images/icon_retweet.png') 0 0 no-repeat;
 }
 
@@ -434,12 +434,15 @@ a.list-toggle-button {
 	white-wrap: nowrap;
 }
 
-.message-count-status {
-	position: absolute;
-	top: 4px;
-	right: 18px;
-	font: 11px tahoma,arial,宋体b8b体4f53;
+a.message-count-status,
+a.message-count-status:visited {
 	color: #999;
+	display: inline-block;
+	font-size: 11px;
+}
+
+a.message-count-status:hover {
+	color: #239CB9;
 }
 
 .message-count-status span {
@@ -469,6 +472,10 @@ a.list-toggle-button {
 ._message_picture_thumbnail {
 	cursor: url(../images/cursor_zoom.cur), pointer;
 } 
+
+._message_picture_thumbnail img {
+	margin-bottom: 0.5em;
+}
 
 #messageBoxContainer .expanded, #messageBoxContainer .collapsed {
 	position: absolute;
