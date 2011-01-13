@@ -44,6 +44,8 @@ Thread:
     profile_type:	{ type: string(255), notnull: false }
     type:			{ type: string(255), notnull: true } #home, search, mentioned
     parameters:		{ type: string(255), notnull: true, default: ''}
+  indexes:
+    tab_thread_index: {fields: [tab_id, profile_id, type, parameters], type: unique}
   relations:
     User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Threads }
     Tab:			{ onDelete: CASCADE, local: tab_id, foreign: id, foreignAlias: Threads }

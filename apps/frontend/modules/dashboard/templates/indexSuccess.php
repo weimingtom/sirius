@@ -11,7 +11,7 @@ $(function(){
 	options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
 	$.sirius.init(options);
 	
-	$('.add-profile-button').colorbox({
+	$('._add-profile-button').colorbox({
 		href:"<?php echo url_for('/profile/add')?>",
 		innerWidth: 510,
 		innerHeight: 320,
@@ -94,7 +94,9 @@ $(function(){
 					<div class="profileSelector" style="height: auto;" ></div>				
 					<div class="_controls controls">
 						<div class="btns-right">
-							<span class="btn-spl add"><a href="#" title="添加微博帐号" class="icon-13 add-profile-button"></a></span>
+							
+								<a href="#" title="添加微博帐号" class="btn-spl add _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>
+							
 						</div>
 						<a href="#" class="_selectAll btn-spl">选择全部</a>
 						<a href="#" class="_selectNone btn-spl">取消选择</a>
@@ -106,7 +108,7 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="/profile/add" title="添加微博帐号" class="icon-13 add-profile-button sidebar-add-profile">添加微博帐号</a>
+		<a href="/profile/add" title="添加微博帐号" class="icon-13 icon-add _add-profile-button sidebar-add-profile">添加微博帐号</a>
 		<ul>
 		</ul>
 	</div>
