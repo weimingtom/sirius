@@ -715,6 +715,7 @@ a.message-count-status:hover {
 	padding: 4px 0 0;
 	display: inline-block;
 	clear: both;
+	min-height: 40px;
 }
 
 .profileSelector .profileAvatar {
