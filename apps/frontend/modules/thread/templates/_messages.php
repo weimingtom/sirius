@@ -18,7 +18,7 @@
 		<a href='#' class='message-count-status _retweet-count'><span class="icon-19 action-retweet"></span><span><?php echo $message->retweetCount?></span> 条转发</a>
 	<?php endif?> 
 	<?php if ($message->commentCount > 0): ?>
-		<a href='#' class='message-count-status _comment-count'><span class="icon-19 action-comment"></span><span><?php echo $message->commentCount?></span> 条评论</span>
+		<a href='#' class='message-count-status _comment-count'><span class="icon-19 action-comment"></span><span><?php echo $message->commentCount?></span> 条评论</a>
 	<?php endif?>
 	<?php if ($message->retweet_origin != null): ?>
 	<div class="message submessage">
@@ -38,7 +38,7 @@
 			<a href='#' class='message-count-status _retweet-count'><span class="icon-19 action-retweet"></span><span><?php echo $message->retweet_origin->retweetCount?></span> 条转发</a>
 		<?php endif?> 
 		<?php if ($message->retweet_origin->commentCount > 0): ?>
-			<a href='#' class='message-count-status _comment-count'><span class="icon-19 action-comment"></span><span><?php echo $message->retweet_origin->commentCount?></span> 条评论</span>
+			<a href='#' class='message-count-status _comment-count'><span class="icon-19 action-comment"></span><span><?php echo $message->retweet_origin->commentCount?></span> 条评论</a>
 		<?php endif?>
 	</div>
 	<?php endif ?>
