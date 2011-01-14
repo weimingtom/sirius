@@ -7,17 +7,20 @@
  * 
  * @property integer $owner_id
  * @property string $title
+ * @property string $thread_ids
  * @property User $User
  * @property Doctrine_Collection $Threads
  * 
- * @method integer             getOwnerId()  Returns the current record's "owner_id" value
- * @method string              getTitle()    Returns the current record's "title" value
- * @method User                getUser()     Returns the current record's "User" value
- * @method Doctrine_Collection getThreads()  Returns the current record's "Threads" collection
- * @method Tab                 setOwnerId()  Sets the current record's "owner_id" value
- * @method Tab                 setTitle()    Sets the current record's "title" value
- * @method Tab                 setUser()     Sets the current record's "User" value
- * @method Tab                 setThreads()  Sets the current record's "Threads" collection
+ * @method integer             getOwnerId()    Returns the current record's "owner_id" value
+ * @method string              getTitle()      Returns the current record's "title" value
+ * @method string              getThreadIds()  Returns the current record's "thread_ids" value
+ * @method User                getUser()       Returns the current record's "User" value
+ * @method Doctrine_Collection getThreads()    Returns the current record's "Threads" collection
+ * @method Tab                 setOwnerId()    Sets the current record's "owner_id" value
+ * @method Tab                 setTitle()      Sets the current record's "title" value
+ * @method Tab                 setThreadIds()  Sets the current record's "thread_ids" value
+ * @method Tab                 setUser()       Sets the current record's "User" value
+ * @method Tab                 setThreads()    Sets the current record's "Threads" collection
  * 
  * @package    Sirius
  * @subpackage model
@@ -37,6 +40,12 @@ abstract class BaseTab extends sfDoctrineRecord
              'type' => 'string',
              'notnull' => true,
              'length' => '255',
+             ));
+        $this->hasColumn('thread_ids', 'string', 1000, array(
+             'type' => 'string',
+             'notnull' => true,
+             'default' => '[]',
+             'length' => '1000',
              ));
     }
 

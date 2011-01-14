@@ -29,6 +29,7 @@ Tab:
   columns:
     owner_id:		{ type: integer, notnull: true }
     title:			{ type: string(255), notnull: true }
+    thread_ids:		{ type: string(1000), notnull: true, default: '[]' }
   relations:
     User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Tabs }
     

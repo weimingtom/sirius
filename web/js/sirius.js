@@ -306,6 +306,25 @@ $(function() {
 					$(data).each(function(index, item){
 						thisObject.addThread(item);
 					});
+					$("#threadsScroll").sortable({
+						axis: 'x',
+						opacity: 0.6,
+						handle: '.thread-header',
+						update: function(event, ui) {
+							thisObject.statusMessage('正在保存数据...', 'info');
+							var tabId = $('.active-tab').attr('tabId');
+							var threads = $('#threadsContainer .thread');
+							var threadIds = [];
+							$(threads).each(function(index, item) {
+								threadIds.push($(item).attr('threadId'))
+							});
+							$.get('/tab/setOrder',
+								{tab_id:tabId, thread_ids: threadIds},
+								function(data){
+									thisObject.statusMessage('数据保存成功', 'success');
+								});
+						}
+					});
 				},
 				error: function() {
 					//alert("ERROR");

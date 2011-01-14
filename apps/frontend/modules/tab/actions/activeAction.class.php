@@ -18,7 +18,31 @@ class activeAction extends sfAction {
       ->where("tab_id = ?", $tabId)
 	  ->orderBy('updated_at')
       ->fetchArray();
+	  
+	$threadsOrder = json_decode($tab->getThreadIds(), true);
 
-    return $this->renderText(json_encode($threads));
+	$threadsResult = array();
+	for ($i = 0; $i < count($threadsOrder); ++$i) {
+		$threadId = $threadsOrder[$i];
+		foreach ($threads as $j => $thread) {
+			if ($thread['id'] == $threadId) {
+				$threadsResult[] = $thread;
+				unset($threads[$j]);
+				break;
+			}
+		}
+	}
+
+	if (count($threads)) {
+		$threadsResult = array_merge($threadsResult, array_values($threads));
+		$threadsOrder = array();
+		for ($i = 0; $i < count($threadsResult); ++$i) {
+			$threadsOrder[] = $threadsResult[$i]['id'];
+		}
+		$tab->setThreadIds(json_encode($threadsOrder));
+		$tab->save();
+	}
+	
+    return $this->renderText(json_encode($threadsResult));
   }
 }
