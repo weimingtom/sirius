@@ -1,4 +1,6 @@
-
+.ui-sortable-spaceholder{
+	
+}
 .hideMe {
 	display: none;
 }
@@ -263,6 +265,7 @@ a.list-toggle-button {
 	font-family: Arial,Helvetica,sans-serif;
 	background: url("../images/threadhead_bg.png") 0 0 repeat-x;
 	z-index: 5;
+	cursor: move;
 }
 
 .thread-buttons {

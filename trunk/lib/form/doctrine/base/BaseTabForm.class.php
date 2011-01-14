@@ -18,6 +18,7 @@ abstract class BaseTabForm extends BaseFormDoctrine
       'id'         => new sfWidgetFormInputHidden(),
       'owner_id'   => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
       'title'      => new sfWidgetFormInputText(),
+      'thread_ids' => new sfWidgetFormTextarea(),
       'created_at' => new sfWidgetFormDateTime(),
       'updated_at' => new sfWidgetFormDateTime(),
     ));
@@ -26,6 +27,7 @@ abstract class BaseTabForm extends BaseFormDoctrine
       'id'         => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'owner_id'   => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
       'title'      => new sfValidatorString(array('max_length' => 255)),
+      'thread_ids' => new sfValidatorString(array('max_length' => 1000, 'required' => false)),
       'created_at' => new sfValidatorDateTime(),
       'updated_at' => new sfValidatorDateTime(),
     ));
