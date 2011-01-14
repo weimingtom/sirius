@@ -58,8 +58,16 @@ class WeiboClient
      * @param int $count 每次返回的最大记录数（即页面大小），不大于200，默认为20。 
      * @return array 
      */ 
-    function home_timeline($since_id = null, $page = 1, $count = 20) 
+    function home_timeline($since_id = null, $page = 1, $count = 20, $max_id = null) 
     {
+    	if ($max_id != null) {
+    		$params = array();
+			if( $since_id ) $param['since_id'] = $since_id; 
+			if( $page ) $param['page'] = $page; 
+       		if( $count ) $param['count'] = $count; 			
+        	if( $max_id ) $param['max_id'] = $max_id; 
+			return $this->oauth->get("http://api.t.sina.com.cn/statuses/home_timeline.json" , $param ); 
+    	}
     	if ($since_id == null)
 			return $this->request_with_pager('http://api.t.sina.com.cn/statuses/home_timeline.json', $page, $count);
 		else
