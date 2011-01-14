@@ -34,7 +34,6 @@ class addAction extends sfAction {
 		$thread->setParameters($parameters);
 		$thread->save();
 		
-		$tab = Doctrine_Core::getTable("Tab")->find(tabId);
 		$threadIds = json_decode($tab->getThreadIds(), true);
 		$threadIds[] = $thread->getId();
 		$tab->setThreadIds(json_encode($threadIds));
