@@ -1,6 +1,6 @@
 <?php
 
-abstract class sinaAction extends sfAction {
+abstract class sinaAction extends myAction {
 	public function preExecute() {
 		parent::preExecute();
 		
@@ -51,8 +51,7 @@ abstract class sinaAction extends sfAction {
 		$message = new Message();
 		$message->id = $origin['id'];
 		
-		$timestamp = strtotime($origin['created_at']);
-		$message->created_at = strftime('%b %d, %I:%M ', $timestamp) . strtolower(strftime('%p', $timestamp));
+		$message->created_at = $this->formatTime($origin['created_at']);
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = $origin['truncated'];
@@ -88,8 +87,7 @@ abstract class sinaAction extends sfAction {
 		$message = new Message();		
 		$message->id = $origin['id'];
 		
-		$timestamp = strtotime($origin['created_at']);
-		$message->created_at = strftime('%b %d, %I:%M ', $timestamp) . strtolower(strftime('%p', $timestamp));
+		$message->created_at = $this->formatTime($origin['created_at']);
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = $origin['truncated'];

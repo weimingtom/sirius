@@ -336,6 +336,7 @@ $(function() {
 		
 		serverRemoveThread: function(threadId) {
 			this.statusMessage("正在删除...", "info");
+			this.removeThread(threadId);
 			$.ajax({
 				type: 'GET',
 				url: '/thread/delete',
@@ -345,7 +346,6 @@ $(function() {
 				dataType: 'json',
 				context: this,
 				success: function (data) {
-					this.removeThread(threadId);
 					this.statusMessage("删除成功", "success");
 				}
 			});

@@ -1,5 +1,5 @@
 <?php
-abstract class QQAction extends sfAction {
+abstract class QQAction extends myAction {
 	public function preExecute() {
 		parent::preExecute();
 		
@@ -49,8 +49,7 @@ abstract class QQAction extends sfAction {
 		$message = new Message();
 		$message->id = $origin['id'];
 		
-		$timestamp = $origin['timestamp'];
-		$message->created_at = strftime('%b %d, %I:%M ', $timestamp) . strtolower(strftime('%p', $timestamp));
+		$message->created_at = $this->formatTime($origin['timestamp']);
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = false; //TODO
@@ -84,8 +83,7 @@ abstract class QQAction extends sfAction {
 		$message = new Message();
 		$message->id = $origin['id'];
 		
-		$timestamp = $origin['timestamp'];
-		$message->created_at = strftime('%b %d, %I:%M ', $timestamp) . strtolower(strftime('%p', $timestamp));
+		$message->created_at = $this->formatTime($origin['timestamp']);
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = false; //TODO

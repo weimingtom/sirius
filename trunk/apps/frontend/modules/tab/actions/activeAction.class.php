@@ -16,6 +16,7 @@ class activeAction extends sfAction {
       ->createQuery()
       ->select("id, title, profile_id, profile_name, profile_type, type, parameters")
       ->where("tab_id = ?", $tabId)
+	  ->orderBy('updated_at')
       ->fetchArray();
 
     return $this->renderText(json_encode($threads));
