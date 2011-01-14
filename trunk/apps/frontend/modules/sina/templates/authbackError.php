@@ -4,6 +4,6 @@ if (!$errorMsg) {
 }
 ?>
 <script>
-	window.opener.parent.parent.jQuery.sirius.statusMessage('<?php echo $errorMsg?>', 'error');
+	window.opener.parent.jQuery.sirius.statusMessage('<?php echo $errorMsg?>', 'error');
 	window.close();
 </script>

@@ -10,18 +10,22 @@ $(function(){
 	options.profiles = <?php echo json_encode($sf_data->getRaw('profiles')); ?>;
 	options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
 	$.sirius.init(options);
-	
-	$('._add-profile-button').colorbox({
-		href:"<?php echo url_for('/profile/add')?>",
-		innerWidth: 510,
-		innerHeight: 320,
-		iframe: true,
-		escKey: false,
-		overlayClose: false,
-		onClosed: function(){
-			
-		}
-	})
+	$('._add-profile-button').click(function() {
+		$('#popup-dialog').dialog('destroy').html("").dialog({
+				modal: true,
+				position: ['center', 100],
+				resizable: false,
+				width: 500,
+				height: 370,
+				title: "添加微博帐号",
+				open: function(event, ui) {
+					$.get('/profile/add', {}, function(data) {
+						$(data).appendTo('#popup-dialog');
+					}, 'html');
+					$('.ui-widget-overlay').html('<img src="/images/ui-overlay-gradient.png" style="width:100%; height: 100%;">');
+				}
+		});
+	});
 	if (options.profiles.length==0)
 		$('.sidebar-add-profile').click();
 	
@@ -108,7 +112,7 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="/profile/add" title="添加微博帐号" class="icon-13 icon-add _add-profile-button sidebar-add-profile">添加微博帐号</a>
+		<a href="#" title="添加微博帐号" class="icon-13 icon-add _add-profile-button sidebar-add-profile">添加微博帐号</a>
 		<ul>
 		</ul>
 	</div>

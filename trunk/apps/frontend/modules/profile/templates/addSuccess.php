@@ -1,5 +1,3 @@
-<?php use_stylesheet('base.css') ?>
-<?php use_stylesheet("popup.css") ?>
 <script>
 $(function(){
 	$("#snList li").click(function(){
