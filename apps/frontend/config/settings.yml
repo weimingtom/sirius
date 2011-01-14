@@ -35,4 +35,6 @@ all:
     use_database:           true
     
     i18n:					true
-    default_culture: 		en_US
+    default_culture: 		zh_CN
+    
+    default_timezone:		Asia/Chongqing
