@@ -60,18 +60,12 @@ class WeiboClient
      */ 
     function home_timeline($since_id = null, $page = 1, $count = 20, $max_id = null) 
     {
-    	if ($max_id != null) {
-    		$params = array();
-			if( $since_id ) $param['since_id'] = $since_id; 
-			if( $page ) $param['page'] = $page; 
-       		if( $count ) $param['count'] = $count; 			
-        	if( $max_id ) $param['max_id'] = $max_id; 
-			return $this->oauth->get("http://api.t.sina.com.cn/statuses/home_timeline.json" , $param ); 
-    	}
-    	if ($since_id == null)
-			return $this->request_with_pager('http://api.t.sina.com.cn/statuses/home_timeline.json', $page, $count);
-		else
-			return $this->request_with_pager_and_since_id('http://api.t.sina.com.cn/statuses/home_timeline.json', $page, $count, $since_id); 
+		$params = array();
+		if( $since_id ) $param['since_id'] = $since_id; 
+		if( $page ) $param['page'] = $page; 
+   		if( $count ) $param['count'] = $count; 			
+    	if( $max_id ) $param['max_id'] = $max_id; 
+		return $this->oauth->get("http://api.t.sina.com.cn/statuses/home_timeline.json" , $param ); 
     } 
 
     /** 
@@ -82,13 +76,14 @@ class WeiboClient
      * @param int $count 每次返回的最大记录数（即页面大小），不大于200，默认为20。 
      * @return array 
      */ 
-    function mentions($since_id = null, $page = 1 , $count = 20 ) 
+    function mentions($since_id = null, $page = 1 , $count = 20, $max_id = null) 
     { 
- 		if ($since_id == null)
-			return $this->request_with_pager('http://api.t.sina.com.cn/statuses/mentions.json', $page, $count);
-		else
-			return $this->request_with_pager_and_since_id('http://api.t.sina.com.cn/statuses/mentions.json', $page, $count, $since_id); 
-		
+		$params = array();
+		if( $since_id ) $param['since_id'] = $since_id; 
+		if( $page ) $param['page'] = $page; 
+   		if( $count ) $param['count'] = $count; 			
+    	if( $max_id ) $param['max_id'] = $max_id; 
+		return $this->oauth->get("http://api.t.sina.com.cn/statuses/mentions.json" , $param ); 
     } 
 
 
@@ -251,10 +246,25 @@ class WeiboClient
      * @param mixed $uid_or_name 指定用户UID或微博昵称 
      * @return array 
      */ 
-    function user_timeline( $uid_or_name = null, $since_id = null, $page = 1 , $count = 20 ) 
+	function user_timeline($since_id = null, $page = 1 , $count = 20, $max_id = null, $uid_or_name = null) 
     {
-    	return $this->request_with_uid_and_since_id( 'http://api.t.sina.com.cn/statuses/user_timeline.json' , $uid_or_name , $page , $count, $since_id ); 
+		$params = array();
+		if( $since_id ) $param['since_id'] = $since_id; 
+		if( $page ) $param['page'] = $page; 
+   		if( $count ) $param['count'] = $count; 			
+    	if( $max_id ) $param['max_id'] = $max_id; 
+		
+		if( is_numeric( $uid_or_name ) ) 
+        { 
+            $param['user_id'] = $uid_or_name; 
+
+        }elseif( $uid_or_name !== null ) { 
+            $param['screen_name'] = $uid_or_name; 
+        }
+		
+		return $this->oauth->get("http://api.t.sina.com.cn/statuses/user_timeline.json" , $param ); 
     } 
+	
 
     /** 
      * 获取私信列表 
@@ -264,12 +274,14 @@ class WeiboClient
      * @param int $count 每次返回的最大记录数，最多返回200条，默认20。 
      * @return array 
      */ 
-    function list_dm($since_id = null, $page = 1 , $count = 20  ) 
-    {
-    	if ($since_id == null)
-			return $this->request_with_pager('http://api.t.sina.com.cn/direct_messages.json', $page, $count);
-		else
-			return $this->request_with_pager_and_since_id('http://api.t.sina.com.cn/direct_messages.json', $page, $count, $since_id); 
+    function list_dm($since_id = null, $page = 1 , $count = 20, $max_id = null) 
+    { 
+		$params = array();
+		if( $since_id ) $param['since_id'] = $since_id; 
+		if( $page ) $param['page'] = $page; 
+   		if( $count ) $param['count'] = $count; 			
+    	if( $max_id ) $param['max_id'] = $max_id; 
+		return $this->oauth->get("http://api.t.sina.com.cn/direct_messages.json" , $param ); 
     } 
 
     /** 

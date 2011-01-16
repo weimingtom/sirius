@@ -17,7 +17,15 @@ class commentsAction extends sinaAction {
 		}
 		
 		if ($request->hasParameter('format') && $request->getParameter('format') == 'html') {
-			return $this->renderPartial('global/messages', array('messages'=>$messages));
+			return $this->renderPartial('global/messages', 
+				array(
+					'messages'		=> $messages, 
+					'profileId'		=> $this->profileId, 
+					'profileType' 	=> 'sina',
+					'threadType'	=> 'comments',
+					'otherParams'	=> json_encode(array('id'=>$messageId))
+				)
+			);
 		}
 		return $this->renderText(json_encode($messages));
 	}

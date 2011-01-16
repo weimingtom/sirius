@@ -4,17 +4,12 @@ class homeAction extends QQAction {
 	public function execute($request) {
 		// prepare apiConsumer
 		$this->forward404Unless($this->prepareApiConsumer($request));
-		$data  = $this->apiConsumer->home_timeline();
 		
-		$data = $data['data']['info'];
-		if ($request->hasParameter('since_id')) {
-			$sinceId = $request->getParameter('since_id');
-			foreach ($data as $key => $value) {
-				if ($value['id'] == $sinceId) {
-					$data = array_slice($data, 0, $key);
-				}
-			}
-		}		
+		$since_id = $request->getParameter('since_id');
+		$before_id = $request->getParameter('before_id');
+		$count = $request->getParameter('count', 20);
+		
+		$data  = QQCacheManager::getInstance()->home_timeline($this->profileId, $this->apiConsumer, $since_id, $before_id, $count);
 		
 		$messages = $this->formatMessages($data);
 		return $this->renderText(json_encode($messages));

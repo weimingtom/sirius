@@ -2,28 +2,30 @@
 
 class userAction extends QQAction {
 	public function execute($request) {
-		$profile_id = $request->getParameter('profile_id');
-		$this->forward404Unless($profile_id);
-		
+		// prepare apiConsumer
+		$this->forward404Unless($this->prepareApiConsumer($request));
+
 		// user name
 		$username = $request->getParameter('name');
-		$this->forward404Unless($username);
+		$since_id = $request->getParameter('since_id');
+		$before_id = $request->getParameter('before_id');
+		$count = $request->getParameter('count', 20);
 		
-		// get profile
-		$profile = Doctrine::getTable('profile')->find($profile_id);
-		$this->forward404Unless($profile);
+		$data  = QQCacheManager::getInstance()->user_timeline($this->profileId, $this->apiConsumer, $since_id, $before_id, $count, $username);
 
-		// check user
-		$this->forward404Unless($profile->getOwnerId() == $this->getUser()->getId());
+		$messages = $this->formatMessages($data);
 		
-		$connectData = json_decode($profile->getConnectData(), true);
-		$weibo = new QQClient($this->consumerKey, $this->consumerSecret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
-		
-		$data  = $weibo->user_timeline($username);
-		$messages = $this->formatMessages($data['data']['info']);
-
 		if ($request->hasParameter('format') && $request->getParameter('format') == 'html') {
-			return $this->renderPartial('global/messages', array('messages'=>$messages));
+			return $this->renderPartial('global/messages', 
+				array(
+					'messages'		=> $messages, 
+					'profileId'		=> $this->profileId, 
+					'profileType' 	=> 'qq',
+					'threadType'	=> 'user',
+					'otherParams'	=> json_encode(array('name'=>$username)),
+					'loadMore'		=> true
+				)
+			);
 		}
 		return $this->renderText(json_encode($messages));
 	}
