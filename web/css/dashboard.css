@@ -368,7 +368,7 @@ a.list-toggle-button {
 	background: url('../images/icon_retweet.png') 0 0 no-repeat;
 }
 
-.thread-message-container {
+.thread-scroll {
 	height: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -474,6 +474,23 @@ a.message-count-status:hover {
 
 ._message_picture_thumbnail img {
 	margin-bottom: 0.5em;
+}
+
+.message-more {
+	text-align: center;
+	border-bottom: 1px solid #AEAEAE;
+}
+
+.message-more a,
+.message-more a:link,
+.message-more a:hover,
+.message-more a:visited {
+	display: block;
+	padding: 10px 0;
+	margin: 0 auto;
+	color: #495666;
+	font-weight: bold;
+	text-shadow: 0 1px 0 white;
 }
 
 #messageBoxContainer .expanded, #messageBoxContainer .collapsed {

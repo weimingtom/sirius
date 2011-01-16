@@ -55,9 +55,13 @@ class QQClient
      * @access public 
      * @return array 
      */ 
-    function home_timeline() 
-    { 
-        return $this->oauth->get('http://open.t.qq.com/api/statuses/home_timeline'); 
+    function home_timeline($count = NULL, $pageflag = NULL, $pagetime = NULL) 
+    {
+    	$params = array();
+    	if ($count != NULL) $params['reqnum'] = $count;
+		if ($pageflag != NULL) $params['pageflag'] = $pageflag;
+		if ($pagetime != NULL) $params['pagetime'] = $pagetime;
+        return $this->oauth->get('http://open.t.qq.com/api/statuses/home_timeline', $params); 
     } 
 
     /** 
@@ -68,9 +72,13 @@ class QQClient
      * @param int $count 每次返回的最大记录数（即页面大小），不大于200，默认为20。 
      * @return array 
      */ 
-    function mentions( $page = 1 , $count = 20 ) 
+    function mentions($count = NULL, $pageflag = NULL, $pagetime = NULL) 
     { 
-        return $this->request_with_pager( 'http://open.t.qq.com/api/statuses/mentions_timeline' , $page , $count ); 
+    	$params = array();
+    	if ($count != NULL) $params['reqnum'] = $count;
+		if ($pageflag != NULL) $params['pageflag'] = $pageflag;
+		if ($pagetime != NULL) $params['pagetime'] = $pagetime;
+        return $this->oauth->get('http://open.t.qq.com/api/statuses/mentions_timeline', $params); 
     } 
 
 
@@ -238,9 +246,14 @@ class QQClient
      * @param mixed $uid_or_name 指定用户UID或微博昵称 
      * @return array 
      */ 
-    function user_timeline($uid_or_name, $page = null , $count = null  ) 
-    { 
-        return $this->request_with_uid( 'http://open.t.qq.com/api/statuses/user_timeline' ,  $uid_or_name , $page , $count ); 
+    function user_timeline($count = NULL, $pageflag = NULL, $pagetime = NULL, $username = NULL) 
+    {
+    	$params = array();
+		if ($username != NULL) $params['name'] = $username;
+    	if ($count != NULL) $params['reqnum'] = $count;
+		if ($pageflag != NULL) $params['pageflag'] = $pageflag;
+		if ($pagetime != NULL) $params['pagetime'] = $pagetime;
+        return $this->oauth->get('http://open.t.qq.com/api/statuses/user_timeline', $params); 
     } 
 
     /** 
@@ -385,7 +398,7 @@ class QQClient
     } 
 	
 	
-	function get_reposts_by_sid( $sid , $pageflag = 0 , $pagetime = NULL ) 
+	function get_reposts_by_sid( $count = NULL , $pageflag = NULL , $pagetime = NULL, $sid ) 
     { 
         $param = array(); 
         $param['rootid'] = $sid; 
@@ -488,10 +501,17 @@ class QQClient
 	
 	} 
 
-	function trend_timeline($trand_name) {
-		return $this->oauth->get( 'http://open.t.qq.com/api/statuses/ht_timeline', array('httext'=> $trand_name)); 
-	}
-	
+    function trend_timeline($count = NULL, $pageflag = NULL, $pagetime = NULL, $trend_name = NULL) 
+    {
+    	if ($trend_name == NULL) return array();
+		 
+    	$params = array();
+		$params['httext'] = $trend_name;
+    	if ($count != NULL) $params['reqnum'] = $count;
+		if ($pageflag != NULL) $params['pageflag'] = $pageflag;
+		if ($pagetime != NULL) $params['pagetime'] = $pagetime;
+        return $this->oauth->get('http://open.t.qq.com/api/statuses/ht_timeline', $params); 
+    } 
 
     // ========================================= 
 

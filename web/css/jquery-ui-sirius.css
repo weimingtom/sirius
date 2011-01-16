@@ -163,10 +163,8 @@
 	padding: 0;
 }
 
-#popup-dialog ._thread-tab .messages {
+#popup-dialog ._thread-tab .popup-thread {
 	height: 400px;
-	overflow-y:scroll;
-	left: 0;
 }
 
 #popup-dialog ._thread-tab .message {

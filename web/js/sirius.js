@@ -375,7 +375,7 @@ $(function() {
 			if (!dashboard)
 				return false;
 
-			thread = $("<div class='thread'><div class='thread-header' /><div class='thread-message-container'/></div>")
+			thread = $("<div class='thread'><div class='thread-header' /><div class='thread-scroll'><div class='thread-message-container'/></div></div>")
 				.attr('profileId', threadInfo.profile_id)
 				.attr('profileType', threadInfo.profile_type)
 				.attr('threadType', threadInfo.type)
@@ -499,13 +499,74 @@ $(function() {
 					}
 					$('div[threadId=' + this.threadId + '] .refreshing').hide();
 					$('div[threadId=' + this.threadId + '] .refresh-button').show();
+					if (data.length >= 19 && $('div[threadId=' + this.threadId + '] .message-more').size() == 0) {
+						$('<div class="message-more"><a href="#">加载更多</a></div>')
+							.appendTo($('div[threadId=' + this.threadId + '] .thread-scroll'))
+							.children('.message-more a')
+							.click(function(event) {
+								sirius.threadLoadMore($(event.target).parents('.thread'));
+							});
+					}
 				},
 				error: function() {
 					$('div[threadId=' + this.threadId + '] .refreshing').hide();
 					$('div[threadId=' + this.threadId + '] .refresh-button').show();
-					//alert("ERROR");
+					this.sirius.statusMessage("加载失败，请稍候重试", 'error');
 				}
 			});
+		},
+		
+		threadLoadMore: function(thread){
+			profileId = $(thread).attr('profileId');
+			profileType = $(thread).attr('profileType');
+			threadType = $(thread).attr('threadType');
+			last_id = $('.thread-message-container>.message:last', thread).attr('messageId');
+			other_params = $(thread).attr('otherParams');
+
+			$('.message-more a', thread).unbind('click').html('正在加载更多...');
+			
+			var requestUrl= '/' + profileType + '/' + threadType;
+			var requestData =  {profile_id: profileId, before_id: last_id};
+			$.extend(requestData, $.parseJSON(other_params));
+			$.ajax({
+				type: 'GET',
+				url: '/' + profileType + '/' + threadType,
+				data: requestData,
+				dataType: 'json',
+				context: {sirius:this, thread: thread, profileId: profileId, profileType: profileType},
+				success: function(data) {
+					tempContainer = $('<div/>');
+					lastMessageId = false;
+					profileId = this.profileId;
+					profileType = this.profileType;
+					thread = this.thread;
+					sirius = this.sirius;
+					$(data).each( function(i, message) {
+						messageNode = sirius.packMessage(message, profileId, profileType);
+						if (message.retweet_origin != null) {
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
+						}
+						$(messageNode).appendTo(tempContainer);
+					});
+					if (tempContainer.children().size() > 0) {
+						tempContainer.children().appendTo($('.thread-message-container', this.thread));
+					}
+					if (data.length < 19) {
+						$('.message-more', this.thread).remove();
+					}
+					$('.message-more a', this.thread).unbind('click').html('加载更多')
+						.click(function(event) {
+							sirius.threadLoadMore(thread);
+						});
+				},
+				error: function(data) {
+					$('.message-more a', this.thread).unbind('click').html('加载失败,请重试')
+						.click(function(event) {
+							sirius.threadLoadMore(thread);
+						});
+				}
+			});
+
 		},
 		
 		packMessage: function(message, profileId, profileType) {
@@ -517,7 +578,7 @@ $(function() {
 			
 			var text = $('<p/>').addClass('message-body').html(message.text);
 			
-			var node = $('<div class="message"></div>').append(avatar).append(author).append(time_source).append(text);
+			var node = $('<div class="message"></div>').attr('messageId', message.id).append(avatar).append(author).append(time_source).append(text);
 			
 			if (message.picture_thumbnail != "") {
 				$('<a/>')
@@ -587,6 +648,7 @@ $(function() {
 							       .end()
 							       .filter('._message-info-tabs')
 							       .tabs({
+							    cache: true,
 							    selected: selectedTab,
 								show: function (event, ui) {
 									if ($(ui.tab).attr('expectedWidth') != undefined) {
@@ -621,7 +683,11 @@ $(function() {
 										}); 
 										$('._thread-tab ._retweet-count').click(function(){
 											sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'retweet');
-										}); 
+										});
+										$('._thread-tab .message-more a')
+											.click(function(event) {
+												sirius.threadLoadMore($(event.target).parents('.popup-thread'));
+											});
 									},
 									error: function( xhr, status, index, anchor ) {
 										$( anchor.hash ).html("<div class='dialog-error'>加载失败... 请稍候重试！</div>");
@@ -684,6 +750,11 @@ $(function() {
 							$('._thread-tab ._retweet-count').click(function(){
 								sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'retweet');
 							}); 
+							$('._thread-tab .message-more a')
+								.click(function(event) {
+									sirius.threadLoadMore($(event.target).parents('.popup-thread'));
+								});
+
 							$('#popup-dialog').dialog('option', {title: '话题: #' + topic + '#'});
 					}});
 				}
@@ -707,6 +778,7 @@ $(function() {
 						context: {profileId: profileId, profileType: profileType},
 						success: function(data){
 							$(data).appendTo('#popup-dialog').tabs({
+							    cache: true,
 								show: function (event, ui) {
 									if ($(ui.tab).attr('expectedWidth') != undefined) {
 										$('#popup-dialog').dialog('option', {width: $(ui.tab).attr('expectedWidth')});
@@ -741,6 +813,10 @@ $(function() {
 										$('._thread-tab ._retweet-count').click(function(){
 											sirius.showMessage(profileId, profileType, $(this).parent('.message').attr('messageId'), 'retweet');
 										}); 
+										$('._thread-tab .message-more a')
+											.click(function(event) {
+												sirius.threadLoadMore($(event.target).parents('.popup-thread'));
+											});
 									},
 									error: function( xhr, status, index, anchor ) {
 										$( anchor.hash ).html("<div class='dialog-error'>加载失败... 请稍候重试！</div>");

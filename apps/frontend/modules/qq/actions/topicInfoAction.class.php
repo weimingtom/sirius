@@ -2,28 +2,17 @@
 
 class topicInfoAction extends QQAction {
 	public function execute($request) {
-		$profile_id = $request->getParameter('profile_id');
-		$this->profileId = $profile_id;
-		$this->forward404Unless($profile_id);
+		// prepare apiConsumer
+		$this->forward404Unless($this->prepareApiConsumer($request));
 		
-		// user
+		// message id
 		$topic = $request->getParameter('topic');
-		$this->forward404Unless($topic);
+		$since_id = $request->getParameter('since_id');
+		$before_id = $request->getParameter('before_id');
+		$count = $request->getParameter('count', 20);
 		
-		
-		// get profile
-		$profile = Doctrine::getTable('profile')->find($profile_id);
-		$this->forward404Unless($profile);
+		$data  = QQCacheManager::getInstance()->trend_timeline($this->profileId, $this->apiConsumer, $since_id, $before_id, $count, $topic);
 
-		// check user
-		$this->forward404Unless($profile->getOwnerId() == $this->getUser()->getId());
-		
-		
-		$connectData = json_decode($profile->getConnectData(), true);
-		$weibo = new QQClient($this->consumerKey, $this->consumerSecret, $connectData['oauth_token'], $connectData['oauth_token_secret']);
-		
-		$data = $weibo->trend_timeline($topic);
-		$this->forward404Unless($user['ret'] == 0);
-		$this->messages = $this->formatMessages($data['data']['info']);
+		$this->messages = $this->formatMessages($data);
 	}
 }
