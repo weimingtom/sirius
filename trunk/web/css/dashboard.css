@@ -347,15 +347,6 @@ a.list-toggle-button {
 	font-weight: normal;
 }
 
-.thread .messageActions {
-	height: 25px;
-	padding: 2px 4px 2px 8px;
-	position: absolute;
-	top: -999px;
-	right: 18px;
-	z-index: 100;
-}
-
 .thread .messageActions .icon-19 {
 	opacity: .85;
 }
@@ -431,6 +422,17 @@ a.list-toggle-button {
 	color: #999;
 	margin-bottom: .4em;
 	white-wrap: nowrap;
+}
+
+.message-actions {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	display: none;
+}
+
+.submessage .message-actions {
+	right: 0;
 }
 
 a.message-count-status,

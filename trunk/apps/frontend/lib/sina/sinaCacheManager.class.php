@@ -50,7 +50,7 @@ class sinaCacheManager {
 		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'user_timeline', $cacheMessageListName, $since_id, $before_id, $count, $uid_or_name);
 	}
 
-	protected function getMessagesBySinceIdOrBeforeId($apiConsumer, $functionName, $cacheMessageListName, $since_id = null, $before_id = null, $count = 20, $addtional_arg1, $addtional_arg2, $addtional_arg3) {
+	protected function getMessagesBySinceIdOrBeforeId($apiConsumer, $functionName, $cacheMessageListName, $since_id = null, $before_id = null, $count = 20, $addtional_arg1 = null, $addtional_arg2 = null, $addtional_arg3 = null) {
 		$cacheMessageListLastModify = $this->cache->getLastModified($cacheMessageListName);
 		$cacheMessageList = $this->cache->get($cacheMessageListName, array());
 		$newCacheMessageList = $cacheMessageList;
