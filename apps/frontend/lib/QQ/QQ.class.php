@@ -325,10 +325,10 @@ class QQClient
     function repost( $sid , $text = false ) 
     { 
         $param = array(); 
-        $param['id'] = $sid; 
-        if( $text ) $param['status'] = $text; 
+        $param['reid'] = $sid; 
+        if( $text ) $param['content'] = $text; 
 
-        return $this->oauth->post( 'http://open.t.qq.com/api/statuses/repost.json' , $param  ); 
+        return $this->oauth->post( 'http://open.t.qq.com/api/t/re_add' , $param  ); 
     } 
 
     /** 
@@ -340,14 +340,13 @@ class QQClient
      * @param bool $cid 要评论的评论id 
      * @return array 
      */ 
-    function send_comment( $sid , $text , $cid = false ) 
+    function send_comment( $sid , $text) 
     { 
         $param = array(); 
-        $param['id'] = $sid; 
-        $param['comment'] = $text; 
-        if( $cid ) $param['cid '] = $cid; 
+        $param['reid'] = $sid; 
+        $param['content'] = $text; 
 
-        return $this->oauth->post( 'http://open.t.qq.com/api/statuses/comment.json' , $param  ); 
+        return $this->oauth->post( 'http://open.t.qq.com/api/t/reply' , $param  ); 
 
     } 
 

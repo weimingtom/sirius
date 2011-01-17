@@ -40,10 +40,10 @@ $(function(){
 	);
 	
 	$('.profileContainer ._controls ._selectAll').click(function(){
-		$('.profileSelector .profileAvatar').addClass('selected');
+		$.sirius.selectProfile($('.profileSelector .profileAvatar'));
 	});
 	$('.profileContainer ._controls ._selectNone').click(function(){
-		$('.profileSelector .profileAvatar.selected').removeClass('selected');
+		$.sirius.deselectProfile($('.profileSelector .profileAvatar'));
 	});
 	
 	$('._messageArea .ac_input').focusin(function(){
@@ -84,6 +84,18 @@ $(function(){
 							<span class="_counter btn-display">140</span>
 						</div>
 					</div>
+					
+					<div id="reactionContent" class="reactionContent">
+						<div class="contentWrapper">
+							<div class="reactionInfo">
+								<span>您正在</span>
+								<a class="remove-reaction icon-28" title="取消">取消</a>
+							</div>
+							<div class="reaction-source _reaction-source">
+							</div>							
+						</div>
+					</div>
+					
 					<div id="messageTools" class="_addLinkBlock _messageTools messageTools trim">
 						<div class="messageMedia">
 						</div>
