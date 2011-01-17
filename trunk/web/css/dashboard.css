@@ -557,6 +557,49 @@ a.message-count-status:hover {
 	float: left;
 }
 
+.collapsed .reactionContent {
+	display: none;
+}
+
+.expanded .reactionContent {
+	display: block;
+	border-top: 1px solid #CCC;
+}
+
+.contentWrapper {
+	background-color: #EDEDED;
+	padding-top: 3px;
+	display: none;
+	margin: 4px;
+	border: 1px solid #CCC;
+}
+
+.reaction-source {
+	margin: 4px 6px 0;
+}
+
+.reactionInfo {
+	position: relative;
+	margin: 2px 3px 0;
+}
+
+.reactionInfo span {
+	font-weight: bold;
+	font-size: 11px;
+	display: inline-block;
+}
+
+.remove-reaction {
+	position: absolute;
+	right: 2px;
+	background: url('../images/dialog_close.png') 0 0 no-repeat;
+	z-index: 2;
+}
+
+.reaction-source .message {
+	border: 0;
+}
+
 .messageComposeBox .messageBoxMessage {
 	border: none;
 	background: none;

@@ -1,5 +1,8 @@
-var socialNetworkTypes = socialNetworkTypes || [];
+var socialNetworkNames = socialNetworkNames || [];
+socialNetworkNames['sina'] = "新浪微博";
+socialNetworkNames['qq'] = "腾讯微博";
 
+var socialNetworkTypes = socialNetworkTypes || [];
 socialNetworkTypes['sina'] = [
 	{
 		defaultTitle: '首页微博',

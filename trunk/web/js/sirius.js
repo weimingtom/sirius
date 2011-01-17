@@ -190,6 +190,7 @@ $(function() {
 		},
 		
 		addProfileToProfileSelector: function(profile, isSelected) {
+			var sirius = this;
 			var profileId = profile.id;
 			var profileType = profile.type;
 			var screenName = profile.screen_name;
@@ -206,7 +207,11 @@ $(function() {
 				.attr('profileType', profileType)
 				.attr('title', screenName)
 				.click(function(){
-					$(this).toggleClass('selected');
+					if ($(this).hasClass("selected")) {
+						sirius.deselectProfile(this);
+					} else {
+						sirius.selectProfile(this);
+					}
 				});
 			if (isSelected) {
 				node.addClass('selected');
@@ -612,7 +617,7 @@ $(function() {
 				}); 
 			}
 			
-			$(node).append("<div class='message-actions'><a href='#' title='转发'><span class='icon-19 action-retweet'>转发</span></a><a href='#' title='回复'><span class='icon-19 action-comment'>回复</span></a></div>");
+			$(node).append("<div class='message-actions'><a href='#' title='转发' class='retweet'><span class='icon-19 action-retweet'>转发</span></a><a href='#' title='评论' class='comment'><span class='icon-19 action-comment'>评论</span></a></div>");
 			
 			var sirius = this;
 			$.merge(avatar, author).click(function() {
@@ -626,6 +631,8 @@ $(function() {
 				var topic = $(this).attr('topic');
 				sirius.showTopic(profileId, profileType, topic);
 			});
+			$('.retweet', node).click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), 'retweet', profileId); event.stopPropagation();});
+			$('.comment', node).click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), 'comment', profileId); event.stopPropagation();});
 			return node;			
 		},
 		
@@ -841,6 +848,44 @@ $(function() {
 			$('.list-profile li.hightlight').removeClass('hightlight');
 		},
 		
+		setMessageBoxStatus: function(ele, action, profileId) {
+			switch (action) {
+				case 'retweet':
+					desc = "您正在转发 :";
+					break;
+				case 'comment':
+					desc = "您正在评论 :";
+					break;
+			}
+			var profileType = $(".selectProfiles .profileAvatar").removeClass("selected")
+				.filter("[profileId=" + profileId + "]").addClass("selected").attr("profileType");
+			
+			$("#reactionContent").attr("actionType", action).attr("profileId", profileId).attr("profileType", profileType);
+			
+			$('#reactionContent .reactionInfo span').text(desc);
+			var cleanEle = $(ele).clone()
+				.removeClass("submessage")
+				.find(".submessage").remove().end()
+				.find(".message-actions").remove().end()
+				.find('.message-count-status').remove().end();
+			$('#reactionContent ._reaction-source').html('').append(cleanEle);
+			$('#reactionContent .contentWrapper').show();
+			this.focusSendPanel();
+			$('.ac_input').focus();
+			
+			var sirius = this;
+			$('.remove-reaction').click(function() {
+				sirius.removeReaction();
+			});
+		},
+		
+		removeReaction: function() {
+			$('#reactionContent ._reaction-source').html('');
+			$("#reactionContent").attr("actionType", "").attr("profileId", "").attr("profileType", "");
+			$('#reactionContent .contentWrapper').hide();
+			this.focusSendPanel();			
+		},
+		
 		sendMessage: function() {
 			var message = $('._messageArea .ac_input').val();
 			if (message == '') {
@@ -857,19 +902,28 @@ $(function() {
 				profiles.push($(profile).attr('profileType') + "|" +  $(profile).attr('profileId'));
 			});
 			this.statusMessage('正在发送消息...', 'info');
+			
+			var data = {message:message, profiles: profiles};
+			var reactionType = $("#reactionContent").attr("actiontype");
+			if (reactionType != undefined && reactionType != "") {
+				data.type = reactionType;
+				data.profile_type = $("#reactionContent").attr('profileType');
+				data.target_message_id = $("#reactionContent .reaction-source .message").attr('messageId');
+			}
 			$.ajax({
 				type: 'POST',
 				url: '/dashboard/send',
-				data: {message:message, profiles: profiles},
+				data: data,
 				dataType: 'json',
 				context: this,
 				success: function(){
 					this.statusMessage('发送成功', 'info');
 					$('.messageComposeBox').removeClass('collapsed').addClass('expanded');
 					$('._messageArea .ac_input').val('');
+					this.removeReaction();
 					this.unfocusSendPanel();
 				}
-			});			
+			});		
 		},
 		
 		focusSendPanel: function() {
@@ -888,9 +942,32 @@ $(function() {
 			$('.profileSelector').height('');
 		},
 		
+		selectProfile: function(profiles) {
+			// check reaction
+			var reactionProfileType = $("#reactionContent").attr("profileType");
+			if (reactionProfileType != undefined && reactionProfileType != "") {
+				var hasDifferentType = false;
+				$(profiles).each(function(index, item) {
+					if ($(item).attr('profileType') != reactionProfileType) {
+						hasDifferentType = true;
+					}
+				});
+				if (hasDifferentType) {
+					var reactionActionType = $("#reactionContent").attr("actionType");
+					this.statusMessage("正在" + (reactionActionType == 'retweet' ? "转发" : "评论") + socialNetworkNames[reactionProfileType] + '消息, 无法选择其他网站的帐号', "error");
+					return;
+				}
+			}
+			$(profiles).addClass("selected");
+		},
+		
+		deselectProfile: function(profiles) {
+			$(profiles).removeClass("selected");
+		},
+		
 		statusMessage: function(message, level) {
 			var levels = ['error', 'warning', 'success', 'info']
-			if (!level || !$.inArray(level, levels)) {
+			if (!level || $.inArray(level, levels) < 0) {
 				level = 'info';
 			}
 			$('#statusContainer .statusMessage').removeClass(levels.join(' ')).addClass(level);
