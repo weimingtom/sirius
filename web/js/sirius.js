@@ -490,6 +490,11 @@ $(function() {
 						if (message.retweet_origin != null) {
 							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
 						}
+						
+						$(messageNode).hover(
+							function() {$('.message-actions',this).show(); $('.new-message',this).hide();},
+							function() {$('.message-actions',this).hide(); $('.new-message',this).show();}
+						);
 						$(messageNode).appendTo(tempContainer);
 					});
 					if (tempContainer.children().size() > 0) {
@@ -606,6 +611,8 @@ $(function() {
 					sirius.showMessage(profileId, profileType, message.id, 'comment');
 				}); 
 			}
+			
+			$(node).append("<div class='message-actions'><a href='#' title='转发'><span class='icon-19 action-retweet'>转发</span></a><a href='#' title='回复'><span class='icon-19 action-comment'>回复</span></a></div>");
 			
 			var sirius = this;
 			$.merge(avatar, author).click(function() {
