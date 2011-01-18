@@ -216,6 +216,7 @@ a.list-toggle-button {
 }
 
 .logo {
+	margin-left: 1px;
 	float: left;
 }
 
@@ -225,8 +226,8 @@ a.list-toggle-button {
 	 text-decoration: none; 
 	 height: 40px; 
 	 margin: 0;
-	 width: 50px;
-	 background-image: url("/images/logo_temp.jpg");
+	 width: 40px;
+	 background-image: url("/images/logo_40.png");
 }
 
 .tweet-panel {
