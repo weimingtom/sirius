@@ -480,20 +480,21 @@ $(function() {
 				url: requestUrl,
 				data: requestData,
 				dataType: 'json',
-				context: {sirius:this, threadId: threadId, profileId: profileId, profileType: profileType},
+				context: {sirius:this, threadId: threadId, profileId: profileId, profileType: profileType, threadType: threadType},
 				success: function(data) {
 					tempContainer = $('<div/>');
 					lastMessageId = false;
 					profileId = this.profileId;
 					profileType = this.profileType;
+					threadType = this.threadType;
 					sirius = this.sirius;
 					$(data).each( function(i, message) {
 						lastMessageId = lastMessageId || message.id;
 						
-						messageNode = sirius.packMessage(message, profileId, profileType);
+						messageNode = sirius.packMessage(message, profileId, profileType, threadType);
 						$('.message-author', messageNode).after('<span class="icon-13 new-message"></span>');
 						if (message.retweet_origin != null) {
-							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, threadType)).addClass('submessage'));
 						}
 						
 						$(messageNode).hover(
@@ -552,9 +553,9 @@ $(function() {
 					thread = this.thread;
 					sirius = this.sirius;
 					$(data).each( function(i, message) {
-						messageNode = sirius.packMessage(message, profileId, profileType);
+						messageNode = sirius.packMessage(message, profileId, profileType, false);
 						if (message.retweet_origin != null) {
-							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType)).addClass('submessage'));
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, true)).addClass('submessage'));
 						}
 						$(messageNode).appendTo(tempContainer);
 					});
@@ -579,7 +580,8 @@ $(function() {
 
 		},
 		
-		packMessage: function(message, profileId, profileType) {
+		packMessage: function(message, profileId, profileType, threadType, isSubMessage) {
+			if (isSubMessage == undefined) isSubMessage = false;
 			var avatar = $('<a href="javascript:;"></a>').addClass('message-avatar').append("<img src='" + message.user.avatar + "' />")
 				.attr('title', message.user.name);
 			var author = $('<a href="javascript:;"></a>').addClass('message-author').text(message.user.screen_name).attr('title', message.user.name);
@@ -617,7 +619,8 @@ $(function() {
 				}); 
 			}
 			
-			$(node).append("<div class='message-actions'><a href='#' title='转发' class='retweet'><span class='icon-19 action-retweet'>转发</span></a><a href='#' title='评论' class='comment'><span class='icon-19 action-comment'>评论</span></a></div>");
+			//$(node).append("<div class='message-actions'><a href='#' title='转发' class='retweet'><span class='icon-19 action-retweet'>转发</span></a><a href='#' title='评论' class='comment'><span class='icon-19 action-comment'>评论</span></a></div>");
+			$("<div class='message-actions'></div>").append(this.packReactions(profileId, profileType, threadType, message.id, isSubMessage)).appendTo(node);
 			
 			var sirius = this;
 			$.merge(avatar, author).click(function() {
@@ -631,9 +634,52 @@ $(function() {
 				var topic = $(this).attr('topic');
 				sirius.showTopic(profileId, profileType, topic);
 			});
-			$('.retweet', node).click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), 'retweet', profileId); event.stopPropagation();});
-			$('.comment', node).click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), 'comment', profileId); event.stopPropagation();});
+			//$('.retweet', node).click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), 'retweet', profileId); event.stopPropagation();});
+			//$('.comment', node).click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), 'comment', profileId); event.stopPropagation();});
 			return node;			
+		},
+		
+		packReactions: function(profileId, profileType, threadType, messageId, isSubMessage) {
+			var sirius = this;
+			var type = socialNetworkTypes[profileType];
+			for (i = 0; i < type.length; ++i) {
+				if (type[i].type == threadType) {
+					var reactions = $("<div />");
+					$(type[i].actions).each(function(index, action){
+						if (action.submessage != undefined && action.submessage == false && isSubMessage == true) {
+							return;
+						}
+						var reaction = $("<a href='#'></a>").attr('title', action.title).addClass(action.name);
+						$("<span/>").addClass("icon-19").addClass("action-" + action.name).appendTo(reaction);
+						switch (action.name) {
+							case 'retweet':
+							case 'comment':
+								reaction.click(function(event){sirius.setMessageBoxStatus($(this).parents('.message:first'), action.name, profileId); event.stopPropagation();});
+								break;
+							case 'delete':
+								reaction.click(function(event) {
+									$.ajax({
+										type: 'GET',
+										url: '/' + profileType + '/deleteMessage',
+										data: {profile_id: profileId, id: messageId},
+										success: function(data) {
+											if (data.error != undefined) {
+												sirius.statusMessage("微博删除失败", "error");
+											} else {
+												sirius.statusMessage("微博删除成功", "success");
+												$('.thread[profileId=' + profileId + '][threadType=' + threadType + '] .message[messageId=' + messageId + ']').remove();
+											}
+										}
+									});
+								});
+								break;
+						}						
+						reactions.append(reaction);
+					});
+					return $(reactions).children();
+				}
+			}
+			return "";
 		},
 		
 		showMessage: function(profileId, profileType, messageId, defaultTab) {

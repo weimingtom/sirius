@@ -11,7 +11,7 @@
 			<?php endforeach?>
 		<?php endif ?>
 		</div>
-		<?php if ($loadMore): ?>
+		<?php if (count($messages) > 0 && $loadMore): ?>
 		<div class="message-more">
 			<a href="#">加载更多</a>
 		</div>

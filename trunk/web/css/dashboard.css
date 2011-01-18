@@ -359,6 +359,10 @@ a.list-toggle-button {
 	background: url('../images/icon_retweet.png') 0 0 no-repeat;
 }
 
+.action-delete {
+	background: url('../images/icon_close.png') 0 0 no-repeat;
+}
+
 .thread-scroll {
 	height: 100%;
 	overflow-x: hidden;

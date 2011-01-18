@@ -21,12 +21,37 @@ socialNetworkTypes['sina'] = [
 	
 	{
 		defaultTitle: '提到我的',
-		type: 'mentions'
+		type: 'mentions',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			}
+		]
 	},
 	
 	{
 		defaultTitle: '我发的微博',
-		type: 'posted'
+		type: 'posted',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			},
+			{
+				name: 'delete',
+				title: '删除',
+				submessage: false
+			}
+		]
 	},
 	
 	{
@@ -38,10 +63,30 @@ socialNetworkTypes['sina'] = [
 socialNetworkTypes['qq'] = [
 	{
 		defaultTitle: '首页微博',
-		type: 'home'
+		type: 'home',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			}
+		]
 	},
 	{
 		defaultTitle: '提到我的',
-		type: 'mentions'
+		type: 'mentions',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			}
+		]
 	}
 ];
