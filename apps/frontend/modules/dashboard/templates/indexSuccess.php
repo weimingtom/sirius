@@ -4,6 +4,8 @@
 <?php use_javascript('socialNetworkTypes.js') ?>
 <?php use_javascript('sirius.js') ?>
 <?php use_javascript('jquery.colorbox-min.js')?>
+<?php use_javascript('swfupload.js') ?>
+<?php use_javascript('upload.js') ?>
 <script>
 $(function(){
 	var options = options || {};
@@ -98,6 +100,7 @@ $(function(){
 					
 					<div id="messageTools" class="_addLinkBlock _messageTools messageTools trim">
 						<div class="messageMedia">
+							<span class="section _uploads"><span id="uploadPlaceholder"></span></span>
 						</div>
 						<div id="saveMessageButtons" class="_saveMessageButtons saveMessageButtons">
 							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" title="Send Now (Shift+Enter)">发布</a></span>
