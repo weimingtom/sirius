@@ -895,6 +895,11 @@ $(function() {
 		},
 		
 		setMessageBoxStatus: function(ele, action, profileId) {
+			if ($('#imageContent').attr("imageUrl")) {
+				this.focusSendPanel();
+				this.statusMessage("如需评论或转发微博，请先删除准备发送的图片", "error");
+				return;
+			}
 			switch (action) {
 				case 'retweet':
 					desc = "您正在转发 :";
@@ -925,10 +930,43 @@ $(function() {
 			});
 		},
 		
+		addPictureToMessageBox: function (imageUrl, imageThumbUrl) {
+			if ($('#reactionContent').attr("actionType")) {
+				this.focusSendPanel();
+				this.statusMessage("正在评论或转发微博，无法插入图片", "error");
+				return;
+			}
+			
+			imageThumbUrl = imageThumbUrl || imageUrl;
+			
+			$('#reactionContent .contentWrapper').hide();
+			$("#imageContent").attr("imageUrl", imageUrl);
+			var imageNode = $("<img />").attr('src', imageThumbUrl);
+			$('#imageContent ._image-preview').html('').append(imageNode);
+			$('#imageContent .contentWrapper').show();
+			this.focusSendPanel();
+			$('.ac_input').focus();
+
+			var sirius = this;
+			$(imageNode).load(function() {
+				sirius.focusSendPanel();
+			});
+			$('.remove-image').click(function() {
+				sirius.removeImage();
+			});
+		},
+		
 		removeReaction: function() {
 			$('#reactionContent ._reaction-source').html('');
 			$("#reactionContent").attr("actionType", "").attr("profileId", "").attr("profileType", "");
 			$('#reactionContent .contentWrapper').hide();
+			this.focusSendPanel();			
+		},
+		
+		removeImage: function() {
+			$('#imageContent ._image-preview').html('');
+			$("#imageContent").attr("imageUrl", "");
+			$('#imageContent .contentWrapper').hide();
 			this.focusSendPanel();			
 		},
 		
@@ -950,12 +988,15 @@ $(function() {
 			this.statusMessage('正在发送消息...', 'info');
 			
 			var data = {message:message, profiles: profiles};
-			var reactionType = $("#reactionContent").attr("actiontype");
-			if (reactionType != undefined && reactionType != "") {
-				data.type = reactionType;
+			if ($("#reactionContent").attr("actiontype")) {
+				data.type = $("#reactionContent").attr("actiontype");
 				data.profile_type = $("#reactionContent").attr('profileType');
 				data.target_message_id = $("#reactionContent .reaction-source .message").attr('messageId');
 			}
+			if ($("#imageContent").attr("imageUrl")) {
+				data.image = $("#imageContent").attr("imageUrl");
+			}
+			
 			$.ajax({
 				type: 'POST',
 				url: '/dashboard/send',

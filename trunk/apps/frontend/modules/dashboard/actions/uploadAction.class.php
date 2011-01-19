@@ -3,17 +3,17 @@
 class uploadAction extends sfActions {
 	public function execute($request) {
 		$files = $request->getFiles();
-
 		if ($files === null || count($files) <= 0) {
 			return sfView::NONE;
 		}
-		$file = $files["FileData"];
+		$file = $files["Filedata"];
 		if ($file['error'] != 0) {
 			return sfView::NONE;
 		}
-		
-		$fileName = $this->generateFileName($uploadedFile["name"]);
-		move_uploaded_file($uploadedFile["tmp_name"], sfConfig::get('sf_upload_dir') . "/" . $fileName);
+		$fileName = $this->generateFileName($file["name"]);
+		move_uploaded_file($file["tmp_name"], sfConfig::get('sf_upload_dir') . "/" . $fileName);
+		$returnData = array("imageUrl" => "/uploads/" . $fileName);
+		return $this->renderText(json_encode($returnData));
 	}
 	
 	protected function generateFileName($originName) {
@@ -27,12 +27,12 @@ class uploadAction extends sfActions {
 			if ($ext) {
 				$fileName .= '.' . $ext;
 			}
-		} while(!$this->fileExist($fileName));
+		} while($this->fileExist($fileName));
 		
 		return $fileName;
 	}
 	
 	protected function fileExist($fileName) {
-		return file_exists(sfConfig::get('sf_upload_dir').'/' .$filename);
+		return file_exists(sfConfig::get('sf_upload_dir').'/' .$fileName);
 	}
 }

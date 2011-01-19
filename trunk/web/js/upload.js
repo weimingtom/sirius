@@ -1,9 +1,9 @@
 $(function(){
+	
 swfu = new SWFUpload({
 	// Backend Settings
-	upload_url: "/test/upload",
+	upload_url: "/dashboard/upload",
 	
-	post_params: {"PHPSESSID": "<?php echo $SID; ?>"},
 	// File Upload Settings
 	file_size_limit : "1 MB",
     file_types : "*.jpg;*.jpeg;*.png;*.gif",
@@ -20,11 +20,25 @@ swfu = new SWFUpload({
 		}
 	},
 	
+	upload_error_handler: function (file, errorCode, message) {
+		$.sirius.statusMessage("图片上传失败", "error");
+	},
+	
+	upload_success_handler: function (file, serverData) {
+		console.log(serverData);
+		var data = $.parseJSON(serverData);
+		if (data == undefined || data.imageUrl == undefined) {
+			$.sirius.statusMessage("图片上传失败", "error");
+			return;
+		}
+		$.sirius.addPictureToMessageBox(data.imageUrl, data.imageThumbUrl);
+	},
+	
 	
 	button_placeholder_id : "uploadPlaceholder",
 	button_width: 30,
 	button_height: 30,
-	button_text : 'Image',
+	button_text : '',
 	button_text_style : '.button { font-family: Helvetica, Arial, sans-serif; font-size: 12pt; } .buttonSmall { font-size: 10pt; }',
 	button_text_top_padding: 0,
 	button_text_left_padding: 18,
@@ -37,6 +51,6 @@ swfu = new SWFUpload({
 	
 	
 	// Debug Settings
-	debug: true
+	debug: false
 	});
 });
