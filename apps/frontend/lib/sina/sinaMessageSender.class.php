@@ -27,13 +27,18 @@ class sinaMessageSender {
 		return true;
 	}
 	
-	public function sendMessage($profileId, $message) {
+	public function sendMessage($profileId, $message, $image) {
 		if (!$this->beforeSend($profileId)) {
 			return false;
 		}
 		
-		$response = $this->apiConsumer->update($message);
-		
+		if ($image) {
+			$imageFilePath = sfConfig::get('sf_upload_dir') . "/" . $this->getFileName($image);
+			$response = $this->apiConsumer->upload($imageFilePath, $message);
+		} else {
+			$response = $this->apiConsumer->update($message);	
+		}
+
 		return true;
 	} 
 
@@ -43,7 +48,7 @@ class sinaMessageSender {
 		}
 		
 		$response = $this->apiConsumer->repost($target, $message);
-		
+
 		return true;
 	}
 	
@@ -55,5 +60,9 @@ class sinaMessageSender {
 		$response = $this->apiConsumer->send_comment($target, $message);
 		
 		return true;
-	} 
+	}
+	
+	private function getFileName($filePath) {
+		return end(explode("/", $filePath));
+	}
 }

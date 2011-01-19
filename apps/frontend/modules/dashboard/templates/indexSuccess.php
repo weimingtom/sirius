@@ -98,6 +98,16 @@ $(function(){
 						</div>
 					</div>
 					
+					<div id="imageContent" class="imageContent">
+						<div class="contentWrapper">
+							<div class="imageInfo">
+								<a class="remove-image icon-28" title="删除图片">删除图片</a>
+							</div>
+							<div class="image-preview _image-preview">
+							</div>							
+						</div>
+					</div>
+					
 					<div id="messageTools" class="_addLinkBlock _messageTools messageTools trim">
 						<div class="messageMedia">
 							<span class="section _uploads"><span id="uploadPlaceholder"></span></span>
