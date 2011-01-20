@@ -908,8 +908,9 @@ class WeiboOAuth {
 
         //print_r( $header_array ); 
         $header_array2=array(); 
-        if( $multi ) 
+        if( $multi ) {
         	$header_array2 = array("Content-Type: multipart/form-data; boundary=" . OAuthUtil::$boundary , "Expect: ");
+		}
         foreach($header_array as $k => $v) 
             array_push($header_array2,$k.': '.$v); 
 

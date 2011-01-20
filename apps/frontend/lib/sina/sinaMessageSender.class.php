@@ -34,9 +34,9 @@ class sinaMessageSender {
 		
 		if ($image) {
 			$imageFilePath = sfConfig::get('sf_upload_dir') . "/" . $this->getFileName($image);
-			$response = $this->apiConsumer->upload($imageFilePath, $message);
+			$response = $this->apiConsumer->upload($message, $imageFilePath);
 		} else {
-			$response = $this->apiConsumer->update($message);	
+			$response = $this->apiConsumer->update($message);
 		}
 
 		return true;

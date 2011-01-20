@@ -26,13 +26,18 @@ class QQMessageSender {
 		return true;
 	}
 	
-	public function sendMessage($profileId, $message) {
+	public function sendMessage($profileId, $message, $image) {
 		if (!$this->beforeSend($profileId)) {
 			return false;
 		}
 		
-		$response = $this->apiConsumer->update($message);
-		
+		if ($image) {
+			$imageFilePath = sfConfig::get('sf_upload_dir') . "/" . $this->getFileName($image);
+			$response = $this->apiConsumer->upload($message, $imageFilePath);
+		} else {
+			$response = $this->apiConsumer->update($message);
+		}
+
 		return true;
 	} 
 
@@ -54,5 +59,10 @@ class QQMessageSender {
 		$response = $this->apiConsumer->send_comment($target, $message);
 		
 		return true;
-	} 
+	}
+	
+	private function getFileName($filePath) {
+		return end(explode("/", $filePath));
+	}
+	
 }
