@@ -112,10 +112,10 @@ class QQClient
     { 
         //  http://open.t.qq.com/api/statuses/update.json 
         $param = array(); 
-        $param['status'] = $text; 
+        $param['content'] = $text; 
         $param['pic'] = '@'.$pic_path;
         
-        return $this->oauth->post( 'http://open.t.qq.com/api/statuses/upload.json' , $param , true ); 
+        return $this->oauth->post( 'http://open.t.qq.com/api/t/add_pic' , $param , true ); 
     } 
 
     /** 
