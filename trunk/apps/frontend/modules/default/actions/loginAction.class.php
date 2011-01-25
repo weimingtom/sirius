@@ -3,6 +3,10 @@ class loginAction extends sfAction {
 	const REGEX_EMAIL = '/^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i';
 	
 	public function execute($request) {
+		if ($this->getUser()->isAuthenticated())
+	    {
+	    	return $this->redirect("/dashboard");
+	    }
 		if ($request->hasParameter('email') && $request->hasParameter('password')) {
 			$email = $request->getParameter('email');
 			$password = $request->getParameter('password');
@@ -31,6 +35,7 @@ class loginAction extends sfAction {
 			}
 
 			$this->getUser()->setId($user->getId());
+			$this->getUser()->setName($user->getFullName());
 			$this->getUser()->setEmail($user->getEmail());
 			$this->getUser()->setAuthenticated(true);
 

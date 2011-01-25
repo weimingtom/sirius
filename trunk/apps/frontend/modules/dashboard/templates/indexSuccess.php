@@ -146,4 +146,8 @@ $(function(){
 		</div>
 	</div>
 </div>
+<div id="footer">
+	<span class="username"><?php echo $username ?></span>
+	<a class="logout" href="/logout">退出登陆 »</a>
+</div>
 <div id="popup-dialog" style="display:none;">abc</div>

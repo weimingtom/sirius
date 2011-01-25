@@ -10,6 +10,10 @@ login:
   url: /login
   param: { module: default, action: login }
 
+logout:
+  url: /logout
+  param: { module: default, action: logout }
+
 signup:
   url: /signup
   param: { module: default, action: signup }
