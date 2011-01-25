@@ -113,7 +113,7 @@ $(function(){
 							<span class="section _uploads"><span id="uploadPlaceholder"></span></span>
 						</div>
 						<div id="saveMessageButtons" class="_saveMessageButtons saveMessageButtons">
-							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" title="Send Now (Shift+Enter)">发布</a></span>
+							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" title="发布">发布</a></span>
 						</div>
 					</div>
 				</div>
