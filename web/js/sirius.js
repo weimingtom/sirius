@@ -553,10 +553,15 @@ $(function() {
 					thread = this.thread;
 					sirius = this.sirius;
 					$(data).each( function(i, message) {
-						messageNode = sirius.packMessage(message, profileId, profileType, false);
+						messageNode = sirius.packMessage(message, profileId, profileType, threadType);
 						if (message.retweet_origin != null) {
-							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, true)).addClass('submessage'));
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, threadType)).addClass('submessage'));
 						}
+						$(messageNode).hover(
+							function() {$('.message-actions',this).show(); $('.new-message',this).hide();},
+							function() {$('.message-actions',this).hide(); $('.new-message',this).show();}
+						);
+
 						$(messageNode).appendTo(tempContainer);
 					});
 					if (tempContainer.children().size() > 0) {
@@ -704,7 +709,16 @@ $(function() {
 						success: function(data){
 							$(data).appendTo('#popup-dialog')
 							       .children('a._message_picture_thumbnail')
-							       .colorbox({maxWidth: '80%', maxHeight: '80%', photo: true})
+							       .colorbox({
+							       		maxWidth: '80%',
+							       		maxHeight: '80%',
+							       		photo: true,
+							       		onComplete: function() {
+							       			$('#cboxLoadedContent>img').click(function() {
+							       				window.open();
+							       			});
+							       		}
+							       	})
 							       .end()
 							       .filter('._message-info-tabs')
 							       .tabs({
