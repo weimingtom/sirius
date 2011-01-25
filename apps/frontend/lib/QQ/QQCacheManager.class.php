@@ -32,6 +32,11 @@ class QQCacheManager {
 		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'home_timeline', $cacheMessageListName, $since_id, $before_id, $count);
 	}
 	
+	public function list_dm($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20) {
+		$cacheMessageListName = 'qq_' . 'list_dm_' . $profile_id;
+		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'list_dm', $cacheMessageListName, $since_id, $before_id, $count);
+	}
+	
 	public function trend_timeline($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20, $trend_name = NULL) {
 		if ($trend_name == NULL) return array();
 		$cacheMessageListName = 'qq_' . 'trend_' . $trend_name . '_' .$profile_id;

@@ -494,7 +494,7 @@ $(function() {
 						messageNode = sirius.packMessage(message, profileId, profileType, threadType);
 						$('.message-author', messageNode).after('<span class="icon-13 new-message"></span>');
 						if (message.retweet_origin != null) {
-							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, threadType)).addClass('submessage'));
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, threadType, true)).addClass('submessage'));
 						}
 						
 						$(messageNode).hover(
@@ -555,7 +555,7 @@ $(function() {
 					$(data).each( function(i, message) {
 						messageNode = sirius.packMessage(message, profileId, profileType, threadType);
 						if (message.retweet_origin != null) {
-							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, threadType)).addClass('submessage'));
+							$(messageNode).append( $(sirius.packMessage(message.retweet_origin, profileId, profileType, threadType, true)).addClass('submessage'));
 						}
 						$(messageNode).hover(
 							function() {$('.message-actions',this).show(); $('.new-message',this).hide();},
