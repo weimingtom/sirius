@@ -49,6 +49,18 @@ class sinaCacheManager {
 		$cacheMessageListName = 'sina_' . 'list_user_' . $uid_or_name . '_' . $profile_id;
 		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'user_timeline', $cacheMessageListName, $since_id, $before_id, $count, $uid_or_name);
 	}
+	
+	public function getEmotions() {
+		$cacheEmotionsName = 'sina_emotions_list';
+		$emotions = $this->cache->get($cacheEmotionsName);
+		if ($emotions) {
+			return $emotions;
+		}
+		
+		$emotions = json_decode(file_get_contents('http://api.t.sina.com.cn/emotions.json'), true);
+		$this->cache->set($cacheEmotionsName, $emotions);
+		return $emotions;
+	}
 
 	protected function getMessagesBySinceIdOrBeforeId($apiConsumer, $functionName, $cacheMessageListName, $since_id = null, $before_id = null, $count = 20, $addtional_arg1 = null, $addtional_arg2 = null, $addtional_arg3 = null) {
 		$cacheMessageListLastModify = $this->cache->getLastModified($cacheMessageListName);
