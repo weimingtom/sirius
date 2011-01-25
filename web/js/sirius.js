@@ -353,6 +353,7 @@ $(function() {
 				context: this,
 				success: function (data) {
 					this.addThread(data);
+					$('#threadsContainer').animate({scrollLeft: $('.thread[threadId=' + data.id + ']').position().left}, "slow");
 					this.statusMessage("添加成功", "success");
 				}
 			});
