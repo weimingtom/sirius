@@ -123,6 +123,45 @@ abstract class QQAction extends myAction {
 		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_]*)# ?/u", " <a class=\"_topic_link\" href=\"#\" topic=\"\\1\">#\\1#</a> ", $text); 
 		// replace user
 		$text = preg_replace( "/ *@([\x{4e00}-\x{9fa5}A-Za-z0-9_]*) ?/u", " <a class=\"_user_link\" href=\"#\" user=\"\\1\">@\\1</a> ", $text);
+		
+		// replace emotions
+		foreach ($this->getEmotions() as $txt => $image) {
+			$imgNode = '<img class="motion" src="' . $image . '" />';
+			$txt = "/" . $txt;
+			$text = str_replace($txt, $imgNode, $text);
+		}
+		
 		return $text;
+	}
+	
+	protected function getEmotions($keyword) {
+		$emotions = array(
+			"微笑" => "http://mat1.gtimg.com/www/mb/images/face/14.gif",
+			"撇嘴" => "http://mat1.gtimg.com/www/mb/images/face/1.gif",
+			"色" => "http://mat1.gtimg.com/www/mb/images/face/2.gif",
+			"发呆" => "http://mat1.gtimg.com/www/mb/images/face/3.gif",
+			"得意" => "http://mat1.gtimg.com/www/mb/images/face/4.gif",
+			"流泪" => "http://mat1.gtimg.com/www/mb/images/face/5.gif",
+			"害羞" => "http://mat1.gtimg.com/www/mb/images/face/6.gif",
+			"闭嘴" => "http://mat1.gtimg.com/www/mb/images/face/7.gif",
+			"睡" => "http://mat1.gtimg.com/www/mb/images/face/8.gif",
+			"大哭" => "http://mat1.gtimg.com/www/mb/images/face/9.gif",
+			"尴尬" => "http://mat1.gtimg.com/www/mb/images/face/10.gif",
+			"发怒" => "http://mat1.gtimg.com/www/mb/images/face/11.gif",
+			"调皮" => "http://mat1.gtimg.com/www/mb/images/face/12.gif",
+			"呲牙" => "http://mat1.gtimg.com/www/mb/images/face/13.gif",
+			"惊讶" => "http://mat1.gtimg.com/www/mb/images/face/0.gif",
+			"难过" => "http://mat1.gtimg.com/www/mb/images/face/15.gif",
+			"酷" => "http://mat1.gtimg.com/www/mb/images/face/16.gif",
+			"冷汗" => "http://mat1.gtimg.com/www/mb/images/face/96.gif",
+			"抓狂" => "http://mat1.gtimg.com/www/mb/images/face/18.gif",
+			"吐" => "http://mat1.gtimg.com/www/mb/images/face/19.gif",
+			"偷笑" => "http://mat1.gtimg.com/www/mb/images/face/20.gif",
+			"可爱" => "http://mat1.gtimg.com/www/mb/images/face/21.gif",
+			"白眼" => "http://mat1.gtimg.com/www/mb/images/face/22.gif",
+			"傲慢" => "http://mat1.gtimg.com/www/mb/images/face/23.gif",
+		);
+		
+		return $emotions;
 	}
 }

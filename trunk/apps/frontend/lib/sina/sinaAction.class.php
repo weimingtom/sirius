@@ -118,6 +118,12 @@ abstract class sinaAction extends myAction {
 		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_]*)# ?/u", " <a class=\"_topic_link\" href=\"#\" topic=\"\\1\">#\\1#</a> ", $text); 
 		// replace user
 		$text = preg_replace( "/ *@([\x{4e00}-\x{9fa5}A-Za-z0-9_]*) ?/u", " <a class=\"_user_link\" href=\"#\" user=\"\\1\">@\\1</a> ", $text);
+		
+		// replace emotions
+		foreach (sinaCacheManager::getInstance()->getEmotions() as $motion) {
+			$imgNode = '<img class="motion" src="' . $motion['url'] . '" />';
+			$text = str_replace($motion['phrase'], $imgNode, $text);
+		}
 		return $text;
 	}
 	
