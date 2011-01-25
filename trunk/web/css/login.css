@@ -1,6 +1,6 @@
 body {
 	min-height: 100%;
-	background: #CEF8FF url(../images/html_bg.jpg) 0 0 repeat-x;	
+	background: #CEF8FF url(../images/html_bg.jpg) 0 0 repeat-x;
 }
 
 .vertical-center {
@@ -13,7 +13,8 @@ body {
 
 #container {
 	margin: 10px auto 0;
-	width: 320px;
+	width: 100%;
+	text-align: center;
 }
 
 .login, .signup{
@@ -30,6 +31,7 @@ body {
 	position: relative;
 	width: 320px;
 	min-height: 168px;
+	text-align:left;
 }
 
 .login {
