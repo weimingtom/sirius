@@ -986,7 +986,7 @@ $(function() {
 		
 		sendMessage: function() {
 			var message = $('._messageArea .ac_input').val();
-			if (message == '') {
+			if ($("#reactionContent").attr("actiontype") != 'retweet' && message == '') {
 				this.statusMessage('消息内容不能为空', 'warning');
 				return;
 			}
