@@ -606,7 +606,11 @@ $(function() {
 					.colorbox({
 						maxWidth: '80%',
 						maxHeight: '80%',
-						photo: true
+						photo: true,
+						title: function(){
+						    var url = $(this).attr('href');
+						    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+						}
 					});
 			}
 			
@@ -713,11 +717,10 @@ $(function() {
 							       		maxWidth: '80%',
 							       		maxHeight: '80%',
 							       		photo: true,
-							       		onComplete: function() {
-							       			$('#cboxLoadedContent>img').click(function() {
-							       				window.open();
-							       			});
-							       		}
+										title: function(){
+										    var url = $(this).attr('href');
+										    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+										}
 							       	})
 							       .end()
 							       .filter('._message-info-tabs')
@@ -737,7 +740,11 @@ $(function() {
 										$('._thread-tab ._message_picture_thumbnail').colorbox({
 											maxWidth: '80%',
 											maxHeight: '80%',
-											photo: true
+											photo: true,
+											title: function(){
+											    var url = $(this).attr('href');
+											    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+											}
 										});
 										
 										$('._thread-tab .message-avatar,._thread-tab  .message-author').click(function() {
@@ -803,7 +810,11 @@ $(function() {
 							$('._thread-tab ._message_picture_thumbnail').colorbox({
 								maxWidth: '80%',
 								maxHeight: '80%',
-								photo: true
+								photo: true,
+								title: function(){
+								    var url = $(this).attr('href');
+								    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+								}
 							});
 							
 							$('._thread-tab .message-avatar,._thread-tab  .message-author').click(function() {
@@ -866,7 +877,11 @@ $(function() {
 										$('._thread-tab ._message_picture_thumbnail').colorbox({
 											maxWidth: '80%',
 											maxHeight: '80%',
-											photo: true
+											photo: true,
+											title: function(){
+											    var url = $(this).attr('href');
+											    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+											}
 										});
 										
 										$('._thread-tab .message-avatar,._thread-tab  .message-author').click(function() {
