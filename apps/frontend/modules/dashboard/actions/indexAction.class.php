@@ -4,6 +4,8 @@ class indexAction extends sfAction {
 	public function execute($request) {
 		$userId = $this->getUser()->getId();
 		
+		$this->username = $this->getUser()->getName();
+		
 		$this->profiles = Doctrine::getTable('Profile')
 			->createQuery('')
 			->select("id, type, screen_name, avatar_url, profile_name")

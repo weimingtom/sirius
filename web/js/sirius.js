@@ -73,7 +73,7 @@ $(function() {
 			else
 				$('#threadsScroll').width("100%");
 				
-			$($.sirius.settings.containerElement).height($(window).height() - $($.sirius.settings.headerElement).height());
+			$($.sirius.settings.containerElement).height($(window).height() - $($.sirius.settings.headerElement).height() - $('#footer').outerHeight());
 			$($.sirius.settings.dashboardElement).height($($.sirius.settings.containerElement).height());
 			$("#threadsContainer").height($($.sirius.settings.dashboardElement).height() - $("#dashboardTabs").height());
 			$('#threadsScroll').height($("#threadsContainer").height() - $.sirius.settings.threadHeadHeight );

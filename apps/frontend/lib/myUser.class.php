@@ -18,6 +18,14 @@ class myUser extends sfBasicSecurityUser
 		return $this->getAttribute("user_email");
 	}
 	
+	public function setName($email) {
+		$this->setAttribute("user_name", $email);
+	}
+	
+	public function getName() {
+		return $this->getAttribute("user_name");
+	}
+	
 	public function getTheme() {
 		return 'NoTheme';
 	}
