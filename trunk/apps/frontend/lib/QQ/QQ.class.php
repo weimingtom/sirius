@@ -150,8 +150,9 @@ class QQClient
      * @return array 
      */ 
     function destroy( $sid ) 
-    { 
-        return $this->oauth->post( 'http://open.t.qq.com/api/statuses/destroy/' . $sid . '.json' ); 
+    {
+    	$params = array('id' => $sid);
+        return $this->oauth->post( 'http://open.t.qq.com/api/t/del', $params ); 
     } 
 
     /** 
@@ -249,11 +250,15 @@ class QQClient
     function user_timeline($count = NULL, $pageflag = NULL, $pagetime = NULL, $username = NULL) 
     {
     	$params = array();
-		if ($username != NULL) $params['name'] = $username;
     	if ($count != NULL) $params['reqnum'] = $count;
 		if ($pageflag != NULL) $params['pageflag'] = $pageflag;
 		if ($pagetime != NULL) $params['pagetime'] = $pagetime;
-        return $this->oauth->get('http://open.t.qq.com/api/statuses/user_timeline', $params); 
+		if ($username != NULL) {
+			$params['name'] = $username;
+			return $this->oauth->get('http://open.t.qq.com/api/statuses/user_timeline', $params);
+		} else {
+			return $this->oauth->get('http://open.t.qq.com/api/statuses/broadcast_timeline', $params);
+		}
     } 
 
     /** 
@@ -264,10 +269,13 @@ class QQClient
      * @param int $count 每次返回的最大记录数，最多返回200条，默认20。 
      * @return array 
      */ 
-    function list_dm( $page = 1 , $count = 20  ) 
-    { 
-        //return $this->request_with_pager( 'http://open.t.qq.com/api/private/recv' , $page , $count ); 
-		return $this->oauth->get( 'http://open.t.qq.com/api/private/recv', array("format"=>"json", "pageflag"=>"0", "pagetime"=>"0", "reqnum"=>"20")); 
+    function list_dm($count = NULL, $pageflag = NULL, $pagetime = NULL) 
+    {
+    	$params = array();
+    	if ($count != NULL) $params['reqnum'] = $count;
+		if ($pageflag != NULL) $params['pageflag'] = $pageflag;
+		if ($pagetime != NULL) $params['pagetime'] = $pagetime;
+		return $this->oauth->get( 'http://open.t.qq.com/api/private/recv', $params); 
     } 
 
     /** 

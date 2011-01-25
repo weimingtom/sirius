@@ -88,5 +88,28 @@ socialNetworkTypes['qq'] = [
 				title: '转发'
 			}
 		]
+	},
+	{
+		defaultTitle: '我发的微博',
+		type: 'posted',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			},
+			{
+				name: 'delete',
+				title: '删除',
+				submessage: false
+			}
+		]
+	},
+	{
+		defaultTitle: '我的私信',
+		type: 'direct'
 	}
 ];
