@@ -120,7 +120,7 @@ abstract class QQAction extends myAction {
 	
 	protected function formatText($text) {
 		// replace #
-		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_]*)# ?/u", " <a class=\"_topic_link\" href=\"#\" topic=\"\\1\">#\\1#</a> ", $text); 
+		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_\ ]*)# ?/u", " <a class=\"_topic_link\" href=\"#\" topic=\"\\1\">#\\1#</a> ", $text); 
 		// replace user
 		$text = preg_replace( "/ *@([\x{4e00}-\x{9fa5}A-Za-z0-9_]*) ?/u", " <a class=\"_user_link\" href=\"#\" user=\"\\1\">@\\1</a> ", $text);
 		

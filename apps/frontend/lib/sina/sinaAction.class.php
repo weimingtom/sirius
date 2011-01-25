@@ -115,7 +115,7 @@ abstract class sinaAction extends myAction {
 		// relpace hyper link
 		$text = preg_replace( "/ *(http:\/\/[a-zA-Z0-9\/\.-]*) ?/u", " <a href=\"\\1\" target=\"_blank\">\\1</a> ", $text);
 		// replace #
-		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_]*)# ?/u", " <a class=\"_topic_link\" href=\"#\" topic=\"\\1\">#\\1#</a> ", $text); 
+		$text = preg_replace( "/ *#([\x{4e00}-\x{9fa5}A-Za-z0-9_\ ]*)# ?/u", " <a class=\"_topic_link\" href=\"#\" topic=\"\\1\">#\\1#</a> ", $text); 
 		// replace user
 		$text = preg_replace( "/ *@([\x{4e00}-\x{9fa5}A-Za-z0-9_]*) ?/u", " <a class=\"_user_link\" href=\"#\" user=\"\\1\">@\\1</a> ", $text);
 		
