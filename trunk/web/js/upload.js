@@ -3,6 +3,7 @@ $(function(){
 swfu = new SWFUpload({
 	// Backend Settings
 	upload_url: "/dashboard/upload",
+	prevent_swf_caching: false,
 	
 	// File Upload Settings
 	file_size_limit : "1 MB",
@@ -51,10 +52,5 @@ swfu = new SWFUpload({
 	
 	// Flash Settings
 	flash_url : "/swf/swfupload.swf",
-	
-	
-	
-	// Debug Settings
-	debug: false
-	});
+});
 });

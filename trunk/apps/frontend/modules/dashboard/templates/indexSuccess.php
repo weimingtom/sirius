@@ -1,11 +1,13 @@
 <?php use_stylesheet('base.css') ?>
 <?php use_stylesheet('dashboard.css') ?>
 <?php use_stylesheet('colorbox.css') ?>
+<?php use_stylesheet('tip-yellowsimple.css') ?>
 <?php use_javascript('socialNetworkTypes.js') ?>
 <?php use_javascript('sirius.js') ?>
 <?php use_javascript('jquery.colorbox-min.js')?>
 <?php use_javascript('swfupload.js') ?>
 <?php use_javascript('upload.js') ?>
+<?php use_javascript('jquery.poshytip.min.js') ?>
 <script>
 $(function(){
 	var options = options || {};
@@ -61,6 +63,13 @@ $(function(){
 	});
 	
 	$('._submitAddMessage').click(function(){$.sirius.sendMessage();});
+	
+	$('._uploads').poshytip({
+		className: 'tip-yellowsimple',
+		alignTo: 'target',
+		alignX: 'center',
+		offsetY: 5
+	});
 });
 </script>
 <div id="statusContainer">
@@ -110,10 +119,10 @@ $(function(){
 					
 					<div id="messageTools" class="_addLinkBlock _messageTools messageTools trim">
 						<div class="messageMedia">
-							<span class="section _uploads"><span id="uploadPlaceholder"></span></span>
+							<span class="section _uploads" title="上传图片"><span id="uploadPlaceholder"></span></span>
 						</div>
 						<div id="saveMessageButtons" class="_saveMessageButtons saveMessageButtons">
-							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" title="发布">发布</a></span>
+							<span class="section _submit"><a class="btn-cmt _submitAddMessage" href="#" title="发布新消息">发布</a></span>
 						</div>
 					</div>
 				</div>
