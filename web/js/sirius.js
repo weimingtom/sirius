@@ -1027,6 +1027,8 @@ $(function() {
 				data.image = $("#imageContent").attr("imageUrl");
 			}
 			
+			this.unfocusSendPanel();
+			
 			$.ajax({
 				type: 'POST',
 				url: '/dashboard/send',
@@ -1038,9 +1040,10 @@ $(function() {
 					$('.messageComposeBox').removeClass('collapsed').addClass('expanded');
 					$('._messageArea .ac_input').val('');
 					this.removeReaction();
+					this.removeImage();
 					this.unfocusSendPanel();
 				}
-			});		
+			});
 		},
 		
 		focusSendPanel: function() {

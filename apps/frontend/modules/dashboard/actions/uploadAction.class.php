@@ -12,7 +12,13 @@ class uploadAction extends sfActions {
 		}
 		$fileName = $this->generateFileName($file["name"]);
 		move_uploaded_file($file["tmp_name"], sfConfig::get('sf_upload_dir') . "/" . $fileName);
-		$returnData = array("imageUrl" => "/uploads/" . $fileName);
+		
+		$thumbnail = new sfThumbnail(150, 150);
+		$thumbnail->loadFile(sfConfig::get('sf_upload_dir') . "/" . $fileName);
+		$thumbnail->save(sfConfig::get('sf_upload_dir').'/thumbnail/'.$fileName);
+		
+		
+		$returnData = array("imageUrl" => "/uploads/" . $fileName, 'imageThumbUrl' => "/uploads/thumbnail/" . $fileName);
 		return $this->renderText(json_encode($returnData));
 	}
 	
