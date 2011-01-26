@@ -1,3 +1,4 @@
+<?php use_stylesheet('base.css') ?>
 <div class="profile-add-window" style="margin-top: 2px">
 	<h1>添加腾讯微博帐号</h1>
 	<p>为了在MixMes中管理您的腾讯微博帐号，您需要允许MixMes访问您的微博帐号。</p>
