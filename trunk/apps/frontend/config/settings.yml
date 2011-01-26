@@ -38,3 +38,5 @@ all:
     default_culture: 		zh_CN
     
     default_timezone:		Asia/Chongqing
+    
+    timeout:     28800
