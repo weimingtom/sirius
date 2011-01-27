@@ -14,7 +14,7 @@
 		<form name="memberLoginForm" id="memberLoginForm" class="login-form clean" method="post" action="/login">
 			<p>
 				<label for="email"><?php echo __('电子邮箱:')?></label>
-				<input id="email" type="text" name="email" maxLength="100" />
+				<input id="email" type="text" name="email" maxLength="100" value="<?php echo $sf_params->get('email') ?>"/>
 			</p>
 			<p>
 				<label for="password"><?php echo __('密码:')?></label>
@@ -27,6 +27,6 @@
 			</p>
 			<input value="<?php echo __('登录')?>" type="submit" class="submit" />			
 		</form>
-		<p class="note">还没有帐号?<a href="/signup">去注册一个</a>。</p>
+		<p class="note">还没有帐号? <a href="/signup">去注册一个</a></p>
 	</div>
 </div>

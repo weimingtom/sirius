@@ -49,7 +49,7 @@ class signupAction extends sfAction {
 						->where('user.email = ?', $email)
 						->fetchOne();
 					if ($checkUser != null) {
-						$this->signUpErrors_email = "该邮箱地址已注册，请<a href='/login'>登陆</a>";
+						$this->signUpErrors_email = "该邮箱地址已注册，请直接<a href='/login?email=" . $email . "'>登录</a>";
 						$hasError = true;
 					}
 				}

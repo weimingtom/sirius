@@ -17,7 +17,7 @@ body {
 	text-align: center;
 }
 
-.login, .signup{
+.pane{
 	display: block;
 	background-color: white;
 	padding: 22px;
@@ -40,6 +40,12 @@ body {
 
 .signup {
 	margin: -180px auto 0 auto;
+}
+
+.apply-invite {
+	margin: 12px auto;
+	padding: 22px 22px 8px 22px;
+	width: 320px;
 }
 
 p.summary {
@@ -93,6 +99,7 @@ form.clean input.submit:-moz-focus-inner { border: 0; }
 p.note {
 	color: #888;
 	font-size: 12px;
+	line-height: 14px;
 }
 
 .error {
