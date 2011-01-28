@@ -691,18 +691,19 @@ $(function() {
 								break;
 							case 'favorite':
 							case 'unfavorite':
+								reaction.attr('actionName', action.name);
 								reaction.click(function(event){
+									actionName = $(reaction).attr('actionName');
 									$.ajax({
 										type: 'GET',
 										url: '/' + profileType + '/favoriteMessage',
-										data: {profile_id: profileId, id: message.id, do: action.name},
+										data: {profile_id: profileId, id: message.id, do: actionName},
 										context: {message: message},
 										success: function(data) {
 											if (data.error != undefined) {
 												sirius.statusMessage("收藏/取消收藏失败", "error");
 											} else {
 												sirius.statusMessage("收藏/取消收藏成功", "success");
-												var messageNode = $();
 												$('.message[messageId=' + this.message.id + '] > .message-actions')
 													.children('.favorite, .unfavorite')
 													.toggleClass('unfavorite favorite')
@@ -711,6 +712,8 @@ $(function() {
 													.end()
 													.attr('title', function(){
 														return (this.title == '收藏') ? '取消收藏' :  '收藏';
+													}).attr('actionName', function(){
+														return ($(this).attr('actionName') == 'favorite') ? 'unfavorite' :  'favorite';
 													});
 												
 											}
