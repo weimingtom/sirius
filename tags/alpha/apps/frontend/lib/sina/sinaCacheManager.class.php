@@ -110,7 +110,7 @@ class sinaCacheManager {
 		return $ids;
 	}
 	
-	protected function cacheMessages($data) {
+	public function cacheMessages($data) {
 		if (isset($data['id'])) {
 			$this->cache->set('sina_message_' . $data['id'], $data);
 		} else {

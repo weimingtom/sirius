@@ -17,11 +17,13 @@ class Message {
 	public $text = "";
 	public $user;
 	public $truncated = "";
+	public $favorited = "";
 	
 	public $retweetCount = -1;
 	public $commentCount = -1;
 	
 	public $picture_thumbnail = "";
+	public $picture_medium = "";
 	public $picture_original = "";
 	//public $video_thumbnail;
 	//public $video_original;

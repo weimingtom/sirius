@@ -15,6 +15,16 @@ socialNetworkTypes['sina'] = [
 			{
 				name: 'retweet',
 				title: '转发'
+			},
+			{
+				name: 'favorite',
+				title: '收藏',
+				unless: 'favorited'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				if: 'favorited'
 			}
 		]
 	},
@@ -30,6 +40,16 @@ socialNetworkTypes['sina'] = [
 			{
 				name: 'retweet',
 				title: '转发'
+			},
+			{
+				name: 'favorite',
+				title: '收藏',
+				unless: 'favorited'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				if: 'favorited'
 			}
 		]
 	},
@@ -45,6 +65,16 @@ socialNetworkTypes['sina'] = [
 			{
 				name: 'retweet',
 				title: '转发'
+			},
+			{
+				name: 'favorite',
+				title: '收藏',
+				unless: 'favorited'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				if: 'favorited'
 			},
 			{
 				name: 'delete',
