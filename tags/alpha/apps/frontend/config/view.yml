@@ -1,0 +1,20 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        MixMes - 一站式微博管理工具
+    description:  MixMes帮助您管理微博帐号，分析微博趋势，策划实施微博营销。
+    keywords:     MixMes, 微博, 新浪微博, 腾讯微博, 搜狐微博, 饭否, weibo, twitter, tweet, 一站式
+    language:     zh_CN
+    #robots:       index, follow
+
+  stylesheets:    [reset.css, jquery-ui-1.8.6.css, jquery-ui-sirius.css]
+
+  javascripts:    [jquery-1.4.4.min.js, jquery-ui-1.8.6.min.js]
+
+  has_layout:     true
+  layout:         layout

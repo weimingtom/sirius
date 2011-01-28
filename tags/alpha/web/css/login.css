@@ -1,0 +1,167 @@
+body {
+	min-height: 100%;
+	background: #CEF8FF url(../images/html_bg.jpg) 0 0 repeat-x;
+}
+
+.vertical-center {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+#container {
+	margin: 10px auto 0;
+	width: 100%;
+	text-align: center;
+}
+
+.pane{
+	display: block;
+	background-color: white;
+	padding: 22px;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-khtml-border-radius: 8px;
+	box-shadow: 0 1px 3px #4F717F;
+	-moz-box-shadow: 0 1px 3px #4F717F;
+	-webkit-box-shadow: 0 1px 3px #4F717F;
+	position: relative;
+	width: 320px;
+	min-height: 168px;
+	text-align:left;
+}
+
+.login {
+	margin: -150px auto 0 auto;
+}
+
+.signup {
+	margin: -180px auto 0 auto;
+}
+
+.apply-invite {
+	margin: 12px auto;
+	padding: 22px 22px 8px 22px;
+	width: 320px;
+}
+
+p.summary {
+	color: #ACACAC;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0 0 12px 0;
+	line-height: 20px;
+}
+
+form.clean { display: block; position: relative; padding: 22px 12px 36px 12px; margin: 12px 0 8px 0; background-color: #f4f4f4; border-radius: 2px; -moz-border-radius: 2px; -webkit-border-radius: 2px; -khtml-border-radius: 2px; clear: both; }
+form.clean p { position: relative; padding: 0; margin: 0 0 8px 0; padding: 0 0 0 87px; }
+form.clean p label { font-weight: bold; font-size: 12px; line-height: 14px; text-align: right; color: #666666; width: 81px; position: absolute; left: 0; top: 0; margin-top: 3px; }
+form.clean p span { display: block; padding: 3px 2px; color: #727272; }
+form.clean p.inline input { width: auto; display: inline; margin-right: 2px; }
+form.clean p.inline label { font-size: 11px; line-height: 11px; font-weight: normal; display: inline; position: static; }
+form.clean input, form.clean textarea { border: 1px solid #d6dde0; padding: 2px; font-size: 12px; width: 100%; -moz-box-sizing: border-box; box-sizing: border-box; }
+form.clean input.submit { border-radius: 6px; -moz-border-radius: 6px; -webkit-border-radius: 6px; -khtml-border-radius: 6px; box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.3); font-family: arial, sans-serif; -moz-background-size: 100% 8px, 100% 19px, 100%, 100%; background-color: #f8f8f8; background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0)), -moz-linear-gradient(top, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.1)), -moz-radial-gradient(center center 45deg, circle closest-corner, rgba(255, 255, 255, 0.1) 75%, rgba(0, 0, 0, 0) 140%); background-position: top left, bottom left, 0 0; background-repeat: no-repeat, no-repeat, no-repeat; background: -webkit-gradient(linear, 0 0, 0 125%, from(rgba(255, 255, 255, 0)), to(rgba(0, 0, 0, 0.2))) no-repeat 0px 0px, -webkit-gradient(linear, right top, left top, color-stop(0.95, rgba(0, 0, 0, 0)), color-stop(1, rgba(0, 0, 0, 0.05))), -webkit-gradient(linear, left top, right top, color-stop(0.95, rgba(0, 0, 0, 0)), color-stop(1, rgba(0, 0, 0, 0.05))), -webkit-gradient(linear, right bottom, right top, color-stop(0.8, rgba(0, 0, 0, 0)), color-stop(1, rgba(0, 0, 0, 0.08))); border: 1px solid white; color: #2d92c6; cursor: pointer; font-size: 10px; font-weight: bold; letter-spacing: 0.075em; line-height: 10px; outline: none !important; padding: 6px 8px; text-align: center; text-decoration: none !important; text-shadow: 0px 1px 2px white; text-transform: uppercase; white-space: nowrap; /*&:active */ /*  outline: none */ /*  background: none */ /*  background-color: #ddd */ /*  border-color: #eee */ line-height: 16px; padding: 4px 8px 2px 8px; position: absolute; bottom: 10px; right: 12px; width: auto; }
+form.clean input.submit a { color: #2d92c6; }
+form.clean input.submit:hover { font-style: none; background-color: #fcfcfc; text-decoration: none; }
+form.clean input.submit:hover a { font-style: none; text-decoration: none; }
+form.clean input.submit:-moz-focus-inner { border: 0; }
+
+.pane form.clean { background-image: -moz-linear-gradient(0% 50px 90deg, #f6f6f6, #fbfbfb, #f6f6f6 95%, #efefef 99%); background-image: -webkit-gradient(linear, 0 0, 0 50, from(#e9e9e9), to(#f6f6f6), color-stop(0.08, #f6f6f6)); margin: 12px -22px 12px -22px; padding: 22px 42px 32px; }
+.pane form.clean p.inline { text-align: right; }
+.pane form.clean input.submit { 
+	bottom: 10px;
+	right: 42px; 
+	color: white;
+	border-width: 1px;
+	border-style: solid;
+	padding: 3px 10px 4px 9px;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 15px;
+	white-space: nowrap;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;	border-color: #AAB0BB #525A69 #333842;
+	background: url(../images/btn_cmt_bg.png) 0 0 repeat-x;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+}
+
+.pane form.clean input.submit:hover {
+	background-position: 0 -24px;
+}
+
+p.note {
+	color: #888;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+.error {
+	font-size: 12px;
+	padding: 3px 2px;
+	background-color: #FBE3E4;
+	border-color: #FBC2C4;
+	color: #8A1F11;
+}
+
+.pane.registration p {
+	color: #888;
+}
+
+form.clean span.error {
+	display: inline-block;
+	margin-top: 6px;
+	color: #727272;
+}
+
+a:link, a:visited, a:active {
+	text-decoration: none;
+	color: #3794C4;
+	outline: none;
+}
+
+a:hover { text-decoration: underline; color: #205874; }
+
+div.logo {
+	position: absolute;
+	top: -20px;
+	left: -15px;
+}
+
+div.logo h1 {
+	margin: 0;
+}
+
+div.logo h1 a {
+	background: url(../images/logo_40.png) 0 0 no-repeat;
+	width: 40px;
+	height: 40px;
+	text-indent: -999em;
+	overflow: hidden;
+	position: absolute;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+}
+
+form.clean {
+	display: block;
+	position: relative;
+	padding: 22px 12px 36px 12px;
+	margin: 12px -22px 22px -22px;
+	background-color: #F4F4F4;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-khtml-border-radius: 2px;
+	clear: both;
+	background-image: -moz-linear-gradient(0% 50px 90deg, #F6F6F6, #FBFBFB, #F6F6F6 95%, #EFEFEF 99%);
+	background-image: -webkit-gradient(linear, 0 0, 0 50, from(#E9E9E9), to(#F6F6F6), color-stop(0.08, #F6F6F6));
+}

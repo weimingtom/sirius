@@ -1,0 +1,18 @@
+User:
+  admin_user:
+    email:			getcary@gmail.com
+    full_name:		Cary Yang
+    password: 		e10adc3949ba59abbe56e057f20f883e #123456
+    status:			verfied
+
+Tab:
+  default_tab:
+    owner_id:		1
+    title:			"default"
+
+Invite:
+  invite_test:
+    code:			abcdef
+    generater_id:	1
+    purpose:		register
+    is_used:		false

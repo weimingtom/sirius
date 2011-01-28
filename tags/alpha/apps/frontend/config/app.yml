@@ -1,0 +1,31 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/11-App
+
+# default values
+all:
+  theme: on
+  invite_signup: on
+  twitter:
+    consumer_key: 'YSQsy4YEV4yIAHhCP8AUnw'
+    consumer_secret: 'gVAH0UmDYMOYecudzKymlHBwZbqXYMwxg4vYwrsf1I'
+  sina:
+    consumer_key: '3316230255'    consumer_secret: '6a805bf3a5071da183dab22cf5156836'    callback_url: 'http://dev.mixmes.com/sina/authback'
+    count_per_call: 20
+    cache_refresh_threshold: 5 #if cache has been refresh in last X second, treat it as the newest, need not to call API again
+  qq:
+    consumer_key: '784c657dc0fd406fb1c141bbf84c8c7d'
+    consumer_secret: '3aadb293c2fa8680cb6b14a65be23cc7'
+    callback_url: 'http://dev.mixmes.com/qq/authback'
+    count_per_call: 20
+    cache_refresh_threshold: 5 #if cache has been refresh in last X second, treat it as the newest, need not to call API again
+  163:
+    consumer_key: 'WRclKXne8VvzZQ6q'
+    consumer_secret: '2RMNl8Jgg3aFbbYT5i6TO6LKf4dE9060'
+    callback_url: 'http://mixmes.com/163/authback'
+  foursquare:
+    consumer_key: '4HBZFWRSMXTOQGT1PWKF1TWJZEULYRHC2E5SVBHTR42G1TUM'
+    consumer_secret: 'X4V2WXQ50MYYTHRJVHL1TQKOJTVBVENLODA3C25W5EVTTNUA'
+  douban:
+    consumer_key: '0c84b64088f504a4258e22c19adf0dec'
+    consumer_secret: '2af83742619bb77a'
+    callback_url: 'http://dev.mixmes.com/douban/authback'
