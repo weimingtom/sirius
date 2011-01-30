@@ -7,6 +7,7 @@
 				<a href="/"><?php echo __('MixMes - Social Media Portal') ?></a>
 			</h1>
 		</div>
+		<div class="version"><?php echo sfConfig::get('app_version')?></div>
 		<p class="summary">MixMes帮助您管理微博帐号，分析微博趋势，策划实施微博营销。</p>
 		<?php if ($errorMsg): ?>
 		<p class="error"><?php echo $errorMsg?></p>

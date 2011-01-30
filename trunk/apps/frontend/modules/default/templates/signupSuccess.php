@@ -14,6 +14,7 @@
 				<a href="/"><?php echo __('MixMes - Social Media Portal') ?></a>
 			</h1>
 		</div>
+		<div class="version"><?php echo sfConfig::get('app_version')?></div>
 		<p class="summary">注册帐号</p>
 		<form name="signupForm" id="signupForm" method="post" class="signup-form clean" action="<?php echo url_for('/signup')?>">
 			<?php if ($signUpErrors) echo __($signUpErrors) ?>

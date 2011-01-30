@@ -54,46 +54,55 @@ body {
 	overflow-y: hidden;
 }
 
-#sidebar .sidebar-add-profile {
-	font-size: 13px;
-	position:absolute;
-	display:inline-block;
-	top:1px;
-	right:2px;
-	overflow: hidden;
-	vertical-align: middle;
-	width: 0px;
-	text-indent: 0;
+#sidebar .sidebar-add-profile,
+#sidebar .sidebar-add-profile:visited {
+	width: 150px;
+	font-size: 15px;
+	text-align: center;
+	padding: 14px 12px;
+	position: absolute;
+	bottom: 4px;
+	left: 13px;
+	background: url(../images/sidebar_profile_add_bg.png) 0 0 repeat-x;
 }
 
-#sidebar .sidebar-add-profile,
 #sidebar .sidebar-add-profile:hover,
-#sidebar .sidebar-add-profile:active,
-#sidebar .sidebar-add-profile:visited {
-	color: black;
+#sidebar .sidebar-add-profile:active {
+	background-position: 0 -45px;
 }
 
 #sidebar>ul {
-	margin: 20px 0 10px;
+	margin: 10px 0;
 }
 
-li.list-profile {
-	margin: 0 10px 5px;
-	width: 190px;
+.list-profile {
+	width: 200px;
 	position: relative;
 }
 
 div.list-title {
+}
+
+a.list-toggle-button,
+a.list-toggle-button:visited {
+	padding: 4px 0 4px 30px;
+	background-position: 10px center;
 	display: inline-block;
-	padding-left: 22px;
-	margin: 4px 0 0;
-	width: 155px;
+	color: #424242;
+	font-size: 13px;
+	font-weight: bold;
+	width: 170px;
 	line-height: 16px; 
 	overflow-x: hidden;
 	white-space: nowrap;
 }
 
-a.list-toggle-button {
+a.list-toggle-button:hover,
+a.list-toggle-button:active {
+	background-color: #DCE4EB;
+}
+
+a.list-toggle-button span {
 	position: absolute;
 	right: 5px;
 	top: 6px;
@@ -106,22 +115,19 @@ a.list-toggle-button {
 	vertical-align: middle;
 }
 
-.list-profile .list-item {
-	padding: 4px 0 4px 28px;
-	background-position-x: 10px;
-	margin: 1px 0;
-}
-
-.list-profile .list-item a {
+.list-profile .list-item,
+.list-profile .list-item:visited  {
+	padding: 4px 0 4px 38px;
+	background-position: 20px center;
+	display: block;
+	font-size: 13px;
 	color: black;
 }
 
-.list-profile .list-item.hightlight {
-	background-color: #525B69;
-}
-
-.list-profile .hightlight a {
-	color: #DDD;
+.list-profile .list-item.highlight,
+.list-profile .list-item:hover,
+.list-profile .list-item:active {
+	background-color: #CAD2DB;
 }
 
 .button-unfold {
@@ -367,6 +373,14 @@ a.list-toggle-button {
 
 .action-delete {
 	background: url('../images/icon_close.png') 0 0 no-repeat;
+}
+
+.action-favorite {
+	background: url('../images/icon_favorite.png') 0 0 no-repeat;
+}
+
+.action-unfavorite {
+	background: url('../images/icon_favorited.png') 0 0 no-repeat;
 }
 
 .thread-scroll {

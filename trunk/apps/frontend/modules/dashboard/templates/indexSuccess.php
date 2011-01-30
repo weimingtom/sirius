@@ -33,11 +33,6 @@ $(function(){
 	if (options.profiles.length==0)
 		$('.sidebar-add-profile').click();
 	
-	$('.sidebar-add-profile').hover(
-		function(){$(this).animate({width: 80});}, 
-		function(){$(this).animate({width: 0});}
-	);
-	
 	$('.selectProfiles').hover(
 		function(){$(this).addClass('activeExpanded').css('height', 'auto');},
 		function(){$(this).removeClass('activeExpanded').css('height', '');}
@@ -131,10 +126,8 @@ $(function(){
 				<div class="profileContainer">
 					<div class="profileSelector" style="height: auto;" ></div>				
 					<div class="_controls controls">
-						<div class="btns-right">
-							
-								<a href="#" title="添加微博帐号" class="btn-spl add _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>
-							
+						<div class="btns-right">							
+								<a href="#" title="添加微博帐号" class="btn-spl add _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>							
 						</div>
 						<a href="#" class="_selectAll btn-spl">选择全部</a>
 						<a href="#" class="_selectNone btn-spl">取消选择</a>
@@ -146,9 +139,9 @@ $(function(){
 </div>
 <div id="container">
 	<div id="sidebar" class="">
-		<a href="#" title="添加微博帐号" class="icon-13 icon-add _add-profile-button sidebar-add-profile">添加微博帐号</a>
 		<ul>
 		</ul>
+		<a href="#" title="添加微博帐号" class="btn-spl sidebar-add-profile _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>	
 	</div>
 	<div id="dashboard">
 		<div class="dashboard-inner-wrapper">

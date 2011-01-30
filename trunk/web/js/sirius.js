@@ -217,7 +217,7 @@ $(function() {
 				node.addClass('selected');
 			}
 			
-			node.appendTo('.profileSelector')
+			node.appendTo('.profileSelector');
 		},
 		
 		addProfileToSidebar: function(profile, isFold) {
@@ -230,17 +230,16 @@ $(function() {
 			var screenName = profile.screen_name;
 			
 			var profileEle = $("<li/>").addClass('list-profile').attr('profileId', profileId);
-			$('<div/>').addClass('list-title').addClass('profile-'+profileType).text(screenName).appendTo(profileEle);
-			$('<a class="list-toggle-button button-fold" href="javascript:;">Toggle</a>').appendTo(profileEle);
+			title = $('<div/>').addClass('list-title').appendTo(profileEle);
+			$('<a class="list-toggle-button" href="#"></a>').text(screenName).append('<span class="button-fold">Toggle</span>').addClass('profile-'+profileType).appendTo(title);
 			
 			var actionList = $("<ul/>").appendTo(profileEle);
 			for (var i=0; i < sn[profileType].length; ++i) {
 				var type = sn[profileType][i].type;
 				var title = sn[profileType][i].defaultTitle
-				var actionItem = $('<li/>').addClass('list-item')
+				var actionItem = $('<li/>').appendTo(actionList);
+				$("<a/>").attr('href', 'javascript:;').addClass('list-item')
 					.addClass('list-icon-'+sn[profileType][i].type)
-					.appendTo(actionList);
-				$("<a/>").attr('href', 'javascript:;')
 					.attr('type', type)
 					.attr('title', title)
 					.text(title)
@@ -256,13 +255,13 @@ $(function() {
 						}
 					});
 				if ($("div.thread[profileId="+profileId + "][threadType="+type+"]").size() > 0) {
-					$(actionItem).addClass('hightlight');
+					$('a', actionItem).addClass('highlight');
 				}
 			}
 			
 			if (isFold) {
-				$('.list-toggle-button', profileEle).removeClass('button-fold');
-				$('.list-toggle-button', profileEle).addClass('button-unfold');
+				$('.list-toggle-button span', profileEle).removeClass('button-fold');
+				$('.list-toggle-button span', profileEle).addClass('button-unfold');
 				$('ul', profileEle).hide();
 			}
 			
@@ -271,16 +270,16 @@ $(function() {
 			var toggleList = function(){
 				$(this).unbind('click', toggleList);
 				var toggleButton = this;
-				if ($(this).hasClass('button-fold')) {
-					$(this).siblings('ul').slideUp('slow', function() {
-						$(toggleButton).removeClass('button-fold');
-						$(toggleButton).addClass('button-unfold');
+				if ($('span', this).hasClass('button-fold')) {
+					$(this).parent().siblings('ul').slideUp('slow', function() {
+						$('span', toggleButton).removeClass('button-fold');
+						$('span', toggleButton).addClass('button-unfold');
 						$(toggleButton).click(toggleList);
 					})
 				} else {
-					$(this).siblings('ul').slideDown('slow', function() {
-						$(toggleButton).removeClass('button-unfold');
-						$(toggleButton).addClass('button-fold');
+					$(this).parent().siblings('ul').slideDown('slow', function() {
+						$('span', toggleButton).removeClass('button-unfold');
+						$('span', toggleButton).addClass('button-fold');
 						$(toggleButton).click(toggleList);
 					})
 					
@@ -434,7 +433,7 @@ $(function() {
 			// set style
 			$('.thread-height', thread).height(this.settings.threadHeadHeight);
 			$('.refreshing', thread).hide();
-			$('.list-profile[profileId=' + threadInfo.profile_id + '] li a[type=' + threadInfo.type + ']').parent().addClass('hightlight');
+			$('.list-profile[profileId=' + threadInfo.profile_id + '] li a[type=' + threadInfo.type + ']').addClass('highlight');
 			
 			// add timer to refresh
 			this.refreshThread(thread);
@@ -448,7 +447,7 @@ $(function() {
 			if (thread.length > 0) {
 				var profileId = $(thread).attr('profileId');
 				var threadType = $(thread).attr('threadType');
-				$('.list-profile[profileId=' + profileId + '] li a[type=' + threadType + ']').parent().removeClass('hightlight');
+				$('.list-profile[profileId=' + profileId + '] li a[type=' + threadType + ']').removeClass('highlight');
 				$('.thread[threadId=' + threadId +']').remove();
 			}
 			
@@ -518,6 +517,12 @@ $(function() {
 							.click(function(event) {
 								sirius.threadLoadMore($(event.target).parents('.thread'));
 							});
+						
+						$('div[threadId=' + this.threadId + '] .thread-scroll').scroll(function(event) {
+							if (event.target.scrollHeight - $(event.target).height() - $(event.target).scrollTop() < 10) {
+								sirius.threadLoadMore($(event.target).parents('.thread'));
+							}
+						});
 					}
 				},
 				error: function() {
@@ -536,6 +541,7 @@ $(function() {
 			other_params = $(thread).attr('otherParams');
 
 			$('.message-more a', thread).unbind('click').html('正在加载更多...');
+			$('.thread-scroll', thread).unbind('scroll');
 			
 			var requestUrl= '/' + profileType + '/' + threadType;
 			var requestData =  {profile_id: profileId, before_id: last_id};
@@ -575,6 +581,11 @@ $(function() {
 						.click(function(event) {
 							sirius.threadLoadMore(thread);
 						});
+					$('.thread-scroll', thread).scroll(function(event) {
+						if (event.target.scrollHeight - $(event.target).height() - $(event.target).scrollTop() < 10) {
+							sirius.threadLoadMore(thread);
+						}
+					});
 				},
 				error: function(data) {
 					$('.message-more a', this.thread).unbind('click').html('加载失败,请重试')
@@ -601,7 +612,7 @@ $(function() {
 			if (message.picture_thumbnail != "") {
 				$('<a/>')
 					.addClass('_message_picture_thumbnail')
-					.attr('href', message.picture_original)
+					.attr('href', message.picture_medium)
 					.append($('<img/>').attr('src', message.picture_thumbnail))
 					.appendTo(node)
 					.colorbox({
@@ -609,8 +620,7 @@ $(function() {
 						maxHeight: '80%',
 						photo: true,
 						title: function(){
-						    var url = $(this).attr('href');
-						    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+						    return '<a class="show-origin-pic" href="'+message.picture_original+'" target="_blank">查看大图</a>';
 						}
 					});
 			}
@@ -630,7 +640,7 @@ $(function() {
 			}
 			
 			//$(node).append("<div class='message-actions'><a href='#' title='转发' class='retweet'><span class='icon-19 action-retweet'>转发</span></a><a href='#' title='评论' class='comment'><span class='icon-19 action-comment'>评论</span></a></div>");
-			$("<div class='message-actions'></div>").append(this.packReactions(profileId, profileType, threadType, message.id, isSubMessage)).appendTo(node);
+			$("<div class='message-actions'></div>").append(this.packReactions(profileId, profileType, threadType, message, isSubMessage)).appendTo(node);
 			
 			var sirius = this;
 			$.merge(avatar, author).click(function() {
@@ -649,7 +659,7 @@ $(function() {
 			return node;			
 		},
 		
-		packReactions: function(profileId, profileType, threadType, messageId, isSubMessage) {
+		packReactions: function(profileId, profileType, threadType, message, isSubMessage) {
 			var sirius = this;
 			var type = socialNetworkTypes[profileType];
 			for (i = 0; i < type.length; ++i) {
@@ -659,6 +669,13 @@ $(function() {
 						if (action.submessage != undefined && action.submessage == false && isSubMessage == true) {
 							return;
 						}
+						if (action.if && eval("message." + action.if) === false) {
+							return;
+						}
+						if (action.unless && eval("message." + action.unless)) {
+							return;
+						}
+						
 						var reaction = $("<a href='#'></a>").attr('title', action.title).addClass(action.name);
 						$("<span/>").addClass("icon-19").addClass("action-" + action.name).appendTo(reaction);
 						switch (action.name) {
@@ -671,19 +688,52 @@ $(function() {
 									$.ajax({
 										type: 'GET',
 										url: '/' + profileType + '/deleteMessage',
-										data: {profile_id: profileId, id: messageId},
+										data: {profile_id: profileId, id: message.id},
+										context: this,
 										success: function(data) {
 											if (data.error != undefined) {
 												sirius.statusMessage("微博删除失败", "error");
 											} else {
 												sirius.statusMessage("微博删除成功", "success");
-												$('.thread[profileId=' + profileId + '][threadType=' + threadType + '] .message[messageId=' + messageId + ']').remove();
+												$('.message[messageId=' + message.id + ']').remove();
 											}
 										}
 									});
 								});
 								break;
-						}						
+							case 'favorite':
+							case 'unfavorite':
+								reaction.attr('actionName', action.name);
+								reaction.click(function(event){
+									actionName = $(reaction).attr('actionName');
+									$.ajax({
+										type: 'GET',
+										url: '/' + profileType + '/favoriteMessage',
+										data: {profile_id: profileId, id: message.id, do: actionName},
+										context: {message: message},
+										success: function(data) {
+											if (data.error != undefined) {
+												sirius.statusMessage("收藏/取消收藏失败", "error");
+											} else {
+												sirius.statusMessage("收藏/取消收藏成功", "success");
+												$('.message[messageId=' + this.message.id + '] > .message-actions')
+													.children('.favorite, .unfavorite')
+													.toggleClass('unfavorite favorite')
+													.children('span')
+													.toggleClass('action-unfavorite action-favorite')
+													.end()
+													.attr('title', function(){
+														return (this.title == '收藏') ? '取消收藏' :  '收藏';
+													}).attr('actionName', function(){
+														return ($(this).attr('actionName') == 'favorite') ? 'unfavorite' :  'favorite';
+													});
+												
+											}
+										}
+									});
+								});
+								break;
+						}
 						reactions.append(reaction);
 					});
 					return $(reactions).children();
@@ -921,7 +971,7 @@ $(function() {
 		
 		removeAllThreads: function() {
 			$('.thread', this.settings.dashboardElement).remove();
-			$('.list-profile li.hightlight').removeClass('hightlight');
+			$('.list-profile li a.highlight').removeClass('highlight');
 		},
 		
 		setMessageBoxStatus: function(ele, action, profileId) {
