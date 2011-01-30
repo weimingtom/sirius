@@ -517,6 +517,12 @@ $(function() {
 							.click(function(event) {
 								sirius.threadLoadMore($(event.target).parents('.thread'));
 							});
+						
+						$('div[threadId=' + this.threadId + '] .thread-scroll').scroll(function(event) {
+							if (event.target.scrollHeight - $(event.target).height() - $(event.target).scrollTop() < 10) {
+								sirius.threadLoadMore($(event.target).parents('.thread'));
+							}
+						});
 					}
 				},
 				error: function() {
@@ -535,6 +541,7 @@ $(function() {
 			other_params = $(thread).attr('otherParams');
 
 			$('.message-more a', thread).unbind('click').html('正在加载更多...');
+			$('.thread-scroll', thread).unbind('scroll');
 			
 			var requestUrl= '/' + profileType + '/' + threadType;
 			var requestData =  {profile_id: profileId, before_id: last_id};
@@ -574,6 +581,11 @@ $(function() {
 						.click(function(event) {
 							sirius.threadLoadMore(thread);
 						});
+					$('.thread-scroll', thread).scroll(function(event) {
+						if (event.target.scrollHeight - $(event.target).height() - $(event.target).scrollTop() < 10) {
+							sirius.threadLoadMore(thread);
+						}
+					});
 				},
 				error: function(data) {
 					$('.message-more a', this.thread).unbind('click').html('加载失败,请重试')
