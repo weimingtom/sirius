@@ -55,6 +55,7 @@ abstract class sinaAction extends myAction {
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = $origin['truncated'];
+		$message->favorited = $origin['favorited'];
 		$message->source = $origin['source'];
 		
 		if (isset($origin['comments'])) {
@@ -67,6 +68,7 @@ abstract class sinaAction extends myAction {
 				
 		if (isset($origin['thumbnail_pic']) && strlen($origin['thumbnail_pic'])) {
 			$message->picture_thumbnail = $origin['thumbnail_pic'];
+			$message->picture_medium = $origin['bmiddle_pic'];
 			$message->picture_original = $origin['original_pic'];
 		}
 		

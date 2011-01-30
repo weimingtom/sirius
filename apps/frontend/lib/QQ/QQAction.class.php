@@ -53,10 +53,12 @@ abstract class QQAction extends myAction {
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = false; //TODO
+		$message->favorited = false; //TODO
 		$message->source = $origin['from'];
 		
 		if ($origin['image'] != null && is_array($origin['image']) && count($origin['image']) > 0) {
 			$message->picture_thumbnail = $origin['image'][0] . '/160';
+			$message->picture_medium = $origin['image'][0] . '/460';
 			$message->picture_original = $origin['image'][0] . '/2000';
 		}
 		
