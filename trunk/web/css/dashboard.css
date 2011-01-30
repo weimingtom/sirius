@@ -319,6 +319,10 @@ a.list-toggle-button span {
 	background-image: url("/images/icon_sina.png");
 }
 
+.thread-icon-fanfou {
+	background-image: url("/images/icon_fanfou.png");
+}
+
 .thread-name {
 	font-size: 14px;
 	font-weight: bold;
