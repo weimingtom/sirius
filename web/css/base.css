@@ -320,6 +320,10 @@ a, a:hover, a:visited, a:focus {
 	background: url("../images/icon_16x16/qq.png") no-repeat left center;
 }
 
+.profile-fanfou {
+	background: url("../images/icon_16x16/fanfou.png") no-repeat left center;
+}
+
 .loading, .dialog-error {
 	text-align: center;
 	padding: 30px 0;

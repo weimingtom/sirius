@@ -1,6 +1,7 @@
 var socialNetworkNames = socialNetworkNames || [];
 socialNetworkNames['sina'] = "新浪微博";
 socialNetworkNames['qq'] = "腾讯微博";
+socialNetworkNames['fanfou'] = "饭否";
 
 var socialNetworkTypes = socialNetworkTypes || [];
 socialNetworkTypes['sina'] = [
@@ -142,4 +143,11 @@ socialNetworkTypes['qq'] = [
 		defaultTitle: '我的私信',
 		type: 'direct'
 	}
+];
+
+socialNetworkTypes['fanfou'] = [
+  	{
+  		defaultTitle: '首页微博',
+  		type: 'home'
+  	}
 ];
