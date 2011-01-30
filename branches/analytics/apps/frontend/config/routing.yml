@@ -1,0 +1,34 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+login:
+  url: /login
+  param: { module: default, action: login }
+
+logout:
+  url: /logout
+  param: { module: default, action: logout }
+
+signup:
+  url: /signup
+  param: { module: default, action: signup }
+
+  
+user:
+  url: /:module/user/:profileId/:tabName
+  param: { action: user }
+
+ajax:
+  url: /ajax/:module/:action
+  param: { method: ajax }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+default:
+  url:   /:module/:action/*

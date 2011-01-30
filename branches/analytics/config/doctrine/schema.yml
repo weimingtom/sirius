@@ -1,0 +1,64 @@
+User:
+  actAs:
+    Timestampable:
+  columns:
+    email:			{ type: string(255), notnull: true, unique: true }
+    full_name:		{ type: string(255) }
+    password:		{ type: string(255), notnull:true }
+    status:			{ type: enum, values: [unverify, verified], default: verified} #will change default value to unverifed
+
+Profile:
+  actAs:
+    Timestampable:
+  columns:
+    owner_id:		{ type: integer, notnull: true }
+    profile_name: 	{ type: string(255), notnull: true }
+    screen_name:	{ type: string(255), notnull: true }
+    type: 			{ type: string(255), notnull: true } #Twitter, SinaWeibo, Renren, facebook, QZone, QQWeibo...
+    avatar_url:		{ type: string(1023) }
+    connect_data: 	{ type: string(1023), notnull: true }
+  indexes:
+    owner_id_index:	{ fields: [owner_id]}
+    fingerprint_index: { fields: [profile_name, screen_name], type: unique }
+  relations:
+    User: 			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Profiles }
+
+Tab:
+  actAs:
+    Timestampable:
+  columns:
+    owner_id:		{ type: integer, notnull: true }
+    title:			{ type: string(255), notnull: true }
+    thread_ids:		{ type: string(1000), notnull: true, default: '[]' }
+  relations:
+    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Tabs }
+    
+Thread:
+  actAs:
+    Timestampable:
+  columns:
+    title:			{ type: string(255), notnull: true }
+    owner_id:		{ type: integer, notnull: true }
+    tab_id:			{ type: integer, notnull: true }
+    profile_id:		{ type: integer, notnull: false }
+    profile_name:	{ type: string(255), notnull: false } # Profile.screen_name
+    profile_type:	{ type: string(255), notnull: false }
+    type:			{ type: string(255), notnull: true } #home, search, mentioned
+    parameters:		{ type: string(255), notnull: true, default: ''}
+  indexes:
+    tab_thread_index: {fields: [tab_id, profile_id, type, parameters], type: unique}
+  relations:
+    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Threads }
+    Tab:			{ onDelete: CASCADE, local: tab_id, foreign: id, foreignAlias: Threads }
+    Profile:		{ onDelete: CASCADE, local: profile_id, foreign: id, foreignAlias: Threads }
+
+Invite:
+  actAs:
+    Timestampable:
+  columns:
+    code:			{ type: string(100), notnull: true }
+    generater_id:	{ type: integer, notnull: false }
+    purpose:		{ type: string(100), notnull: true, default: 'register' }
+    is_used:		{ type: boolean, notnull: true, default: false}
+    used_by:		{ type: integer, notnull: false }
+    expire_date:	{ type: date, notnull: false }
