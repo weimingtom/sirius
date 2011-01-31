@@ -24,12 +24,30 @@ class fanfouClient {
 		return $this->get("http://api.fanfou.com/users/show.json", $params);
 	}
 	
-	function friendsTimeline() {
-		return $this->get("http://api.fanfou.com/statuses/friends_timeline.json");
+	function friendsTimeline($since_id = null, $page = 1, $count = 20, $max_id = null) {
+		$params = array('format'=>'html');
+		if( $since_id ) $params['since_id'] = $since_id; 
+		if( $page ) $params['page'] = $page; 
+   		if( $count ) $params['count'] = $count; 			
+    	if( $max_id ) $params['max_id'] = $max_id;
+    	
+		return $this->get("http://api.fanfou.com/statuses/friends_timeline.json", $params);
+	}
+		
+	function userTimeline($since_id = null, $page = 1, $count = 20, $max_id = null, $userId = null) {
+		$params = array('format'=>'html');
+		if( $since_id ) $params['since_id'] = $since_id; 
+		if( $page ) $params['page'] = $page; 
+   		if( $count ) $params['count'] = $count; 			
+    	if( $max_id ) $params['max_id'] = $max_id; 
+    	if( $userId ) $params['id'] = $userId;
+		
+		return $this->get("http://api.fanfou.com/statuses/user_timeline.json", $params);
 	}
 	
-	function get($url, $parameters = array()) { 
-        $response = $this->http($this->toUrl($url, $parameters), 'GET'); 
+	
+	function get($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
+        $response = $this->http($this->toUrl($url, $parameters), 'GET');
         if ($this->format === 'json' && $this->decode_json) { 
             return json_decode($response, true); 
         } 
