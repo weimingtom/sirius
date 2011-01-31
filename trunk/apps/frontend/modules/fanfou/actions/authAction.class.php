@@ -38,7 +38,7 @@ class authAction extends fanfouAction {
 		$profile->setType('fanfou');
 		$profile->setAvatarUrl($userInfo['profile_image_url']);
 		
-		$profile->setConnectData(json_encode(array("username"=>$username, "password"=>$password), true));
+		$profile->setConnectData(json_encode(array("username"=>$username, "password"=>base64_encode($password)), true));
 		$profile->save();
 		
 		return sfView::NONE;

@@ -1146,6 +1146,6 @@ $(function() {
 		}
 	});
 
-	$.sirius = new Sirius;
+	$.sirius = $.sirius || new Sirius;
 
 })(jQuery);
