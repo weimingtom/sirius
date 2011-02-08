@@ -176,7 +176,7 @@ a.list-toggle-button span {
 .tab {
 	margin-top: 3px;
 	font-weight: bold;
-	margin-right: 1px;
+	margin-right: 3px;
 	float: left;
 	position: relative;
 }
@@ -186,7 +186,8 @@ a.list-toggle-button span {
 	text-shadow: 0 1px 0 rgba(255, 255, 255, .7);
 }
 
-.tab .tab-name {
+.tab .tab-name,
+.tab .tab-name:visited {
 	text-decoration: none;
 	-moz-border-radius-topLeft: 4px;
 	-moz-border-radius-topRight: 4px;
@@ -194,14 +195,41 @@ a.list-toggle-button span {
 	-webkit-border-top-right-radius: 4px;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	background: #EEE;
-	padding: 5px 23px 5px 9px;
+	background: #DDD;
+	padding: 5px 23px 3px 9px;
 	outline: none;
 	white-space: nowrap;
 	float: left;
 	color: #3C3C3C;
 	line-height: 15px;
 	font-size: 12px;
+}
+
+.tab .tab-name:hover,
+.tab .tab-name:active {
+	background: #EEE;
+}
+
+.tab .tab-rename {
+	position: absolute;
+	left: 1px;
+	height: 15px;
+	padding: 1px;
+	top: 2px;
+	width: auto;
+	min-width: 10px;
+	max-width: 100%;
+	margin-right: 20px;
+	display: none;
+}
+
+.tab.active-tab .tab-name {
+	padding-bottom: 5px;
+	background: #EEE;
+}
+
+.tab .tab-name.tab-add {
+	padding: 5px;
 }
 
 .tab .tab-delete-button {

@@ -1,0 +1,11 @@
+ReportDailyFollowerCount:
+  actAs:
+    Timestampable:
+  columns:
+    profile_name:	{ type: integer, notnull: false }
+    profile_type:	{ type: string(255), notnull: true }
+    date:			{ type: date, notnull: false }
+    count:			{ type: integer, notnull: false }
+  indexes:
+    profile_index:	{ fields: [profile_name, profile_type] }
+    profile_date_index:	{ fields: [profile_name, profile_type, date], type: unique }

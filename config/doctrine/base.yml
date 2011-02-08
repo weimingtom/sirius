@@ -5,23 +5,23 @@ User:
     email:			{ type: string(255), notnull: true, unique: true }
     full_name:		{ type: string(255) }
     password:		{ type: string(255), notnull:true }
-    status:			{ type: enum, values: [unverify, verified], default: verified} #will change default value to unverifed
+    status:			{ type: enum, values: [unverify, verified], default: verified } #will change default value to unverifed
 
 Profile:
   actAs:
     Timestampable:
   columns:
     owner_id:		{ type: integer, notnull: true }
-    profile_name: 	{ type: string(255), notnull: true }
+    profile_name:	{ type: string(255), notnull: true }
     screen_name:	{ type: string(255), notnull: true }
-    type: 			{ type: string(255), notnull: true } #Twitter, SinaWeibo, Renren, facebook, QZone, QQWeibo...
+    type:			{ type: string(255), notnull: true } #Twitter, SinaWeibo, Renren, facebook, QZone, QQWeibo...
     avatar_url:		{ type: string(1023) }
-    connect_data: 	{ type: string(1023), notnull: true }
+    connect_data:	{ type: string(1023), notnull: true }
   indexes:
-    owner_id_index:	{ fields: [owner_id]}
-    fingerprint_index: { fields: [profile_name, screen_name], type: unique }
+    owner_id_index:	{ fields: [owner_id] }
+    fingerprint_index:	{ fields: [profile_name, screen_name], type: unique }
   relations:
-    User: 			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Profiles }
+    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Profiles }
 
 Tab:
   actAs:
@@ -44,9 +44,9 @@ Thread:
     profile_name:	{ type: string(255), notnull: false } # Profile.screen_name
     profile_type:	{ type: string(255), notnull: false }
     type:			{ type: string(255), notnull: true } #home, search, mentioned
-    parameters:		{ type: string(255), notnull: true, default: ''}
+    parameters:		{ type: string(255), notnull: true, default: '' }
   indexes:
-    tab_thread_index: {fields: [tab_id, profile_id, type, parameters], type: unique}
+    tab_thread_index:	{fields: [tab_id, profile_id, type, parameters], type: unique }
   relations:
     User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Threads }
     Tab:			{ onDelete: CASCADE, local: tab_id, foreign: id, foreignAlias: Threads }
@@ -59,6 +59,27 @@ Invite:
     code:			{ type: string(100), notnull: true }
     generater_id:	{ type: integer, notnull: false }
     purpose:		{ type: string(100), notnull: true, default: 'register' }
-    is_used:		{ type: boolean, notnull: true, default: false}
+    is_used:		{ type: boolean, notnull: true, default: false }
     used_by:		{ type: integer, notnull: false }
     expire_date:	{ type: date, notnull: false }
+
+CronJob:
+  actAs:
+    Timestampable:
+  columns:
+    minute:			{ type: string(16), notnull: true, default: '*' }
+    hour:			{ type: string(16), notnull: true, default: '*' }
+    day:			{ type: string(16), notnull: true, default: '*' }
+    month:			{ type: string(16), notnull: true, default: '*' }
+    job:			{ type: string(255), notnull: true, default: '' }
+    priority:		{ type: integer, notnull: true, default: 1 }
+    enabled:		{ type: boolean, notnull: true, default: true }
+    run_once:		{ type: boolean, notnull: true, default: false }
+    run_times:		{ type: integer, notnull: true, default: 0}
+    last_run:		{ type: datetime, notnull: false }
+
+#CrawlProfile:
+#  actAs:
+#    Timestampable:
+#  columns:
+#    profile_id:		{ type: integer, notnull: false }

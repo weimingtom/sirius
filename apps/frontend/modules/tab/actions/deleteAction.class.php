@@ -9,7 +9,7 @@ class deleteAction extends sfAction {
 		
 		$this->forward404Unless($tab);
 		$this->forward404Unless($tab->getOwnerId() == $this->getUser()->getId());
-				
+
 		$tab->delete();
 				
 		return $this->renderText(json_encode(array('result'=>'succeed')));
