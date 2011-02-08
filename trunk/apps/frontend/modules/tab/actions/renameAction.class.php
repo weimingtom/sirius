@@ -10,10 +10,10 @@ class renameAction extends sfAction {
 		$this->forward404Unless($tab);
 		$this->forward404Unless($tab->getOwnerId() == $this->getUser()->getId());
 				
-		$tabName = $request->getParameter("title", "untitled");
-		$tab->setTitle($tabName);
+		$tabName = $request->getParameter("title", "未命名");
+		$tab->setTitle(trim($tabName));
 		$tab->save();
 
-		return $this->renderText(json_encode(array('tabId'=>$tabId, 'tabName'=>$tabName)));
+		return $this->renderText(json_encode(array('tabId'=>$tabId, 'title'=>$tabName)));
 	}
 }

@@ -25,7 +25,7 @@ socialNetworkTypes['sina'] = [
 			{
 				name: 'unfavorite',
 				title: '取消收藏',
-				if: 'favorited'
+				ifCondition: 'favorited'
 			}
 		]
 	},
@@ -50,7 +50,7 @@ socialNetworkTypes['sina'] = [
 			{
 				name: 'unfavorite',
 				title: '取消收藏',
-				if: 'favorited'
+				ifCondition: 'favorited'
 			}
 		]
 	},
@@ -75,7 +75,7 @@ socialNetworkTypes['sina'] = [
 			{
 				name: 'unfavorite',
 				title: '取消收藏',
-				if: 'favorited'
+				ifCondition: 'favorited'
 			},
 			{
 				name: 'delete',

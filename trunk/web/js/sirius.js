@@ -32,9 +32,7 @@ $(function() {
 });
 
 (function($) {
-	var Sirius = Sirius ||
-	function() {
-	};
+	var Sirius = Sirius || function() {};
 
 	$.extend(Sirius.prototype, {
 		initialized: false,
@@ -119,6 +117,7 @@ $(function() {
 		},
 		
 		_initTabs: function() {
+			var sirius = this;
 			if (!$.isArray(this.settings.tabs))
 				return false;
 			tabs = this.settings.tabs;
@@ -130,13 +129,31 @@ $(function() {
 				$("<a href='javascript:;'/>")
 					.addClass("tab-name")
 					.html(tabs[i].title)
+					.click(function(event) {
+						sirius.activeTab($(event.target).parents(".tab"));
+					})
+					.appendTo(tabElement);
+				$("<input type='text' class='tab-rename' />")
+					.val(tabs[i].title)
 					.appendTo(tabElement);
 				$("<a href='javascript:;' />")
 					.addClass("tab-delete-button icon-19")
 					.text("X")
+					.click(function(event){
+						sirius.deleteTab($(event.target).parents(".tab"));
+					})
 					.appendTo(tabElement);
 				$("#dashboardTabs").append(tabElement);
 			}
+			
+			tabAddElement = $("<div/>").addClass("tab _add-tab");
+			$("<a href='javascript:;'/>")
+				.addClass("tab-name tab-add")
+				.append("<span class='icon-13 icon-add'></span>")
+				.click(function(event){sirius.addTab();})
+				.appendTo(tabAddElement);
+			
+			$("#dashboardTabs").append(tabAddElement);
 			
 			this.settings.activeTabId = this.settings.activeTabId || this.settings.tabs[0].id;
 			
@@ -247,7 +264,7 @@ $(function() {
 					.click(function(){
 						exist = $("div.thread[profileId="+profileId + "][threadType="+$(this).attr('type')+"]")
 						if (exist.size() == 0) {
-							sirius.serverAddThread(sirius.settings.activeTabId, profileId, $(this).attr('type'), $(this).attr('title'));
+							sirius.serverAddThread($(".active-tab").attr("tabId"), profileId, $(this).attr('type'), $(this).attr('title'));
 						} else {
 							$('#threadsContainer').animate({scrollLeft: $(exist).position().left}, "slow");
 							bgColor = $('.message', exist).css('backgroundColor');
@@ -287,13 +304,123 @@ $(function() {
 			};
 			$(".list-toggle-button", profileEle).click(toggleList);
 		},
+		
+		addTab: function() {
+			this.statusMessage("正在添加新面板, 请耐心等待", "info");
+			$.ajax({
+				type: 'GET',
+				url: '/tab/add',
+				dataType: 'json',
+				context: this,
+				success: function(data) {
+					var sirius = this;
+					if (data.error) {
+						this.statusMessage("新面板添加失败, 请稍候重试", "error");
+						return;
+					}
+					tabId = data.tabId;
+					tabElement = $("<div/>").attr("id", "tab" + data.tabId)
+						.addClass("tab")
+						.attr("tabId", data.tabId)
+						.attr("tabTitle", data.title);
+					$("<a href='javascript:;'/>")
+						.addClass("tab-name")
+						.html(data.title)
+						.click(function(event) {
+							sirius.activeTab($(event.target).parents(".tab"));
+						}).appendTo(tabElement);
+					$("<input type='text' class='tab-rename' />")
+						.val(data.title)
+						.appendTo(tabElement);
+					$("<a href='javascript:;' />")
+						.addClass("tab-delete-button icon-19")
+						.text("X")
+						.click(function(event){
+							sirius.deleteTab($(event.target).parents(".tab"));
+						}).appendTo(tabElement);
+					$("#dashboardTabs ._add-tab").before(tabElement);
+					this.activeTab(tabElement);
+					this.statusMessage("面板添加成功");
+				},
+				error: function(data) {
+					this.statusMessage("新面板添加失败, 请稍候重试", "error");
+					return;
+				}
+			});
+		},
+		
+		deleteTab: function(tab) {
+			if (!confirm("您确认要删除该面板吗?")) {
+				return;
+			}
+			$.ajax({
+				type: 'GET',
+				url: '/tab/delete',
+				data: {tabId: $(tab).attr('tabId')},
+				dataType: 'json',
+				context: {sirius: this, tab: tab},
+				success: function(data) {
+					if (data.error) {
+						this.statusMessage("面板删除失败, 请稍候重试", "error");
+						return;
+					}
+					var isActived = $(this.tab).hasClass('active-tab');
+					$(this.tab).remove();
+					if (isActived) {
+						this.sirius.activeTab($('.tab:first'));
+					}
+				}
+			});
+		},
+		
+		renameTab: function(tab) {
+			$.ajax({
+				type: 'GET',
+				url: '/tab/rename',
+				data: {tabId: $(tab).attr('tabId'), title: $('.tab-rename', tab).val()},
+				dataType: 'json',
+				context: {sirius: this, tab: tab},
+				success: function(data) {
+					if (data.error) {
+						this.statusMessage("重命名失败, 请稍候重试", "error");
+						return;
+					}
+					$('.tab-name', tab).text(data.title);
+				}
+			});
+		},
 
 		activeTab: function(tab) {
-			if (!tab || this.activeTab && this.activeTab == $(tab)[0]) return;
+			if ($(tab).hasClass('active-tab')) {
+				return;
+			}
+			
+			var sirius = this;
 			
 			// set tab style
-			$(".tab-name").removeClass('active-tab');
+			$(".tab.active-tab")
+				.removeClass('active-tab')
+				.children('.tab-name')
+				.unbind('dblclick')
+				.attr('title', '');
 			$(tab).addClass('active-tab');
+			$('.tab-name', tab)
+				.attr('title', '双击重命名')
+				.dblclick(function(event){
+					$('.tab-rename', tab)
+						.val($('.tab-name',tab).text())
+						.keydown(function(){
+							$('.tab-name',tab).text($('.tab-rename', tab).val());
+							$('.tab-rename', tab).width($('.tab-name',tab).innerWidth() - $('.tab-name',tab).css('padding-right'));
+						})
+						.blur(function(){
+							$('.tab-name',tab).text($('.tab-rename', tab).val());
+							$('.tab-rename', tab).hide();
+							sirius.renameTab(tab);
+						})
+						.show()
+						.focus();
+				});
 			
 			// remove threads
 			this.removeAllThreads();
@@ -334,7 +461,6 @@ $(function() {
 					//alert("ERROR");
 				}
 			});
-			this.activeTab = $(tab)[0];
 		},
 		
 		serverAddThread: function(tabId, profileId, type, title) {
@@ -669,7 +795,7 @@ $(function() {
 						if (action.submessage != undefined && action.submessage == false && isSubMessage == true) {
 							return;
 						}
-						if (action.if && eval("message." + action.if) === false) {
+						if (action.ifCondition && eval("message." + action.ifCondition) === false) {
 							return;
 						}
 						if (action.unless && eval("message." + action.unless)) {
@@ -709,7 +835,7 @@ $(function() {
 									$.ajax({
 										type: 'GET',
 										url: '/' + profileType + '/favoriteMessage',
-										data: {profile_id: profileId, id: message.id, do: actionName},
+										data: {profile_id: profileId, id: message.id, _do: actionName},
 										context: {message: message},
 										success: function(data) {
 											if (data.error != undefined) {
@@ -930,8 +1056,8 @@ $(function() {
 											maxHeight: '80%',
 											photo: true,
 											title: function(){
-											    var url = $(this).attr('href');
-											    return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
+												var url = $(this).attr('href');
+												return '<a class="show-origin-pic" href="'+url+'" target="_blank">查看大图</a>';
 											}
 										});
 										

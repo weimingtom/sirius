@@ -5,7 +5,7 @@ class favoriteMessageAction extends sinaAction {
 		$this->forward404Unless($this->prepareApiConsumer($request));
 
 		$messageId = $request->getParameter('id');
-		$action = $request->getParameter('do');
+		$action = $request->getParameter('_do');
 		
 		if ($messageId == null) {
 			return $this->renderText("{error:'no id'}");

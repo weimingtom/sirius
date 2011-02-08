@@ -51,6 +51,6 @@ swfu = new SWFUpload({
 	button_cursor: SWFUpload.CURSOR.HAND,
 	
 	// Flash Settings
-	flash_url : "/swf/swfupload.swf",
+	flash_url : "/swf/swfupload.swf"
 });
 });
