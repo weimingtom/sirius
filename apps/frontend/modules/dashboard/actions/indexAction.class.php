@@ -43,7 +43,7 @@ class indexAction extends sfAction {
 		
 		//active tab
 		$activeTabId = $tabsSettings->getActiveTabId();
-		if (!$activeTabId || array_search($activeTabId, $tabsOrder) === FALSE) {
+		if ((!$activeTabId || array_search($activeTabId, $tabsOrder) === FALSE) && !empty($tabRes)) {
 			$activeTabId = $tabRes[0]['id'];
 			$tabSettings->setActiveTabId($activeTabId);
 			$tabSettings->save();
