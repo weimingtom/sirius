@@ -11,6 +11,20 @@ class deleteAction extends sfAction {
 		$this->forward404Unless($tab->getOwnerId() == $this->getUser()->getId());
 
 		$tab->delete();
+		
+		$user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
+	    $tabsSettings = $user->getTabsSettings();
+	    $tabIds = $tabsSettings->getTabIds();
+	    
+	    $key = array_search($tabId, $tabIds);
+	    if ($key !== FALSE) {
+	    	unset($tabIds[$key]);
+	    	$tabIds = array_values($tabIds);
+	    }
+	    
+	    $tabsSettings->setTabIds($tabIds);
+	    $tabsSettings->save();
+		
 				
 		return $this->renderText(json_encode(array('result'=>'succeed')));
 	}

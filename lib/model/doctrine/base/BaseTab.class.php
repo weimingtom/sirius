@@ -9,23 +9,23 @@
  * @property string $title
  * @property string $thread_ids
  * @property User $User
- * @property Doctrine_Collection $Threads
+ * @property Doctrine_Collection $threads
  * 
  * @method integer             getOwnerId()    Returns the current record's "owner_id" value
  * @method string              getTitle()      Returns the current record's "title" value
  * @method string              getThreadIds()  Returns the current record's "thread_ids" value
  * @method User                getUser()       Returns the current record's "User" value
- * @method Doctrine_Collection getThreads()    Returns the current record's "Threads" collection
+ * @method Doctrine_Collection getThreads()    Returns the current record's "threads" collection
  * @method Tab                 setOwnerId()    Sets the current record's "owner_id" value
  * @method Tab                 setTitle()      Sets the current record's "title" value
  * @method Tab                 setThreadIds()  Sets the current record's "thread_ids" value
  * @method Tab                 setUser()       Sets the current record's "User" value
- * @method Tab                 setThreads()    Sets the current record's "Threads" collection
+ * @method Tab                 setThreads()    Sets the current record's "threads" collection
  * 
  * @package    Sirius
  * @subpackage model
  * @author     Cary Yang <getcary@gmail.com>
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 7691 2011-02-04 15:43:29Z jwage $
  */
 abstract class BaseTab extends sfDoctrineRecord
 {
@@ -57,7 +57,7 @@ abstract class BaseTab extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
 
-        $this->hasMany('Thread as Threads', array(
+        $this->hasMany('Thread as threads', array(
              'local' => 'id',
              'foreign' => 'tab_id'));
 

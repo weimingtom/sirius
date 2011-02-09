@@ -106,12 +106,6 @@ class signupAction extends sfAction {
 			// goto waiting for validate page
 			//TODO:_______
 			
-			//REMOVE_ME: add new tab
-			$tab = new Tab();
-			$tab->setOwnerId($user->getId());
-			$tab->setTitle('Default Tab');
-			$tab->save();			
-			
 			$this->redirect('default', 'login');
 		} else {
 			return sfVIEW::SUCCESS;

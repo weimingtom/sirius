@@ -14,6 +14,13 @@ class addAction extends sfAction {
 			"tabId" => $tab->getId(),
 			"title" => $tab->getTitle()
 		);
+		
+		$user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
+	    $tabsSettings = $user->getTabsSettings();
+	    $tabIds = $tabsSettings->getTabIds();
+	    array_push($tabIds,$tabId);
+	    $tabsSettings->setTabIds($tabIds);
+	    $tabsSettings->save();
 
 		return $this->renderText(json_encode($tab));
 	}

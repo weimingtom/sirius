@@ -155,6 +155,25 @@ $(function() {
 			
 			$("#dashboardTabs").append(tabAddElement);
 			
+			$("#dashboardTabs").sortable({
+				items: "div:not(._add-tab)",
+				axis: 'x',
+				opacity: 0.6,
+				update: function(event, ui) {
+					sirius.statusMessage('正在保存数据...', 'info');
+					var tabs = $('#dashboardTabs .tab:not(._add-tab)');
+					var tabIds = [];
+					$(tabs).each(function(index, item) {
+						tabIds.push($(item).attr('tabId'))
+					});
+					$.get('/tab/tabOrder',
+						{tab_ids: tabIds},
+						function(data){
+							thisObject.statusMessage('数据保存成功', 'success');
+						});
+				}
+			});
+			
 			this.settings.activeTabId = this.settings.activeTabId || this.settings.tabs[0].id;
 			
 			this.activeTab($("#tab" + this.settings.activeTabId));
@@ -305,11 +324,13 @@ $(function() {
 			$(".list-toggle-button", profileEle).click(toggleList);
 		},
 		
-		addTab: function() {
+		addTab: function(title) {
 			this.statusMessage("正在添加新面板, 请耐心等待", "info");
+			params = title ? {title: title} : {};
 			$.ajax({
 				type: 'GET',
 				url: '/tab/add',
+				data: params,
 				dataType: 'json',
 				context: this,
 				success: function(data) {

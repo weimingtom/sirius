@@ -10,7 +10,11 @@ class activeAction extends sfAction {
     $this->forward404Unless($tab);
     $this->forward404Unless($tab->getOwnerId() == $this->getUser()->getId());
     
-    //TODO: make it active!
+    // make it active!
+    $user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
+    $tabsSettings = $user->getTabsSettings();
+    $tabsSettings->setActiveTabId($tabId);
+    $tabsSettings->save();
     
     $threads = Doctrine::getTable('Thread')
       ->createQuery()
