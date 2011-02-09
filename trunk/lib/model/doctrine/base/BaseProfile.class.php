@@ -12,7 +12,7 @@
  * @property string $avatar_url
  * @property string $connect_data
  * @property User $User
- * @property Doctrine_Collection $Threads
+ * @property Doctrine_Collection $threads
  * 
  * @method integer             getOwnerId()      Returns the current record's "owner_id" value
  * @method string              getProfileName()  Returns the current record's "profile_name" value
@@ -21,7 +21,7 @@
  * @method string              getAvatarUrl()    Returns the current record's "avatar_url" value
  * @method string              getConnectData()  Returns the current record's "connect_data" value
  * @method User                getUser()         Returns the current record's "User" value
- * @method Doctrine_Collection getThreads()      Returns the current record's "Threads" collection
+ * @method Doctrine_Collection getThreads()      Returns the current record's "threads" collection
  * @method Profile             setOwnerId()      Sets the current record's "owner_id" value
  * @method Profile             setProfileName()  Sets the current record's "profile_name" value
  * @method Profile             setScreenName()   Sets the current record's "screen_name" value
@@ -29,12 +29,12 @@
  * @method Profile             setAvatarUrl()    Sets the current record's "avatar_url" value
  * @method Profile             setConnectData()  Sets the current record's "connect_data" value
  * @method Profile             setUser()         Sets the current record's "User" value
- * @method Profile             setThreads()      Sets the current record's "Threads" collection
+ * @method Profile             setThreads()      Sets the current record's "threads" collection
  * 
  * @package    Sirius
  * @subpackage model
  * @author     Cary Yang <getcary@gmail.com>
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 7691 2011-02-04 15:43:29Z jwage $
  */
 abstract class BaseProfile extends sfDoctrineRecord
 {
@@ -95,7 +95,7 @@ abstract class BaseProfile extends sfDoctrineRecord
              'foreign' => 'id',
              'onDelete' => 'CASCADE'));
 
-        $this->hasMany('Thread as Threads', array(
+        $this->hasMany('Thread as threads', array(
              'local' => 'id',
              'foreign' => 'profile_id'));
 

@@ -9,29 +9,32 @@
  * @property string $full_name
  * @property string $password
  * @property enum $status
- * @property Doctrine_Collection $Profiles
- * @property Doctrine_Collection $Tabs
- * @property Doctrine_Collection $Threads
+ * @property Doctrine_Collection $profiles
+ * @property Doctrine_Collection $tabs
+ * @property TabsSettings $tabs_settings
+ * @property Doctrine_Collection $threads
  * 
- * @method string              getEmail()     Returns the current record's "email" value
- * @method string              getFullName()  Returns the current record's "full_name" value
- * @method string              getPassword()  Returns the current record's "password" value
- * @method enum                getStatus()    Returns the current record's "status" value
- * @method Doctrine_Collection getProfiles()  Returns the current record's "Profiles" collection
- * @method Doctrine_Collection getTabs()      Returns the current record's "Tabs" collection
- * @method Doctrine_Collection getThreads()   Returns the current record's "Threads" collection
- * @method User                setEmail()     Sets the current record's "email" value
- * @method User                setFullName()  Sets the current record's "full_name" value
- * @method User                setPassword()  Sets the current record's "password" value
- * @method User                setStatus()    Sets the current record's "status" value
- * @method User                setProfiles()  Sets the current record's "Profiles" collection
- * @method User                setTabs()      Sets the current record's "Tabs" collection
- * @method User                setThreads()   Sets the current record's "Threads" collection
+ * @method string              getEmail()         Returns the current record's "email" value
+ * @method string              getFullName()      Returns the current record's "full_name" value
+ * @method string              getPassword()      Returns the current record's "password" value
+ * @method enum                getStatus()        Returns the current record's "status" value
+ * @method Doctrine_Collection getProfiles()      Returns the current record's "profiles" collection
+ * @method Doctrine_Collection getTabs()          Returns the current record's "tabs" collection
+ * @method TabsSettings        getTabsSettings()  Returns the current record's "tabs_settings" value
+ * @method Doctrine_Collection getThreads()       Returns the current record's "threads" collection
+ * @method User                setEmail()         Sets the current record's "email" value
+ * @method User                setFullName()      Sets the current record's "full_name" value
+ * @method User                setPassword()      Sets the current record's "password" value
+ * @method User                setStatus()        Sets the current record's "status" value
+ * @method User                setProfiles()      Sets the current record's "profiles" collection
+ * @method User                setTabs()          Sets the current record's "tabs" collection
+ * @method User                setTabsSettings()  Sets the current record's "tabs_settings" value
+ * @method User                setThreads()       Sets the current record's "threads" collection
  * 
  * @package    Sirius
  * @subpackage model
  * @author     Cary Yang <getcary@gmail.com>
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 7691 2011-02-04 15:43:29Z jwage $
  */
 abstract class BaseUser extends sfDoctrineRecord
 {
@@ -67,19 +70,25 @@ abstract class BaseUser extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
-        $this->hasMany('Profile as Profiles', array(
+        $this->hasMany('Profile as profiles', array(
              'local' => 'id',
              'foreign' => 'owner_id'));
 
-        $this->hasMany('Tab as Tabs', array(
+        $this->hasMany('Tab as tabs', array(
              'local' => 'id',
              'foreign' => 'owner_id'));
 
-        $this->hasMany('Thread as Threads', array(
+        $this->hasOne('TabsSettings as tabs_settings', array(
+             'local' => 'id',
+             'foreign' => 'owner_id'));
+
+        $this->hasMany('Thread as threads', array(
              'local' => 'id',
              'foreign' => 'owner_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);
+
+    $this->addListener(new UserInsertListener(array()), 'UserInsertListener');
     }
 }

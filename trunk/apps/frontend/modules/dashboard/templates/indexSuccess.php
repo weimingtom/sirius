@@ -13,6 +13,7 @@ $(function(){
 	var options = options || {};
 	options.profiles = <?php echo json_encode($sf_data->getRaw('profiles')); ?>;
 	options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
+	options.activeTabId = <?php echo $activeTabId ?>;
 	$.sirius = $.sirius || new Sirius;
 	$.sirius.init(options);
 	$('._add-profile-button').click(function() {

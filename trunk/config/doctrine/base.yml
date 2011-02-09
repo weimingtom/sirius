@@ -1,6 +1,7 @@
 User:
   actAs:
     Timestampable:
+  listeners:		[ UserInsertListener ]
   columns:
     email:			{ type: string(255), notnull: true, unique: true }
     full_name:		{ type: string(255) }
@@ -21,7 +22,7 @@ Profile:
     owner_id_index:	{ fields: [owner_id] }
     fingerprint_index:	{ fields: [profile_name, screen_name], type: unique }
   relations:
-    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Profiles }
+    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: profiles }
 
 Tab:
   actAs:
@@ -31,7 +32,15 @@ Tab:
     title:			{ type: string(255), notnull: true }
     thread_ids:		{ type: string(1000), notnull: true, default: '[]' }
   relations:
-    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Tabs }
+    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: tabs }
+
+TabsSettings:
+  columns:
+    owner_id:		{ type: integer, notnull: true }
+    tab_ids:		{ type: array(100) }
+    active_tab_id:	{ type: integer }
+  relations:
+    User:			{ foreignType: one, onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: tabs_settings }
     
 Thread:
   actAs:
@@ -48,9 +57,9 @@ Thread:
   indexes:
     tab_thread_index:	{fields: [tab_id, profile_id, type, parameters], type: unique }
   relations:
-    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: Threads }
-    Tab:			{ onDelete: CASCADE, local: tab_id, foreign: id, foreignAlias: Threads }
-    Profile:		{ onDelete: CASCADE, local: profile_id, foreign: id, foreignAlias: Threads }
+    User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: threads }
+    Tab:			{ onDelete: CASCADE, local: tab_id, foreign: id, foreignAlias: threads }
+    Profile:		{ onDelete: CASCADE, local: profile_id, foreign: id, foreignAlias: threads }
 
 Invite:
   actAs:
