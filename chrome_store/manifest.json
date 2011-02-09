@@ -1,0 +1,21 @@
+{
+  "name": "MixMes",
+  "description": "MixMes帮助您管理微博帐号，分析微博趋势，策划实施微博营销。",
+  "version": "1",
+  "app": {
+    "urls": [
+      "*://mixmes.com/"
+    ],
+    "launch": {
+      "web_url": "http://mixmes.com/"
+    }
+  },
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "notifications",
+	"geolocation"
+  ]
+}
