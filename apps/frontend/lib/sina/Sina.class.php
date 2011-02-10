@@ -249,20 +249,20 @@ class WeiboClient
 	function user_timeline($since_id = null, $page = 1 , $count = 20, $max_id = null, $uid_or_name = null) 
     {
 		$params = array();
-		if( $since_id ) $param['since_id'] = $since_id; 
-		if( $page ) $param['page'] = $page; 
-   		if( $count ) $param['count'] = $count; 			
-    	if( $max_id ) $param['max_id'] = $max_id; 
+		if( $since_id ) $params['since_id'] = $since_id; 
+		if( $page ) $params['page'] = $page; 
+   		if( $count ) $params['count'] = $count; 			
+    	if( $max_id ) $params['max_id'] = $max_id; 
 		
 		if( is_numeric( $uid_or_name ) ) 
         { 
-            $param['user_id'] = $uid_or_name; 
+            $params['user_id'] = $uid_or_name; 
 
         }elseif( $uid_or_name !== null ) { 
-            $param['screen_name'] = $uid_or_name; 
+            $params['screen_name'] = $uid_or_name; 
         }
 		
-		return $this->oauth->get("http://api.t.sina.com.cn/statuses/user_timeline.json" , $param ); 
+		return $this->oauth->get("http://api.t.sina.com.cn/statuses/user_timeline.json" , $params ); 
     } 
 	
 
@@ -281,7 +281,7 @@ class WeiboClient
 		if( $page ) $param['page'] = $page; 
    		if( $count ) $param['count'] = $count; 			
     	if( $max_id ) $param['max_id'] = $max_id; 
-		return $this->oauth->get("http://api.t.sina.com.cn/direct_messages.json" , $param ); 
+		return $this->oauth->get("http://api.t.sina.com.cn/direct_messages.json" , $params ); 
     } 
 
     /** 

@@ -35,7 +35,17 @@ class fanfouCacheManager {
 		$cacheMessageListName = 'fanfou_' . 'list_user_' . $userid . '_' . $profile_id;
 		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'userTimeline', $cacheMessageListName, $since_id, $before_id, $count, $userid);
 	}
-    
+	
+	public function list_dm($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20) {
+		$cacheMessageListName = 'fanfou_' . 'list_dm_' . $profile_id;
+		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'dmInbox', $cacheMessageListName, $since_id, $before_id, $count);
+	}
+	
+	public function mentions($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20) {
+		$cacheMessageListName = 'fanfou_' . 'list_mentions_' . $profile_id;
+		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'mentionsTimeline', $cacheMessageListName, $since_id, $before_id, $count);
+	}
+	
 	protected function getMessagesBySinceIdOrBeforeId($apiConsumer, $functionName, $cacheMessageListName, $since_id = null, $before_id = null, $count = 20, $addtional_arg1 = null, $addtional_arg2 = null, $addtional_arg3 = null) {
 		$cacheMessageListLastModify = $this->cache->getLastModified($cacheMessageListName);
 		$cacheMessageList = $this->cache->get($cacheMessageListName, array());
@@ -45,9 +55,9 @@ class fanfouCacheManager {
 				$new_since_id = count($cacheMessageList) > 1 ? $cacheMessageList[1] : null;
 				$data = $apiConsumer->$functionName($new_since_id, 1, $this->countPerCall, null, $addtional_arg1, $addtional_arg2, $addtional_arg3);
 				$this->cacheMessages($data);
-				$ids = $this->getIdListFromApiData($data);
+				$ids = $this->getIdListFromApiData($data); 
 				$newCacheMessageList = $this->mergeIdLists($ids, $cacheMessageList);	
-				$this->cache->set($cacheMessageListName, $newCacheMessageList);			
+				$this->cache->set($cacheMessageListName, $newCacheMessageList);
 			}
 			$offset = array_search($since_id, $newCacheMessageList);
 			if ($since_id != null && $offset !== FALSE && $offset < $count) {

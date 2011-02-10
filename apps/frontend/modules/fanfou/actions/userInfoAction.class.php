@@ -11,8 +11,7 @@ class userInfoAction extends fanfouAction {
 		
 		$user = $this->apiConsumer->getUserInfo($username);
 		
-		$user['profile_image_url_180'] = str_replace('/50/', '/180/', $user['profile_image_url']);		
-		$user['domain'] = $user['id'];
+		$user['profile_image_url'] = str_replace('fanfou.com/s0', 'fanfou.com/l0', $user['profile_image_url']);
 		
 		if (strlen($user['url']) <= 10) {
 			$user['url'] = "";
