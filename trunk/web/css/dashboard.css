@@ -155,6 +155,10 @@ a.list-toggle-button span {
 	background: url("../images/direct_12x12.png") no-repeat left center;
 }
 
+.list-icon-favorite {
+	background: url("../images/favorite_12x12.png") no-repeat left center;
+}
+
 #dashboard {
 	float: left;
 	width: 100%;

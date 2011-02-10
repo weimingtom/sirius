@@ -451,19 +451,14 @@ class QQClient
 
     } 
 
-    /** 
-     * 返回用户的发布的最近20条收藏信息，和用户收藏页面返回内容是一致的。 
-     *  
-     * @access public 
-     * @param bool $page 返回结果的页序号。 
-     * @return array 
-     */ 
-    function get_favorites( $page = false ) 
+    function get_favorites( $count = NULL , $pageflag = NULL , $pagetime = NULL) 
     { 
-        $param = array(); 
-        if( $page ) $param['page'] = $page; 
+      	$param = array('format'=>'json');
+        if( $count ) $param['reqnum'] = $count; 
+        if( $pageflag ) $param['pageflag'] = $pageflag; 
+        if( $pagetime ) $param['pagetime'] = $pagetime;	
 
-        return $this->oauth->get( 'http://open.t.qq.com/api/favorites.json' , $param ); 
+        return $this->oauth->get( 'http://open.t.qq.com/api/fav/list_t' , $param ); 
     } 
 
     /** 
@@ -478,7 +473,7 @@ class QQClient
         $param = array(); 
         $param['id'] = $sid; 
 
-        return $this->oauth->post( 'http://open.t.qq.com/api/favorites/create.json' , $param ); 
+        return $this->oauth->post( 'http://open.t.qq.com/api/fav/addt' , $param ); 
     } 
 
     /** 
@@ -490,7 +485,9 @@ class QQClient
      */ 
     function remove_from_favorites( $sid ) 
     { 
-        return $this->oauth->post( 'http://open.t.qq.com/api/favorites/destroy/' . $sid . '.json'  ); 
+        $param = array(); 
+        $param['id'] = $sid; 
+    	return $this->oauth->post( 'http://open.t.qq.com/api/fav/delt', $param ); 
     } 
     
     
