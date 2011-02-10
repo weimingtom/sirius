@@ -50,6 +50,11 @@ class sinaCacheManager {
 		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'user_timeline', $cacheMessageListName, $since_id, $before_id, $count, $uid_or_name);
 	}
 	
+	public function favorite_timeline($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20) {
+		$cacheMessageListName = 'sina_' . 'list_favorite_' . $profile_id;
+		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'get_favorites', $cacheMessageListName, $since_id, $before_id, $count, $uid_or_name);
+	}
+	
 	public function getEmotions() {
 		$cacheEmotionsName = 'sina_emotions_list';
 		$emotions = $this->cache->get($cacheEmotionsName);

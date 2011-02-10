@@ -53,6 +53,11 @@ class QQCacheManager {
 		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'user_timeline', $cacheMessageListName, $since_id, $before_id, $count, $uid_or_name);
 	}
 
+	public function favorite_timeline($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20, $uid_or_name = null) {
+		$cacheMessageListName = 'qq_' . 'list_favorite_' . $profile_id;
+		return $this->getMessagesBySinceIdOrBeforeId($apiConsumer, 'get_favorites', $cacheMessageListName, $since_id, $before_id, $count, $uid_or_name);
+	}
+
 	public function get_reposts_by_sid($profile_id, $apiConsumer, $since_id = null, $before_id = null, $count = 20, $sid = null) {
 		if ($sid == NULL) return array();
 		$cacheMessageListName = 'qq_' . 'list_retweet_' . $sid . '_' . $profile_id;
@@ -124,7 +129,7 @@ class QQCacheManager {
 		return $ids;
 	}
 	
-	protected function cacheMessages($data) {
+	public function cacheMessages($data) {
 		if (isset($data['id'])) {
 			$this->cache->set('qq_message_' . $data['id'], $data);
 		} else {

@@ -53,8 +53,7 @@ socialNetworkTypes['sina'] = [
 				ifCondition: 'favorited'
 			}
 		]
-	},
-	
+	},	
 	{
 		defaultTitle: '我发的微博',
 		type: 'posted',
@@ -88,6 +87,25 @@ socialNetworkTypes['sina'] = [
 	{
 		defaultTitle: '我的私信',
 		type: 'direct'
+	},
+	{
+		defaultTitle: '我的收藏',
+		type: 'favorite',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				submessage: false
+			}
+		]
 	}
 ];
 
@@ -103,6 +121,16 @@ socialNetworkTypes['qq'] = [
 			{
 				name: 'retweet',
 				title: '转发'
+			},
+			{
+				name: 'favorite',
+				title: '收藏',
+				unless: 'favorited'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				ifCondition: 'favorited'
 			}
 		]
 	},
@@ -117,6 +145,16 @@ socialNetworkTypes['qq'] = [
 			{
 				name: 'retweet',
 				title: '转发'
+			},
+			{
+				name: 'favorite',
+				title: '收藏',
+				unless: 'favorited'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				ifCondition: 'favorited'
 			}
 		]
 	},
@@ -142,6 +180,25 @@ socialNetworkTypes['qq'] = [
 	{
 		defaultTitle: '我的私信',
 		type: 'direct'
+	},
+	{
+		defaultTitle: '我的收藏',
+		type: 'favorite',
+		actions: [
+			{
+				name: 'comment',
+				title: '评论'
+			},
+			{
+				name: 'retweet',
+				title: '转发'
+			},
+			{
+				name: 'unfavorite',
+				title: '取消收藏',
+				submessage: false
+			}
+		]
 	}
 ];
 
