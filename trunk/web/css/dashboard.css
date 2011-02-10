@@ -935,6 +935,10 @@ a.message-count-status:hover {
 	background: url(../images/icon_13x13/sina.png) 0 0 no-repeat;
 }
 
+.icon-13.fanfou {
+	background: url(../images/icon_13x13/fanfou.png) 0 0 no-repeat;
+}
+
 a.show-origin-pic,
 a.show-origin-pic:visited {
 	color: #0082CB;

@@ -30,7 +30,7 @@ abstract class fanfouAction extends myAction {
 		}
 		foreach ($originMessages as $originMessage) {
 			if ($isDM) {
-				//$messages[] = $this->formatDirectMessage($originMessage);
+				$messages[] = $this->formatDirectMessage($originMessage);
 			} else {
 				$messages[] = $this->formatMessage($originMessage);
 			}
@@ -38,11 +38,42 @@ abstract class fanfouAction extends myAction {
 		return $messages;
 	}
 	
+	protected function formatDirectMessage($origin) {
+		$message = new Message();
+		$message->id = $origin['id'];
+		
+		$message->created_at = $this->formatTime($origin['created_at']);
+		
+		if (isset($origin['photo'])) {
+			$message->picture_thumbnail = $origin['photo']['thumburl'];
+			$message->picture_medium = $origin['photo']['largeurl'];
+			$message->picture_original = $origin['photo']['largeurl'];
+		}
+		
+		$message->text = $this->formatText($origin['text']);
+		$message->truncated = $origin['truncated'];
+		$message->favorited = $origin['favorited'];
+		
+		$user = $message->user;
+		$user->id = $origin['sender']['id'];
+		$user->name = $origin['sender']['id'];
+		$user->screen_name = $origin['sender']['screen_name'];
+		$user->avatar = $origin['sender']['profile_image_url'];
+		
+		return $message;
+	}
+	
 	protected function formatMessage($origin) {
 		$message = new Message();
 		$message->id = $origin['id'];
 		
 		$message->created_at = $this->formatTime($origin['created_at']);
+		
+		if (isset($origin['photo'])) {
+			$message->picture_thumbnail = $origin['photo']['thumburl'];
+			$message->picture_medium = $origin['photo']['largeurl'];
+			$message->picture_original = $origin['photo']['largeurl'];
+		}
 		
 		$message->text = $this->formatText($origin['text']);
 		$message->truncated = $origin['truncated'];

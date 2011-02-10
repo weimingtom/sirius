@@ -7,10 +7,12 @@ class fanfouClient {
 	private $decode_json = true;
 	private $ssl_verifypeer = FALSE;
 	private $useragent = 'Sirius Server v0.1';
+	private $source = 'MixMes';
 	private $timeout = 30;
 	private $connecttimeout = 30;
 	public $http_code; 
 	public $http_info;
+	public static $boundary = '';
 	
 	
 	function __construct( $username , $password ) {
@@ -45,9 +47,54 @@ class fanfouClient {
 		return $this->get("http://api.fanfou.com/statuses/user_timeline.json", $params);
 	}
 	
+	function mentionsTimeline($since_id = null, $page = 1, $count = 20, $max_id = null, $userId = null) {
+		$params = array('format'=>'html');
+		if( $since_id ) $params['since_id'] = $since_id; 
+		if( $page ) $params['page'] = $page; 
+   		if( $count ) $params['count'] = $count; 			
+    	if( $max_id ) $params['max_id'] = $max_id; 
+    	if( $userId ) $params['id'] = $userId;
+		
+		return $this->get("http://api.fanfou.com/statuses/replies.json", $params);
+	}
 	
-	function get($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
+    function dmInbox($since_id = null, $page = 1 , $count = 20, $max_id = null) 
+    { 
+		$params = array();
+		if( $since_id ) $params['since_id'] = $since_id; 
+		if( $page ) $params['page'] = $page; 
+   		if( $count ) $params['count'] = $count; 			
+    	if( $max_id ) $params['max_id'] = $max_id;
+		return $this->get("http://api.fanfou.com/direct_messages.json" , $params ); 
+    }
+    
+    function update($text) {
+    	$param = array(); 
+        $param['status'] = $text; 
+        $param['source'] = $this->source; 
+
+        return $this->post( 'http://api.fanfou.com/statuses/update.json' , $param ); 
+    }
+	
+    function upload( $text , $pic_path ) {
+        $param = array(); 
+        $param['photo'] = '@'.$pic_path;
+        $param['status'] = $text; 
+        $param['source'] = $this->source; 
+
+        return $this->post( 'http://api.fanfou.com/photos/upload.json' , $param ); 
+    }
+	
+    function get($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
         $response = $this->http($this->toUrl($url, $parameters), 'GET');
+        if ($this->format === 'json' && $this->decode_json) { 
+            return json_decode($response, true); 
+        } 
+        return $response; 
+    }
+    
+    function post($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
+    	$response = $this->http($url, 'POST', $parameters);
         if ($this->format === 'json' && $this->decode_json) { 
             return json_decode($response, true); 
         } 
@@ -67,12 +114,11 @@ class fanfouClient {
 	function http($url, $method, $postfields = NULL , $multi = false) {
 		$this->http_info = array(); 
         $ci = curl_init(); 
-        /* Curl settings */ 
+        /* Curl settings */
         if ($this->username && $this->password) {
         	curl_setopt($ci, CURLOPT_HTTPAUTH, CURLAUTH_BASIC ) ;
 			curl_setopt($ci, CURLOPT_USERPWD, $this->username . ":" . $this->password);
         }
-
         curl_setopt($ci, CURLOPT_USERAGENT, $this->useragent); 
         curl_setopt($ci, CURLOPT_CONNECTTIMEOUT, $this->connecttimeout); 
         curl_setopt($ci, CURLOPT_TIMEOUT, $this->timeout); 
@@ -90,7 +136,7 @@ class fanfouClient {
             if (!empty($postfields)) { 
                 curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields); 
                 //echo "=====post data======\r\n";
-                //echo $postfields;
+                //var_dump($postfields);
             } 
             break; 
         case 'DELETE': 
@@ -100,14 +146,6 @@ class fanfouClient {
             } 
         } 
 
-/*        $header_array2=array(); 
-        if( $multi ) 
-        	$header_array2 = array("Content-Type: multipart/form-data; boundary=" . OAuthUtil::$boundary , "Expect: ");
-        foreach($header_array2 as $k => $v) 
-            array_push($header_array2,$k.': '.$v); 
-
-        curl_setopt($ci, CURLOPT_HTTPHEADER, $header_array2 ); 
-*/
         curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE ); 
 
         curl_setopt($ci, CURLOPT_URL, $url); 
@@ -118,14 +156,13 @@ class fanfouClient {
         $this->url = $url; 
         //echo '=====info====='."\r\n";
         //print_r( curl_getinfo($ci) );
-        //print_r($this->http_code);
+        ///print_r($this->http_code);
         //print_r($this->http_info); 
         
         //echo '=====$response====='."\r\n";
         //print_r( $response ); 
-
         
-        curl_close ($ci); 
+        curl_close ($ci); //die();
         return $response; 
 	}
 	/** 
@@ -141,5 +178,5 @@ class fanfouClient {
             $this->http_header[$key] = $value; 
         } 
         return strlen($header); 
-    } 
+    }
 }
