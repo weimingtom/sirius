@@ -2,18 +2,23 @@
 <?php use_stylesheet('dashboard.css') ?>
 <?php use_stylesheet('colorbox.css') ?>
 <?php use_stylesheet('tip-yellowsimple.css') ?>
+<?php use_stylesheet('jquery.ui.selectmenu.css') ?>
 <?php use_javascript('socialNetworkTypes.js') ?>
 <?php use_javascript('sirius.js') ?>
 <?php use_javascript('jquery.colorbox-min.js')?>
 <?php use_javascript('swfupload.js') ?>
 <?php use_javascript('upload.js') ?>
 <?php use_javascript('jquery.poshytip.min.js') ?>
+<?php use_javascript('jquery.ui.selectmenu.js') ?>
+<?php use_javascript('jquery.timers-1.2.js') ?>
 <script>
 $(function(){
 	var options = options || {};
 	options.profiles = <?php echo json_encode($sf_data->getRaw('profiles')); ?>;
 	options.tabs = <?php echo json_encode($sf_data->getRaw('tabs')); ?>;
 	options.activeTabId = <?php echo $activeTabId ?>;
+	options.threadWidth = <?php echo $threadWidth ?>;
+	options.refreshFrequency = <?php echo $refreshFrequency ?>;
 	$.sirius = $.sirius || new Sirius;
 	$.sirius.init(options);
 	$('._add-profile-button').click(function() {
@@ -65,8 +70,36 @@ $(function(){
 		className: 'tip-yellowsimple',
 		alignTo: 'target',
 		alignX: 'center',
-		offsetY: 5
 	});
+
+	$("._refresh-all").click(function(event){
+		$.sirius.refreshAllThread();
+	});
+
+	$('._refresh-frequency').val(options.refreshFrequency).selectmenu({
+		width: "10.3em",
+		style: 'dropdown',
+		change: function(event) {
+			$.sirius.changeRefreshFrequency(event.target.value);
+		}
+	});
+
+	$('._thread-width-adjust').slider({
+		min: 300,
+		max: 600,
+		value: options.threadWidth,
+		slide: function(event, ui) {
+			$.sirius.setThreadWidth(ui.value);
+		},
+		change: function(event, ui) {
+			$.sirius.saveThreadWidth(ui.value);
+		}
+	}).poshytip({
+		className: 'tip-yellowsimple',
+		alignTo: 'target',
+		alignX: 'center',
+		offsetY: 5
+	});;
 });
 </script>
 <div id="statusContainer">
@@ -146,7 +179,19 @@ $(function(){
 		<a href="#" title="添加微博帐号" class="btn-spl sidebar-add-profile _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>	
 	</div>
 	<div id="dashboard">
-		<div class="dashboard-inner-wrapper">
+		<div class="dashboard-controller _dashboard-cotroller">
+			<a href="#" class="_refresh-all refresh-all btn-spl" title="全部刷新" style="display: inline-block; ">
+				<span class="icon-19 refresh-button"></span>
+			</a>
+			<select class="refresh-frequency _refresh-frequency" name="refreshFrequency">
+				<option value="5">每5分钟刷新全部</option>
+				<option value="10">每10分钟刷新全部</option>
+				<option value="20">每20分钟刷新全部</option>
+				<option value="0">手动刷新</option>
+			</select>
+			<div class="thread-width-adjust-holder rb-a-3">
+				<div class="thread-width-adjust _thread-width-adjust" title="设置栏目宽度"></div>
+			</div>
 		</div>
 	</div>
 </div>

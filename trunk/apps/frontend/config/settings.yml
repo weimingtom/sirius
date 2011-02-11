@@ -39,4 +39,4 @@ all:
     
     default_timezone:		Asia/Chongqing
     
-    timeout:     28800
+    timeout:				28800

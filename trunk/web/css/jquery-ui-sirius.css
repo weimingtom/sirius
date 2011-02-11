@@ -69,7 +69,12 @@
 	padding: 5px;
 }
 
-.ui-widget-content a.btn-cmt {
+#popup-dialog .ui-widget-content,
+#popup-dialog .ui-widget-content a {
+	color: #362B36;
+}
+
+#popup-dialog .ui-widget-content a.btn-cmt {
 	color: white;
 }
 

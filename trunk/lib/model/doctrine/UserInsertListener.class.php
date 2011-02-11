@@ -12,11 +12,10 @@ class UserInsertListener extends Doctrine_Record_Listener {
 		$tab->save();	
 		
 		// add tabs setting
-		$tabsSettings = new TabsSettings();
+		$tabsSettings = new DashboardSettings();
 		$tabsSettings->setOwnerId($userId);
 		$tabsSettings->setTabIds(array($tab->getId()));
 		$tabsSettings->setActiveTabId($tab->getId());
 		$tabsSettings->save();	
-		
 	}
 }

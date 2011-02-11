@@ -13,7 +13,7 @@ class deleteAction extends sfAction {
 		$tab->delete();
 		
 		$user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
-	    $tabsSettings = $user->getTabsSettings();
+	    $tabsSettings = $user->getDashboardSettings();
 	    $tabIds = $tabsSettings->getTabIds();
 	    
 	    $key = array_search($tabId, $tabIds);

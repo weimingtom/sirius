@@ -11,25 +11,25 @@
  * @property enum $status
  * @property Doctrine_Collection $profiles
  * @property Doctrine_Collection $tabs
- * @property TabsSettings $tabs_settings
+ * @property DashboardSettings $dashboard_settings
  * @property Doctrine_Collection $threads
  * 
- * @method string              getEmail()         Returns the current record's "email" value
- * @method string              getFullName()      Returns the current record's "full_name" value
- * @method string              getPassword()      Returns the current record's "password" value
- * @method enum                getStatus()        Returns the current record's "status" value
- * @method Doctrine_Collection getProfiles()      Returns the current record's "profiles" collection
- * @method Doctrine_Collection getTabs()          Returns the current record's "tabs" collection
- * @method TabsSettings        getTabsSettings()  Returns the current record's "tabs_settings" value
- * @method Doctrine_Collection getThreads()       Returns the current record's "threads" collection
- * @method User                setEmail()         Sets the current record's "email" value
- * @method User                setFullName()      Sets the current record's "full_name" value
- * @method User                setPassword()      Sets the current record's "password" value
- * @method User                setStatus()        Sets the current record's "status" value
- * @method User                setProfiles()      Sets the current record's "profiles" collection
- * @method User                setTabs()          Sets the current record's "tabs" collection
- * @method User                setTabsSettings()  Sets the current record's "tabs_settings" value
- * @method User                setThreads()       Sets the current record's "threads" collection
+ * @method string              getEmail()              Returns the current record's "email" value
+ * @method string              getFullName()           Returns the current record's "full_name" value
+ * @method string              getPassword()           Returns the current record's "password" value
+ * @method enum                getStatus()             Returns the current record's "status" value
+ * @method Doctrine_Collection getProfiles()           Returns the current record's "profiles" collection
+ * @method Doctrine_Collection getTabs()               Returns the current record's "tabs" collection
+ * @method DashboardSettings   getDashboardSettings()  Returns the current record's "dashboard_settings" value
+ * @method Doctrine_Collection getThreads()            Returns the current record's "threads" collection
+ * @method User                setEmail()              Sets the current record's "email" value
+ * @method User                setFullName()           Sets the current record's "full_name" value
+ * @method User                setPassword()           Sets the current record's "password" value
+ * @method User                setStatus()             Sets the current record's "status" value
+ * @method User                setProfiles()           Sets the current record's "profiles" collection
+ * @method User                setTabs()               Sets the current record's "tabs" collection
+ * @method User                setDashboardSettings()  Sets the current record's "dashboard_settings" value
+ * @method User                setThreads()            Sets the current record's "threads" collection
  * 
  * @package    Sirius
  * @subpackage model
@@ -78,7 +78,7 @@ abstract class BaseUser extends sfDoctrineRecord
              'local' => 'id',
              'foreign' => 'owner_id'));
 
-        $this->hasOne('TabsSettings as tabs_settings', array(
+        $this->hasOne('DashboardSettings as dashboard_settings', array(
              'local' => 'id',
              'foreign' => 'owner_id'));
 

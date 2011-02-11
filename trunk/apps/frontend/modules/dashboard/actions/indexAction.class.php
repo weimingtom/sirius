@@ -14,7 +14,7 @@ class indexAction extends sfAction {
 		
 		// tabs
 		$user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
-	    $tabsSettings = $user->getTabsSettings();
+	    $tabsSettings = $user->getDashboardSettings();
 	    $tabsOrder = $tabsSettings->getTabIds();
 	    $tabs = Doctrine::getTable('Tab')
 	      ->createQuery()
@@ -49,5 +49,8 @@ class indexAction extends sfAction {
 			$tabSettings->save();
 		}
 		$this->activeTabId = $activeTabId;
+		
+		$this->threadWidth = $tabsSettings->getThreadWidth();
+		$this->refreshFrequency = $tabsSettings->getRefreshFrequency();
 	}      
 }

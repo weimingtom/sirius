@@ -7,8 +7,8 @@
  * 
  * @package    Sirius
  * @subpackage model
- * @author     Cary Yang
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @author     Cary Yang <getcary@gmail.com>
+ * @version    SVN: $Id: Builder.php 7691 2011-02-04 15:43:29Z jwage $
  */
 class Tab extends BaseTab
 {
