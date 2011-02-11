@@ -26,7 +26,8 @@ class profileActions extends sfActions
   	$support_list = array(
 		"sina" => "新浪微博",
 		"qq" => "腾讯微博",
-  		"fanfou" => "饭否"
+  		"fanfou" => "饭否",
+  		"douban" => "豆瓣"
 	);
 	
 	$this->supportList = $support_list;
