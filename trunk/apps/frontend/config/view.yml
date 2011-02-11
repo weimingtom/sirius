@@ -6,9 +6,9 @@ default:
     content-type: text/html
 
   metas:
-    title:        MixMes - 一站式微博管理工具
-    description:  MixMes帮助您管理微博帐号，分析微博趋势，策划实施微博营销。
-    keywords:     MixMes, 微博, 新浪微博, 腾讯微博, 搜狐微博, 饭否, weibo, twitter, tweet, 一站式
+    title:        MixMes - 一站式社交网络管理工具
+    description:  MixMes帮助您管理社交网络，分析社交网络趋势，策划实施社交网络营销。
+    keywords:     MixMes, 微博, 新浪微博, 腾讯微博, 搜狐微博, 饭否, 豆瓣, weibo, twitter, tweet, 一站式
     language:     zh_CN
     #robots:       index, follow
 

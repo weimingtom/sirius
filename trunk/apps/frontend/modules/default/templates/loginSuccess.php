@@ -8,7 +8,7 @@
 			</h1>
 		</div>
 		<div class="version"><?php echo sfConfig::get('app_version')?></div>
-		<p class="summary">MixMes帮助您管理微博帐号，分析微博趋势，策划实施微博营销。</p>
+		<p class="summary">MixMes帮助您管理社交网络，分析社交网络趋势，策划实施社交网络营销。</p>
 		<?php if ($errorMsg): ?>
 		<p class="error"><?php echo $errorMsg?></p>
 		<?php endif?>
