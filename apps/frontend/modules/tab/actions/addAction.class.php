@@ -16,7 +16,7 @@ class addAction extends sfAction {
 		);
 		
 		$user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
-	    $tabsSettings = $user->getTabsSettings();
+	    $tabsSettings = $user->getDashboardSettings();
 	    $tabIds = $tabsSettings->getTabIds();
 	    array_push($tabIds,$tabId);
 	    $tabsSettings->setTabIds($tabIds);

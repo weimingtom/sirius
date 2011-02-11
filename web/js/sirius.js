@@ -8,8 +8,7 @@ $(function() {
 	o.style.position = 'absolute';
 	o.style.top = '0px';
 	o.style.left = '0px';
-	o.style.visibility =
-	'hidden';
+	o.style.visibility = 'hidden';
 	o.style.width = '200px';
 	o.style.height = '150px';
 	o.style.overflow = 'hidden';
@@ -48,13 +47,15 @@ $(function() {
 				profiles: {},
 				tabs: [],
 				activeTabId: 0,
-				threadWidth: 400
+				threadWidth: 400,
+				refreshFrequency: 0
 			}, options || {});
 
 			if (!this._initDashboard()
 			 && !this._initSiderbarAndProfileSelector()
 			 && !this._initTabs())
 				return;
+			this.resetRefreshPlan();
 			this.initialized = true;
 		},
 				
@@ -92,7 +93,6 @@ $(function() {
 			dashboard.addClass('dashboard');
 
 			// children
-			dashboard.children().remove();
 			dashboard.append($('<div/>').attr('id', 'dashboardTabs'));
 			dashboard.append(
 			$('<div/>').attr('id', 'threadsContainer')
@@ -482,6 +482,83 @@ $(function() {
 					//alert("ERROR");
 				}
 			});
+			
+			// reset refreshAll
+			this.resetRefreshPlan();
+			var currentTime = new Date()
+			var hours = currentTime.getHours()
+			var minutes = currentTime.getMinutes()
+			if (minutes < 10)
+				minutes = "0" + minutes
+			$('._refresh-all').attr('title', '全部刷新 | 上次刷新' + hours + ":" + minutes);
+		},
+		
+		setThreadWidth: function(width) {
+			this.settings.threadWidth = width;
+			$('.thread').css('width', width);
+			this._onResize();
+		},
+		
+		saveThreadWidth: function(width) {
+			$.ajax({
+				type: 'GET',
+				url: '/dashboard/savePreference',
+				data: { name: 'threadWidth', value: width　},
+				dataType: 'json',
+				context: this,
+				success: function (data) {
+					if (data && data.error) {
+						this.statusMessage(data.error, "error");
+					} else {
+						this.statusMessage("数据保存成功", "success");
+					}
+				}
+			});
+		},
+		
+		resetRefreshPlan: function() {
+			$("body").stopTime("refreshAll");
+			if (this.settings.refreshFrequency != 0) {
+				var sirius = this;
+				$("body").oneTime(1000 * 60 * this.settings.refreshFrequency, "refreshAll", function() {
+					sirius.refreshAllThread();
+				});
+			}
+		},
+		
+		refreshAllThread: function() {
+			var sirius = this;
+			$('.thread').each(function(index, value){
+				sirius.refreshThread(value);
+			});
+			this.resetRefreshPlan();
+
+			var currentTime = new Date()
+			var hours = currentTime.getHours()
+			var minutes = currentTime.getMinutes()
+			if (minutes < 10)
+				minutes = "0" + minutes
+			$('._refresh-all').attr('title', '全部刷新 | 上次刷新' + hours + ":" + minutes);
+		},
+		
+		changeRefreshFrequency: function(frequency) {
+			if (this.settings.refreshFrequency == frequency) return;
+			this.settings.refreshFrequency = frequency;
+			this.resetRefreshPlan();
+			$.ajax({
+				type: 'GET',
+				url: '/dashboard/savePreference',
+				data: { name: 'refreshFrequency', value: frequency　},
+				dataType: 'json',
+				context: this,
+				success: function (data) {
+					if (data && data.error) {
+						this.statusMessage(data.error, "error");
+					} else {
+						this.statusMessage("数据保存成功", "success");
+					}
+				}
+			});
 		},
 		
 		serverAddThread: function(tabId, profileId, type, title) {
@@ -532,7 +609,8 @@ $(function() {
 				.attr('profileType', threadInfo.profile_type)
 				.attr('threadType', threadInfo.type)
 				.attr('threadId', threadInfo.id)
-				.attr('threadParameters', threadInfo.parameters);
+				.attr('threadParameters', threadInfo.parameters)
+				.css('width', this.settings.threadWidth);
 
 			threadHeader = $('.thread-header', thread)
 				.append('<span class="thread-icon" />')

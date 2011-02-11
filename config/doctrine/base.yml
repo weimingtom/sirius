@@ -34,13 +34,15 @@ Tab:
   relations:
     User:			{ onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: tabs }
 
-TabsSettings:
+DashboardSettings:
   columns:
     owner_id:		{ type: integer, notnull: true }
     tab_ids:		{ type: array(100) }
     active_tab_id:	{ type: integer }
+    thread_width:	{ type: integer, notnull: true, default: 400 }
+    refresh_frequency:	{ type: integer, notnull: true, default: 20 }
   relations:
-    User:			{ foreignType: one, onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: tabs_settings }
+    User:			{ foreignType: one, onDelete: CASCADE, local: owner_id, foreign: id, foreignAlias: dashboard_settings }
     
 Thread:
   actAs:

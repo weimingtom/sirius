@@ -263,7 +263,7 @@ a, a:hover, a:visited, a:focus {
 	text-decoration: none;
 }
 
-.icon-13, .icon-14, .icon-16, .icon-18, .icon-19, .icon-20, .icon-28 {
+.icon-12, .icon-13, .icon-14, .icon-16, .icon-18, .icon-19, .icon-20, .icon-28 {
 	display: inline-block;
 	text-decoration: none;
 	text-indent: -999em;
@@ -271,6 +271,11 @@ a, a:hover, a:visited, a:focus {
 	vertical-align: middle;
 	outline: none;
 	white-space: nowrap;
+}
+
+.icon-12 {
+	height: 12px;
+	padding-left: 12px;
 }
 
 .icon-13 {

@@ -12,7 +12,7 @@ class activeAction extends sfAction {
     
     // make it active!
     $user = Doctrine_Core::getTable("User")->find($this->getUser()->getId());
-    $tabsSettings = $user->getTabsSettings();
+    $tabsSettings = $user->getDashboardSettings();
     $tabsSettings->setActiveTabId($tabId);
     $tabsSettings->save();
     

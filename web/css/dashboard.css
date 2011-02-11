@@ -162,6 +162,58 @@ a.list-toggle-button span {
 #dashboard {
 	float: left;
 	width: 100%;
+	position: relative;
+}
+
+.dashboard-controller {
+	position: absolute;
+	right: 5px;
+	top: 2px;
+	font-size: 12px;
+}
+
+.dashboard-controller .refresh-frequency,
+.dashboard-controller .refresh-all,
+.dashboard-controller .thread-width-adjust-holder {
+	float: left;
+}
+
+.dashboard-controller .btn-spl.refresh-all {
+	padding: 1px 4px 0;
+	margin: 1px 2px;
+}
+
+.dashboard-controller .thread-width-adjust-holder {
+	padding: 7px 8px;
+	margin: 1px 2px;
+	border-top: 1px solid #B4B6B9;
+	background-color: #C3C6CB;
+}
+
+.dashboard-controller .thread-width-adjust {
+	width: 68px;
+	height: 6px;
+	position: relative;
+	background: #95999C;
+	border: none;
+	-moz-box-shadow: inset 0 1px 5px 0 rgba(0, 0, 0, .75);
+	-webkit-box-shadow: inset 0 1px 5px 0 rgba(0, 0, 0, .75);
+	box-shadow: inset 0 1px 5px 0 rgba(0, 0, 0, .75);
+}
+
+.dashboard-controller .thread-width-adjust .ui-slider-handle {
+	top: 0;
+	width: 8px;
+	height: 12px;
+	margin-top: -4px;
+	margin-left: -4px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid lightGrey;
+	border-bottom: 1px solid #9E9FA0;
+	background: #E6E6E6;
+	color: #555;
 }
 
 #dashboardTabs {
