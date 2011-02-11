@@ -396,15 +396,19 @@ a.list-toggle-button span {
 }
 
 .thread-icon-qq {
-	background-image: url("/images/icon_qq.png");
+	background-image: url("/images/icon_28x28/qq.png");
 }
 
 .thread-icon-sina {
-	background-image: url("/images/icon_sina.png");
+	background-image: url("/images/icon_28x28/sina.png");
 }
 
 .thread-icon-fanfou {
-	background-image: url("/images/icon_fanfou.png");
+	background-image: url("/images/icon_28x28/fanfou.png");
+}
+
+.thread-icon-douban {
+	background-image: url("/images/icon_28x28/douban.png");
 }
 
 .thread-name {
@@ -993,6 +997,10 @@ a.message-count-status:hover {
 
 .icon-13.fanfou {
 	background: url(../images/icon_13x13/fanfou.png) 0 0 no-repeat;
+}
+
+.icon-13.douban {
+	background: url(../images/icon_13x13/douban.png) 0 0 no-repeat;
 }
 
 a.show-origin-pic,

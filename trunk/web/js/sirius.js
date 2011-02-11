@@ -835,19 +835,23 @@ $(function() {
 			var node = $('<div class="message"></div>').attr('messageId', message.id).append(avatar).append(author).append(time_source).append(text);
 			
 			if (message.picture_thumbnail != "") {
-				$('<a/>')
-					.addClass('_message_picture_thumbnail')
-					.attr('href', message.picture_medium)
-					.append($('<img/>').attr('src', message.picture_thumbnail))
-					.appendTo(node)
-					.colorbox({
-						maxWidth: '80%',
-						maxHeight: '80%',
-						photo: true,
-						title: function(){
-						    return '<a class="show-origin-pic" href="'+message.picture_original+'" target="_blank">查看大图</a>';
-						}
-					});
+				if (message.picture_medium != "") {
+					$('<a/>')
+						.addClass('_message_picture_thumbnail')
+						.attr('href', message.picture_medium)
+						.append($('<img/>').attr('src', message.picture_thumbnail))
+						.appendTo(node)
+						.colorbox({
+							maxWidth: '80%',
+							maxHeight: '80%',
+							photo: true,
+							title: function(){
+							    return '<a class="show-origin-pic" href="'+message.picture_original+'" target="_blank">查看大图</a>';
+							}
+						});
+				} else {
+					$('<img/>').attr('src', message.picture_thumbnail).appendTo(node);
+				}
 			}
 			
 			$(node).append("<div style='clear:both;' />");
