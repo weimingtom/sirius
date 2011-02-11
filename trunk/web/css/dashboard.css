@@ -180,7 +180,36 @@ a.list-toggle-button span {
 
 .dashboard-controller .btn-spl.refresh-all {
 	padding: 1px 4px 0;
-	margin: 1px 2px;
+	margin: 1px 0;
+	-moz-border-radius: 3px 0 0 3px;
+	-webkit-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	border-bottom: 1px solid #CCC;
+}
+
+.dashboard-controller .refresh-frequency {
+	-moz-border-radius: 0 3px 3px 0;
+	-webkit-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+	margin: 1px 2px 1px 0;
+	background: url(../images/btn_spl_bg.png) 0 0 repeat-x;
+	height: 20px;
+	border-left: solid 1px #777;
+}
+
+.refresh-frequency .ui-selectmenu-item-selected {
+	border: 1px solid #dddddd; background: #dddddd url(../images/jqueryui/ui-bg_highlight-soft_60_dddddd_1x100.png) 50% 50% repeat-x; font-weight: normal; color: #000000;
+}
+.refresh-frequency .ui-selectmenu-item-selected a {
+	color: black;
+}
+.dashboard-controller .refresh-frequency.ui-state-active {
+	border: 1px solid #CCC;
+	border-left: solid 1px #777;
+}
+
+.dashboard-controller .refresh-frequency  .ui-selectmenu-icon {
+	right: 0;
 }
 
 .dashboard-controller .thread-width-adjust-holder {
