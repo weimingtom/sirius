@@ -77,7 +77,8 @@ $(function(){
 	});
 
 	$('._refresh-frequency').val(options.refreshFrequency).selectmenu({
-		width: "10.3em",
+		width: "14px",
+		menuWidth: "10.3em",
 		style: 'dropdown',
 		change: function(event) {
 			$.sirius.changeRefreshFrequency(event.target.value);
