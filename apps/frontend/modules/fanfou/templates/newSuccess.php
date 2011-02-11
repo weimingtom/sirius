@@ -35,7 +35,7 @@
 				dataType: "json",
 				data: $(".fanfou_form").serialize(),
 				success: function(data) {
-					if (data.error) {
+					if (data && data.error) {
 						sirius.statusMessage(data.error, "error");
 						return;
 					}
