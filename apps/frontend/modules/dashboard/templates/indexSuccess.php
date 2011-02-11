@@ -28,7 +28,7 @@ $(function(){
 				resizable: false,
 				width: 500,
 				height: 370,
-				title: "添加微博帐号",
+				title: "添加社交网络帐号",
 				open: function(event, ui) {
 					$.get('/profile/add', {}, function(data) {
 						$(data).appendTo('#popup-dialog');
@@ -69,7 +69,7 @@ $(function(){
 	$('._uploads').poshytip({
 		className: 'tip-yellowsimple',
 		alignTo: 'target',
-		alignX: 'center',
+		alignX: 'center'
 	});
 
 	$("._refresh-all").click(function(event){
@@ -163,7 +163,7 @@ $(function(){
 					<div class="profileSelector" style="height: auto;" ></div>				
 					<div class="_controls controls">
 						<div class="btns-right">							
-								<a href="#" title="添加微博帐号" class="btn-spl add _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>							
+								<a href="#" title="添加社交网络帐号" class="btn-spl add _add-profile-button"><span class="icon-13 icon-add"></span>添加社交网络帐号</a>							
 						</div>
 						<a href="#" class="_selectAll btn-spl">选择全部</a>
 						<a href="#" class="_selectNone btn-spl">取消选择</a>
@@ -177,7 +177,7 @@ $(function(){
 	<div id="sidebar" class="">
 		<ul>
 		</ul>
-		<a href="#" title="添加微博帐号" class="btn-spl sidebar-add-profile _add-profile-button"><span class="icon-13 icon-add"></span>添加微博帐号</a>	
+		<a href="#" title="添加社交网络帐号" class="btn-spl sidebar-add-profile _add-profile-button"><span class="icon-13 icon-add"></span>添加社交网络帐号</a>	
 	</div>
 	<div id="dashboard">
 		<div class="dashboard-controller _dashboard-cotroller">
