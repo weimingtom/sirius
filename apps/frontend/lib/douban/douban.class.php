@@ -74,7 +74,7 @@ class doubanClient
         $param = "<?xml version='1.0' encoding='UTF-8'?><entry xmlns:ns0='http://www.w3.org/2005/Atom' xmlns:db='http://www.douban.com/xmlns/'><content>" . $text ."</content></entry>";
 
 
-        return $this->oauth->post( 'http://api.douban.com/miniblog/saying' , $param ); 
+        return $this->oauth->post( 'http://api.douban.com/miniblog/saying' , $param, false, true); 
     }
     
     /** 
@@ -724,9 +724,9 @@ class doubanOAuth {
      * 
      * @return mixed 
      */ 
-    function post($url, $parameters = array() , $multi = false) { 
+    function post($url, $parameters = array(), $multi = false, $isXml = false) { 
         
-        $response = $this->oAuthRequest($url, 'POST', $parameters , $multi ); 
+        $response = $this->oAuthRequest($url, 'POST', $parameters , $multi, $isXml ); 
         if ($this->format === 'json' && $this->decode_json) { 
             return json_decode($response, true); 
         } 
@@ -751,7 +751,7 @@ class doubanOAuth {
      * 
      * @return string 
      */ 
-    function oAuthRequest($url, $method, $parameters , $multi = false) { 
+    function oAuthRequest($url, $method, $parameters , $multi = false, $isXml = false) { 
 
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0) { 
             $url = "{$this->host}{$url}.{$this->format}"; 
@@ -764,8 +764,12 @@ class doubanOAuth {
         case 'GET': 
             //echo $request->to_url(); 
             return $this->http($request->to_url(), 'GET'); 
-        default: 
-            return $this->http($request->get_normalized_http_url(), $method, $request->to_postdata($multi) , $multi ); 
+        default:
+        	if ($isXml) {
+        		return $this->http($request->get_normalized_http_url(), $method, $parameters, $request->to_header(), $multi, $isXml );
+        	} else {
+            	return $this->http($request->get_normalized_http_url(), $method, $request->to_postdata($multi), NULL, $multi ); 
+        	}
         } 
     } 
 
@@ -774,7 +778,7 @@ class doubanOAuth {
      * 
      * @return string API results 
      */ 
-    function http($url, $method, $postfields = NULL , $multi = false) { 
+    function http($url, $method, $postfields = NULL , $header = NULL, $multi = false, $isXml = false) {
         $this->http_info = array(); 
         $ci = curl_init(); 
         /* Curl settings */ 
@@ -802,41 +806,20 @@ class doubanOAuth {
             curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE'); 
             if (!empty($postfields)) { 
                 $url = "{$url}?{$postfields}"; 
-            } 
+            }
         } 
 
-        $header_array = array(); 
-        
-/*
-        $header_array["FetchUrl"] = $url; 
-        $header_array['TimeStamp'] = date('Y-m-d H:i:s'); 
-        $header_array['AccessKey'] = SAE_ACCESSKEY; 
-
-
-        $content="FetchUrl"; 
-
-        $content.=$header_array["FetchUrl"]; 
-
-        $content.="TimeStamp"; 
-
-        $content.=$header_array['TimeStamp']; 
-
-        $content.="AccessKey"; 
-
-        $content.=$header_array['AccessKey']; 
-
-        $header_array['Signature'] = base64_encode(hash_hmac('sha256',$content, SAE_SECRETKEY ,true)); 
-*/
-        //curl_setopt($ci, CURLOPT_URL, SAE_FETCHURL_SERVICE_ADDRESS ); 
-
-        //print_r( $header_array ); 
-        $header_array2=array(); 
-        if( $multi ) 
+        $header_array2=array();
+        if ($isXml)
+        	$header_array2 = array("Content-Type: application/atom+xml", "X-HTTP-Method-Override: POST");
+        else if( $multi ) 
         	$header_array2 = array("Content-Type: multipart/form-data; boundary=" . OAuthUtil::$boundary , "Expect: ");
-        foreach($header_array as $k => $v) 
-            array_push($header_array2,$k.': '.$v); 
-
-        curl_setopt($ci, CURLOPT_HTTPHEADER, $header_array2 ); 
+    	
+        if ($header) {
+        	array_push($header_array2, $header);
+        }
+        curl_setopt($ci, CURLOPT_HTTPHEADER, $header_array2 );
+        
         curl_setopt($ci, CURLINFO_HEADER_OUT, TRUE ); 
 
         //echo $url."<hr/>"; 
@@ -872,5 +855,4 @@ class doubanOAuth {
         } 
         return strlen($header); 
     } 
-} 
-
+}
