@@ -278,7 +278,10 @@ class OAuthRequest {
         if ($token) 
             $defaults['oauth_token'] = $token->key; 
 
-        $parameters = array_merge($defaults, $parameters); 
+        if (is_array($parameters))
+        	$parameters = array_merge($defaults, $parameters);
+        else
+        	$parameters = $defaults;
 
         return new OAuthRequest($http_method, $http_url, $parameters); 
     } 
@@ -413,7 +416,7 @@ class OAuthRequest {
      * builds the Authorization: header 
      */ 
     public function to_header() { 
-        $out ='Authorization: OAuth realm=""'; 
+        $out ='Authorization: OAuth realm="mixmes.com"'; 
         $total = array(); 
         foreach ($this->parameters as $k => $v) { 
             if (substr($k, 0, 5) != "oauth") continue; 

@@ -77,6 +77,10 @@ abstract class doubanAction extends myAction {
 					break;
 			}
 		}
+		
+		if (!$user->avatar) {
+			$user->avatar = $this->getEmptyAvatar();
+		}
 		$user->screen_name = $origin['author']['name']['$t'];
 		
 		return $message;
@@ -115,15 +119,16 @@ abstract class doubanAction extends myAction {
 					break;
 			}
 		}
+		
+		if (!$user->avatar) {
+			$user->avatar = $this->getEmptyAvatar();
+		}
 		$user->screen_name = $origin['author']['name']['$t'];
 		return $message;
 	}
 	
-	protected function getEmptyAvatar($size = 50) {
-		if ($size = 120) {
-			return "http://mat1.gtimg.com/www/mb/images/head_120.jpg";
-		}
-		return "http://mat1.gtimg.com/www/mb/images/head_50.jpg";
+	protected function getEmptyAvatar() {
+		return "http://img3.douban.com/icon/user_normal.jpg";
 	}
 	
 	protected function formatText($text) {
