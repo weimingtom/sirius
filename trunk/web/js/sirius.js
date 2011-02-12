@@ -430,7 +430,11 @@ $(function() {
 				.dblclick(function(event){
 					$('.tab-rename', tab)
 						.val($('.tab-name',tab).text())
-						.keydown(function(){
+						.keydown(function(event){
+							if(event.keyCode == 13) {
+								$(this).blur();
+								return;
+							}
 							$('.tab-name',tab).text($('.tab-rename', tab).val());
 							$('.tab-rename', tab).width($('.tab-name',tab).innerWidth() - $('.tab-name',tab).css('padding-right'));
 						})

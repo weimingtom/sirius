@@ -105,8 +105,7 @@ class signupAction extends sfAction {
 			
 			// goto waiting for validate page
 			//TODO:_______
-			
-			$this->redirect('default', 'login');
+			$this->redirect('default/login?email=' . $email);
 		} else {
 			return sfVIEW::SUCCESS;
 		}		

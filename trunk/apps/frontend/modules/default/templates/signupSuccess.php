@@ -4,6 +4,11 @@
 <?php use_javascript('jquery.colorbox-min.js')?>
 <script>
 	$(function(){
+		$('#email').focus();
+	});
+</script>
+<script>
+	$(function(){
 		$("._apply-invite-code").colorbox({inline:true});
 	});
 </script>
