@@ -1,5 +1,10 @@
 <?php use_helper('I18N') ?>
 <?php use_stylesheet('login.css') ?>
+<script>
+	$(function(){
+		$('#email').focus();
+	});
+</script>
 <div id="container" class="vertical-center">
 	<div class="pane login">
 		<div class="logo">
