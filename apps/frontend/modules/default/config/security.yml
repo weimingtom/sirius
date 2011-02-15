@@ -1,2 +1,8 @@
 all:
   is_secure: false
+
+login:
+  is_ssl: true
+  
+signup:
+  is_ssl: true
