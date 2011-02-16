@@ -4,7 +4,7 @@
 # default values
 all:
   theme: on
-  invite_signup: on
+  invite_signup: false
   version: '内部测试版(Alpha)'
   twitter:
     consumer_key: 'YSQsy4YEV4yIAHhCP8AUnw'

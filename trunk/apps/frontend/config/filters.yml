@@ -5,7 +5,6 @@ rendering: ~
 security:  ~
 
 # insert your own filters here
-SslRequirementFilter:  
-  class: MySslRequirementFilter
+
 cache:     ~
 execution: ~
