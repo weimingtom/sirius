@@ -1,27 +1,8 @@
 CronJob:
-  example1:
-    minute:			'*/5'
-    hour:			'12'
+  followerCount:
+    minute:			'5'
+    hour:			'1'
     day:			'*'
     month:			'*'
-    job:			'Example|{"abc":"def"}'
-    enabled:		true
-    
-  example2:
-    minute:			'*'
-    hour:			'*/2'
-    day:			'*'
-    month:			'*'
-    job:			'Example|["abc","def"]'
-    priority:		2
-    enabled:		true
-
-  example_once:
-    minute:			'*'
-    hour:			'*/2'
-    day:			'*'
-    month:			'*'
-    job:			'Example|{}'
-    run_once:		true
-    priority:		2
+    job:			'FollowerCounter|{}'
     enabled:		true
