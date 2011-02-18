@@ -2,4 +2,10 @@
 # http://www.symfony-project.org/reference/1_4/en/11-App
 
 # default values
-#all:
+all:
+  sina:
+    consumer_key: '3316230255'
+    consumer_secret: '6a805bf3a5071da183dab22cf5156836'
+  qq:
+    consumer_key: '784c657dc0fd406fb1c141bbf84c8c7d'
+    consumer_secret: '3aadb293c2fa8680cb6b14a65be23cc7'

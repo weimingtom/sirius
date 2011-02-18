@@ -11,6 +11,7 @@ User:
 Profile:
   actAs:
     Timestampable:
+  listeners:		[ ProfileInsertListener ]
   columns:
     owner_id:		{ type: integer, notnull: true }
     profile_name:	{ type: string(255), notnull: true }

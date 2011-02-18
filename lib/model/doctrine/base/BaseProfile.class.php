@@ -34,7 +34,7 @@
  * @package    Sirius
  * @subpackage model
  * @author     Cary Yang <getcary@gmail.com>
- * @version    SVN: $Id: Builder.php 7691 2011-02-04 15:43:29Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class BaseProfile extends sfDoctrineRecord
 {
@@ -101,5 +101,7 @@ abstract class BaseProfile extends sfDoctrineRecord
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);
+
+    $this->addListener(new ProfileInsertListener(array()), 'ProfileInsertListener');
     }
 }

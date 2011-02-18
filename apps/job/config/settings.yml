@@ -30,6 +30,8 @@ all:
     # Output escaping settings
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS
+    
+    default_timezone:		Asia/Chongqing
 
     # Enable the database manager
     use_database:           true
