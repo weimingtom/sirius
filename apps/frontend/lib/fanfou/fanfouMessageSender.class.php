@@ -40,22 +40,32 @@ class fanfouMessageSender {
 		return true;
 	} 
 
-	public function retweetMessage($profileId, $message, $target) {
+	public function retweetMessage($profileId, $message, $target, $sourceContent = null, $sourceAuthor = null) {
 		if (!$this->beforeSend($profileId)) {
 			return false;
 		}
 		
-		$response = $this->apiConsumer->repost($target, $message);
+		if ($sourceContent != null) {
+			$message .= ' 转: @' . $sourceAuthor . ' ' . $sourceContent;
+			$response = $this->apiConsumer->update($message);
+		} else {
+			$_response = $this->apiConsumer->repost($target, $message);
+		}
 
 		return true;
 	}
 	
-	public function commentMessage($profileId, $message, $target) {
+	public function commentMessage($profileId, $message, $target, $sourceContent = null, $sourceAuthor = null) {
 		if (!$this->beforeSend($profileId)) {
 			return false;
 		}
 		
-		$response = $this->apiConsumer->send_comment($target, $message);
+		if ($sourceContent != null) {
+			$message .= ' @' . $sourceAuthor . ' ' . $sourceContent;
+			$response = $this->apiConsumer->update($message);
+		} else {
+			$response = $this->apiConsumer->send_comment($target, $message);
+		}
 		
 		return true;
 	}

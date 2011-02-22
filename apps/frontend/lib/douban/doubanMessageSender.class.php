@@ -42,11 +42,17 @@ class doubanMessageSender {
 		return true;
 	} 
 
-	public function retweetMessage($profileId, $message, $target) {
+	public function retweetMessage($profileId, $message, $target, $sourceContent = null, $sourceAuthor = null) {
+		if ($sourceContent != null) {
+			$message .= ' 转: @' . $sourceAuthor . ' ' . $sourceContent;
+		}
 		return $this->sendMessage($profileId, $message, null);
 	}
 	
-	public function commentMessage($profileId, $message, $target) {
+	public function commentMessage($profileId, $message, $target, $sourceContent = null, $sourceAuthor = null) {
+		if ($sourceContent != null) {
+			$message .= ' @' . $sourceAuthor . ' ' . $sourceContent;
+		}
 		return $this->sendMessage($profileId, $message, null);
 	}
 	

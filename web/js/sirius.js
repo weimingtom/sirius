@@ -1305,6 +1305,8 @@ $(function() {
 				data.type = $("#reactionContent").attr("actiontype");
 				data.profile_type = $("#reactionContent").attr('profileType');
 				data.target_message_id = $("#reactionContent .reaction-source .message").attr('messageId');
+				data.target_message_content = $("#reactionContent .reaction-source .message .message-body").html();
+				data.target_message_author = $("#reactionContent .reaction-source .message .message-author").attr('title');
 			}
 			if ($("#imageContent").attr("imageUrl")) {
 				data.image = $("#imageContent").attr("imageUrl");
@@ -1347,7 +1349,7 @@ $(function() {
 		
 		selectProfile: function(profiles) {
 			// check reaction
-			var reactionProfileType = $("#reactionContent").attr("profileType");
+			/*var reactionProfileType = $("#reactionContent").attr("profileType");
 			if (reactionProfileType != undefined && reactionProfileType != "") {
 				var hasDifferentType = false;
 				$(profiles).each(function(index, item) {
@@ -1360,7 +1362,7 @@ $(function() {
 					this.statusMessage("正在" + (reactionActionType == 'retweet' ? "转发" : "评论") + socialNetworkNames[reactionProfileType] + '消息, 无法选择其他网站的帐号', "error");
 					return;
 				}
-			}
+			}*/
 			$(profiles).addClass("selected");
 		},
 		
