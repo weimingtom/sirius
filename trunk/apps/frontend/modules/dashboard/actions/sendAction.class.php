@@ -6,6 +6,8 @@ class sendAction extends sfAction {
 		$type = $request->getParameter('type');
 		$profile_type = $request->getParameter('profile_type');
 		$target_message_id = $request->getParameter('target_message_id');
+		$target_message_content = $request->getParameter('target_message_content');
+		$target_message_author = $request->getParameter('target_message_author');
 		$image = $request->getParameter('image');
 		
 		$this->forward404Unless($type == 'retweet' || strlen($message) > 0);
@@ -14,8 +16,9 @@ class sendAction extends sfAction {
 		foreach($profiles as $profile) {
 			list($profileType, $profileId) = explode('|', $profile . '|');
 			
+			$content = null;
 			if ($profile_type != null && $profile_type != $profileType) {
-				continue;
+				$content = strip_tags($target_message_content);
 			}
 			
 			$clazz = new ReflectionClass($profileType . 'MessageSender');
@@ -23,10 +26,10 @@ class sendAction extends sfAction {
 			
 			switch ($type) {
 				case 'retweet':
-					$sender->retweetMessage($profileId, $message, $target_message_id);
+					$sender->retweetMessage($profileId, $message, $target_message_id, $content, $target_message_author);
 					break;
 				case 'comment':
-					$sender->commentMessage($profileId, $message, $target_message_id);
+					$sender->commentMessage($profileId, $message, $target_message_id, $content, $target_message_author);
 					break;
 				default:
 					$sender->sendMessage($profileId, $message, $image);
