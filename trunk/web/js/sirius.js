@@ -110,6 +110,14 @@ $(function() {
 			if (!$.isArray(this.settings.profiles))
 				return false;
 			var profiles = this.settings.profiles;
+			
+			// sortable
+			$("#sidebar ul").sortable({
+				axis: 'y',
+				opacity: 0.6,
+				handle: '.list-title'
+			});
+			
 			for (var i = 0; i < profiles.length; ++i) {
 				this.addProfileToSidebar(profiles[i]);
 				this.addProfileToProfileSelector(profiles[i]);
