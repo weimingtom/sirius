@@ -1,6 +1,7 @@
 var socialNetworkNames = socialNetworkNames || {
 	sina: "新浪微博",
 	qq: "腾讯微博",
+	sohu: "搜狐微博",
 	fanfou: "饭否",
 	douban: "豆瓣"
 };
@@ -77,6 +78,12 @@ socialNetworkTypes['qq'] = [
 	}
 ];
 socialNetworkTypes['fanfou'] = [
+  	{defaultTitle: '首页微博', type: 'home'},
+  	{defaultTitle: '提到我的', type: 'mentions'},
+	{defaultTitle: '我发的微博', type: 'posted'},
+	{defaultTitle: '我的私信', type: 'direct'}
+];
+socialNetworkTypes['sohu'] = [
   	{defaultTitle: '首页微博', type: 'home'},
   	{defaultTitle: '提到我的', type: 'mentions'},
 	{defaultTitle: '我发的微博', type: 'posted'},
