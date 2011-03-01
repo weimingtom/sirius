@@ -440,6 +440,10 @@ a.list-toggle-button span {
 	background-image: url("/images/icon_28x28/douban.png");
 }
 
+.thread-icon-sohu {
+	background-image: url("/images/icon_28x28/sohu.png");
+}
+
 .thread-name {
 	font-size: 14px;
 	font-weight: bold;
@@ -1022,6 +1026,10 @@ a.message-count-status:hover {
 
 .icon-13.sina {
 	background: url(../images/icon_13x13/sina.png) 0 0 no-repeat;
+}
+
+.icon-13.sohu {
+	background: url(../images/icon_13x13/sohu.png) 0 0 no-repeat;
 }
 
 .icon-13.fanfou {

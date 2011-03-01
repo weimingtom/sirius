@@ -35,3 +35,4 @@ all:
   sohu:
     consumer_key: 'fWDzFW0ttmFQu3SsdAZ2'
     consumer_secret: '=JiY1sBxI*pwCygN$u!mGYH#V6uUT2i0-=h9YS1G'
+    callback_url: 'http://dev.mixmes.com/sohu/authback'
