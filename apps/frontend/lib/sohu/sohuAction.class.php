@@ -6,7 +6,7 @@ abstract class sohuAction extends myAction {
 		
 		$this->consumerKey = sfConfig::get('app_sohu_consumer_key');
 	    $this->consumerSecret = sfConfig::get('app_sohu_consumer_secret');
-		$this->callbackUrl = sfConfig::get('app_sohu_callback_url');
+		$this->callbackUrl = "http://" . $_SERVER['HTTP_HOST'] . sfConfig::get('app_sohu_callback_url');
 	}
 	
 	protected function prepareApiConsumer($request) {

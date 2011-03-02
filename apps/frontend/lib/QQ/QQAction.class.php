@@ -5,7 +5,7 @@ abstract class QQAction extends myAction {
 		
 		$this->consumerKey = sfConfig::get('app_qq_consumer_key');
 	    $this->consumerSecret = sfConfig::get('app_qq_consumer_secret');
-		$this->callbackUrl = sfConfig::get('app_qq_callback_url');		
+		$this->callbackUrl = "http://" . $_SERVER['HTTP_HOST'] . sfConfig::get('app_qq_callback_url');		
 	}
 	
 	protected function prepareApiConsumer($request) {
