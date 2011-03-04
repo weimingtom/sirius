@@ -85,7 +85,7 @@ class fanfouClient {
         return $this->post( 'http://api.fanfou.com/photos/upload.json' , $param ); 
     }
 	
-    function get($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
+    protected function get($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
         $response = $this->http($this->toUrl($url, $parameters), 'GET');
         if ($this->format === 'json' && $this->decode_json) { 
             return json_decode($response, true); 
@@ -93,7 +93,7 @@ class fanfouClient {
         return $response; 
     }
     
-    function post($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
+    protected function post($url, $parameters = array()) {//echo $this->toUrl($url, $parameters); die();
     	$response = $this->http($url, 'POST', $parameters);
         if ($this->format === 'json' && $this->decode_json) { 
             return json_decode($response, true); 
@@ -101,7 +101,7 @@ class fanfouClient {
         return $response; 
     } 
     
-    public function toUrl($url, $params) {
+    protected function toUrl($url, $params) {
     	foreach ($params as $k => $p) {
     		$out .= '&' . urlencode($k) . '=' . urlencode($p);
     	} 
@@ -111,7 +111,7 @@ class fanfouClient {
         return $url; 
     } 
 	
-	function http($url, $method, $postfields = NULL , $multi = false) {
+	protected function http($url, $method, $postfields = NULL , $multi = false) {
 		$this->http_info = array(); 
         $ci = curl_init(); 
         /* Curl settings */
@@ -170,7 +170,7 @@ class fanfouClient {
      * 
      * @return int 
      */ 
-    function getHeader($ch, $header) { 
+    protected function getHeader($ch, $header) { 
         $i = strpos($header, ':'); 
         if (!empty($i)) { 
             $key = str_replace('-', '_', strtolower(substr($header, 0, $i))); 

@@ -198,10 +198,22 @@ a.list-toggle-button span {
 }
 
 .refresh-frequency .ui-selectmenu-item-selected {
-	border: 1px solid #dddddd; background: #dddddd url(../images/jqueryui/ui-bg_highlight-soft_60_dddddd_1x100.png) 50% 50% repeat-x; font-weight: normal; color: #000000;
+	border: 1px solid #ddd; 
+	background: #ddd url(../images/jqueryui/ui-bg_highlight-soft_60_dddddd_1x100.png) 50% 50% repeat-x; 
+	font-weight: normal; 
+	color: #000;
 }
-.refresh-frequency .ui-selectmenu-item-selected a {
-	color: black;
+
+.refresh-frequency a,
+.refresh-frequency a:visited {
+	color: #FFF;
+}
+
+.refresh-frequency .ui-selectmenu-item-selected a,
+.refresh-frequency .ui-selectmenu-item-selected a:visited,
+.refresh-frequency .ui-selectmenu-item-selected a:active,
+.refresh-frequency .ui-selectmenu-item-selected a:hover {
+	color: #000;
 }
 .dashboard-controller .refresh-frequency.ui-state-active {
 	border: 1px solid #CCC;
